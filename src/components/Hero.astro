@@ -1,0 +1,160 @@
+---
+---
+
+<section class="relative min-h-screen flex flex-col pt-[68px] overflow-hidden" aria-label="Héro">
+  <!-- Decorative circles (right, partially off-screen) -->
+  <div
+    class="absolute right-0 top-1/2 -translate-y-[55%] translate-x-[28%] w-[700px] h-[700px] pointer-events-none select-none"
+    aria-hidden="true"
+  >
+    <svg viewBox="0 0 700 700" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+      <circle cx="350" cy="350" r="338" stroke="#CCFF00" stroke-width="0.75" opacity="0.12"/>
+      <circle cx="350" cy="350" r="270" stroke="#EDE9E0" stroke-width="0.5" opacity="0.06"/>
+      <circle cx="350" cy="350" r="200" stroke="#CCFF00" stroke-width="0.5" opacity="0.08"/>
+      <g class="arc-spin" style="transform-origin: 350px 350px">
+        <path
+          d="M350 12 A338 338 0 0 1 688 350"
+          stroke="#CCFF00"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          opacity="0.5"
+        />
+      </g>
+      <circle cx="350" cy="350" r="3" fill="#CCFF00" opacity="0.4"/>
+    </svg>
+  </div>
+
+  <!-- Main content -->
+  <div class="flex-1 flex items-center relative z-10">
+    <div class="max-w-container mx-auto px-8 w-full py-16 lg:py-24">
+      <div class="max-w-[700px]">
+
+        <!-- Label -->
+        <p class="text-xs font-sans font-semibold text-accent uppercase tracking-[0.14em] mb-10" data-animate>
+          Agence IA &amp; Automatisation
+        </p>
+
+        <!-- Headline -->
+        <h1 class="font-display font-bold text-hero text-ink mb-8" data-animate data-delay="1">
+          On n'évangélise<br>
+          pas. On&nbsp;<em>construit</em>.
+        </h1>
+
+        <!-- Subtitle -->
+        <p class="text-[17px] leading-[1.65] text-muted max-w-[500px] mb-14" data-animate data-delay="2">
+          Aitom déploie des systèmes d'IA et d'automatisation qui s'intègrent à vos outils et créent de la valeur mesurable — sans le discours.
+        </p>
+
+        <!-- CTAs -->
+        <div class="flex flex-wrap items-center gap-x-10 gap-y-5" data-animate data-delay="3">
+          <a
+            href="#contact"
+            class="inline-block bg-accent text-bg text-sm font-semibold px-7 py-[14px] rounded hover:opacity-90 transition-opacity duration-200"
+          >
+            Discuter d'un projet
+          </a>
+          <a
+            href="#projets"
+            class="inline-flex items-center gap-2 text-sm text-muted hover:text-ink transition-colors duration-200 group"
+          >
+            Voir nos projets
+            <span class="inline-block group-hover:translate-x-1.5 transition-transform duration-200 ease-expo">→</span>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Marquee strip -->
+  <div class="border-t border-border overflow-hidden relative z-10" aria-hidden="true">
+    <div class="py-[14px]">
+      <div class="marquee-row whitespace-nowrap">
+        <span class="marquee-inner inline-flex items-center gap-0">
+          <span class="marquee-item">Intelligence Artificielle</span>
+          <span class="marquee-dot">·</span>
+          <span class="marquee-item">Automatisation</span>
+          <span class="marquee-dot">·</span>
+          <span class="marquee-item">Agents IA</span>
+          <span class="marquee-dot">·</span>
+          <span class="marquee-item">Intégrations</span>
+          <span class="marquee-dot">·</span>
+          <span class="marquee-item">LLM</span>
+          <span class="marquee-dot">·</span>
+          <span class="marquee-item">Données</span>
+          <span class="marquee-dot">·</span>
+          <span class="marquee-item">NLP</span>
+          <span class="marquee-dot">·</span>
+          <!-- duplicate for seamless loop -->
+          <span class="marquee-item">Intelligence Artificielle</span>
+          <span class="marquee-dot">·</span>
+          <span class="marquee-item">Automatisation</span>
+          <span class="marquee-dot">·</span>
+          <span class="marquee-item">Agents IA</span>
+          <span class="marquee-dot">·</span>
+          <span class="marquee-item">Intégrations</span>
+          <span class="marquee-dot">·</span>
+          <span class="marquee-item">LLM</span>
+          <span class="marquee-dot">·</span>
+          <span class="marquee-item">Données</span>
+          <span class="marquee-dot">·</span>
+          <span class="marquee-item">NLP</span>
+          <span class="marquee-dot">·</span>
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Hero headline */
+  .text-hero {
+    font-size: clamp(3rem, 8vw, 7.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+  }
+
+  h1 em {
+    font-style: italic;
+  }
+
+  /* Animated arc */
+  .arc-spin {
+    animation: arc-rotate 14s linear infinite;
+  }
+
+  @keyframes arc-rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  /* Marquee */
+  .marquee-inner {
+    animation: marquee 28s linear infinite;
+    will-change: transform;
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  .marquee-item {
+    font-size: 0.6875rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #3E3B34;
+    padding: 0 2rem;
+    flex-shrink: 0;
+  }
+
+  .marquee-dot {
+    color: #3E3B34;
+    flex-shrink: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .arc-spin { animation: none; }
+    .marquee-inner { animation: none; }
+  }
+</style>
