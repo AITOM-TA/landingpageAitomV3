@@ -15,8 +15,8 @@ export default {
       accent: '#CCFF00',
     },
     fontFamily: {
-      display: ['Figtree', 'system-ui', 'sans-serif'],
-      sans: ['Figtree', 'system-ui', 'sans-serif'],
+      display: ['"Figtree Variable"', 'system-ui', 'sans-serif'],
+      sans: ['"Figtree Variable"', 'system-ui', 'sans-serif'],
     },
     extend: {
       fontSize: {
