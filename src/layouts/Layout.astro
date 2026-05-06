@@ -17,7 +17,7 @@ const siteUrl = 'https://aitom.fr';
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="canonical" href={siteUrl} />
 
     <!-- Primary meta -->
@@ -139,7 +139,7 @@ const siteUrl = 'https://aitom.fr';
 
   /* Clamp-based display sizes */
   .text-hero {
-    font-size: clamp(2.25rem, 4.5vw, 4rem);
+    font-size: clamp(2.5rem, 6vw, 5.5rem);
     line-height: 1.05;
     letter-spacing: -0.04em;
   }
@@ -154,6 +154,65 @@ const siteUrl = 'https://aitom.fr';
     font-size: clamp(1.5rem, 2.5vw, 2rem);
     line-height: 1.15;
     letter-spacing: -0.02em;
+  }
+
+  /* Primary button */
+  .btn-primary {
+    position: relative;
+    overflow: hidden;
+    transition:
+      transform 400ms cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 400ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .btn-primary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.14);
+    transform: translateX(-101%);
+    transition: transform 500ms cubic-bezier(0.16, 1, 0.3, 1);
+    border-radius: inherit;
+    pointer-events: none;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(78, 226, 236, 0.28);
+  }
+
+  .btn-primary:hover::before {
+    transform: translateX(0);
+  }
+
+  .btn-primary:active {
+    transform: translateY(0);
+    box-shadow: none;
+    transition-duration: 100ms;
+  }
+
+  /* Secondary button */
+  .btn-secondary {
+    position: relative;
+  }
+
+  .btn-secondary .btn-label {
+    position: relative;
+  }
+
+  .btn-secondary .btn-label::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: currentColor;
+    transition: width 350ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .btn-secondary:hover .btn-label::after {
+    width: 100%;
   }
 
   /* Smooth scroll offset for fixed nav */
