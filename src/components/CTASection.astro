@@ -3,57 +3,133 @@
 
 <section id="contact" class="py-section-sm md:py-section border-t border-border">
   <div class="max-w-container mx-auto px-8">
-    <div class="max-w-[900px]">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start">
 
-      <!-- Label -->
-      <p class="text-xs font-semibold text-accent uppercase tracking-[0.14em] mb-10" data-animate>
-        Contact
-      </p>
+      <!-- Left: pitch -->
+      <div>
+        <p class="text-xs font-semibold text-accent uppercase tracking-[0.14em] mb-8" data-animate>
+          Essai gratuit
+        </p>
+        <h2 class="font-display font-bold text-display text-ink mb-8" data-animate data-delay="1">
+          Essayez gratuitement<br>pendant <em>7 jours</em>.
+        </h2>
+        <p class="text-[17px] leading-[1.65] text-muted mb-10 max-w-[440px]" data-animate data-delay="2">
+          Installation offerte, sans engagement. Votre standard IA répond à vos appels dès cette semaine — vous ne payez que si vous décidez de continuer.
+        </p>
 
-      <!-- Oversized headline -->
-      <h2 class="font-display font-bold text-display text-ink mb-16" data-animate data-delay="1">
-        Vous avez un projet.<br>
-        Nous avons les outils pour<br>le <em>construire</em>.
-      </h2>
-
-      <!-- Email link -->
-      <div data-animate data-delay="2">
-        <a
-          href="mailto:contact@aitom.fr"
-          class="email-link group inline-flex items-baseline gap-4 font-display font-bold text-display-sm text-ink hover:text-accent transition-colors duration-300"
-          aria-label="Envoyer un email à contact@aitom.fr"
-        >
-          <span class="email-text relative">
-            contact@aitom.fr
-            <span class="email-underline"></span>
-          </span>
-          <span class="text-muted group-hover:text-accent group-hover:translate-x-2 transition-all duration-300 ease-expo inline-block">
-            →
-          </span>
-        </a>
+        <!-- Reassurance points -->
+        <ul class="flex flex-col gap-3 list-none" data-animate data-delay="3">
+          <li class="flex items-center gap-3 text-sm text-muted">
+            <span class="text-accent">→</span> Opérationnel en quelques jours
+          </li>
+          <li class="flex items-center gap-3 text-sm text-muted">
+            <span class="text-accent">→</span> Fonctionne sur votre numéro actuel
+          </li>
+          <li class="flex items-center gap-3 text-sm text-muted">
+            <span class="text-accent">→</span> Aucune carte bancaire demandée
+          </li>
+        </ul>
       </div>
 
-      <!-- Secondary note -->
-      <p class="text-sm text-faint mt-10" data-animate data-delay="3">
-        Nous répondons sous 24h. Pas de pitch, pas de proposition non sollicitée.
-      </p>
+      <!-- Right: form -->
+      <div data-animate data-delay="2">
+        <!-- NOTE: configurez l'endpoint de réception (Formspree, Vercel Forms, etc.)
+             en remplaçant l'attribut `action` ci-dessous. -->
+        <form
+          class="contact-form flex flex-col gap-5"
+          action="#"
+          method="POST"
+        >
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <div class="field">
+              <label for="firstname">Prénom</label>
+              <input type="text" id="firstname" name="firstname" autocomplete="given-name" required />
+            </div>
+            <div class="field">
+              <label for="lastname">Nom</label>
+              <input type="text" id="lastname" name="lastname" autocomplete="family-name" required />
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="email">Email professionnel</label>
+            <input type="email" id="email" name="email" autocomplete="email" required />
+          </div>
+
+          <div class="field">
+            <label for="phone">Téléphone</label>
+            <input type="tel" id="phone" name="phone" autocomplete="tel" required />
+          </div>
+
+          <div class="field">
+            <label for="activity">Votre activité</label>
+            <textarea id="activity" name="activity" rows="3" placeholder="Ex. : plombier, cabinet dentaire, dépannage…" required></textarea>
+          </div>
+
+          <button type="submit" class="btn-primary inline-block bg-accent text-bg text-sm font-semibold px-7 py-[15px] rounded mt-1 w-full sm:w-auto">
+            Démarrer mon essai gratuit
+          </button>
+
+          <p class="text-xs text-faint mt-1">
+            Pas un robot au bout du fil pour vous : un humain vous rappelle sous 24h pour lancer l'essai.
+          </p>
+        </form>
+
+        <!-- Alternative contact -->
+        <p class="text-sm text-muted mt-8 pt-8 border-t border-border">
+          Vous préférez écrire ?
+          <a href="mailto:contact@aitom.fr" class="text-ink hover:text-accent transition-colors duration-300 font-medium">contact@aitom.fr</a>
+        </p>
+      </div>
 
     </div>
   </div>
 </section>
 
 <style>
-  .email-underline {
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    width: 0;
-    height: 1px;
-    background-color: #0A7C84;
-    transition: width 450ms cubic-bezier(0.16, 1, 0.3, 1);
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
   }
 
-  .email-link:hover .email-underline {
+  .field label {
+    font-size: 0.8125rem;
+    color: #6B635A;
+    font-weight: 500;
+  }
+
+  .contact-form input,
+  .contact-form textarea {
     width: 100%;
+    background-color: #F1EDE4;
+    border: 1px solid #DCD5C8;
+    border-radius: 4px;
+    padding: 12px 14px;
+    font-size: 0.9375rem;
+    color: #1A1712;
+    font-family: inherit;
+    transition:
+      border-color 250ms cubic-bezier(0.16, 1, 0.3, 1),
+      background-color 250ms cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 250ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .contact-form textarea {
+    resize: vertical;
+    min-height: 88px;
+  }
+
+  .contact-form input::placeholder,
+  .contact-form textarea::placeholder {
+    color: #B3AA9B;
+  }
+
+  .contact-form input:focus,
+  .contact-form textarea:focus {
+    outline: none;
+    border-color: #0A7C84;
+    background-color: #FAF8F2;
+    box-shadow: 0 0 0 3px rgba(10, 124, 132, 0.12);
   }
 </style>

@@ -1,0 +1,45 @@
+---
+const items = [
+  {
+    name: 'Conseil IA',
+    description:
+      "On repère les opportunités concrètes dans votre organisation et on vous remet un plan d'action priorisé.",
+  },
+  {
+    name: 'Automatisation',
+    description:
+      'On connecte vos outils et on élimine les tâches répétitives, pour réinvestir chaque heure gagnée là où elle compte.',
+  },
+];
+---
+
+<section id="plus-loin" class="py-section-sm border-t border-border">
+  <div class="max-w-container mx-auto px-8">
+    <div class="max-w-[760px]">
+
+      <!-- Intro -->
+      <p class="text-xs font-semibold text-muted uppercase tracking-[0.14em] mb-5" data-animate>
+        Aller plus loin
+      </p>
+      <h2 class="font-display font-bold text-display-sm text-ink mb-5" data-animate data-delay="1">
+        Le téléphone n'est qu'un début.
+      </h2>
+      <p class="text-[17px] leading-[1.65] text-muted mb-12" data-animate data-delay="2">
+        Une fois votre accueil automatisé, on identifie ensemble les autres tâches répétitives qui vous coûtent du temps — et on s'en occupe.
+      </p>
+
+      <!-- Condensed items -->
+      <div class="divide-y divide-border border-t border-border" data-animate data-delay="2">
+        {items.map((item) => (
+          <div class="py-6 md:flex md:items-baseline md:gap-8">
+            <h3 class="font-display font-semibold text-ink text-base md:w-44 md:shrink-0 mb-1 md:mb-0">
+              {item.name}
+            </h3>
+            <p class="text-sm text-muted leading-relaxed">{item.description}</p>
+          </div>
+        ))}
+      </div>
+
+    </div>
+  </div>
+</section>
