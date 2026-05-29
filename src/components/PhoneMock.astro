@@ -1,0 +1,378 @@
+---
+// Mockup téléphone 2.5D : l'assistant IA répond, qualifie et prend le rendez-vous.
+const waveBars = Array.from({ length: 5 });
+---
+
+<div class="phone-stage" aria-hidden="true">
+  <div class="phone-glow"></div>
+  <div class="phone-tilt" data-tilt>
+    <div class="phone">
+      <span class="phone-btn phone-btn--mute"></span>
+      <span class="phone-btn phone-btn--vol-up"></span>
+      <span class="phone-btn phone-btn--vol-dn"></span>
+      <span class="phone-btn phone-btn--power"></span>
+      <div class="phone-island"></div>
+      <div class="phone-screen">
+        <!-- Barre de statut -->
+        <div class="ph-statusbar">
+          <span class="ph-time" data-clock>9:41</span>
+          <span class="ph-status-icons">
+            <!-- Signal -->
+            <svg class="ph-ic" width="17" height="11" viewBox="0 0 18 12" fill="#1A1712" xmlns="http://www.w3.org/2000/svg">
+              <rect x="0"  y="8"   width="3" height="4"   rx="1"/>
+              <rect x="5"  y="5.5" width="3" height="6.5" rx="1"/>
+              <rect x="10" y="3"   width="3" height="9"   rx="1"/>
+              <rect x="15" y="0"   width="3" height="12"  rx="1"/>
+            </svg>
+            <!-- Batterie -->
+            <svg class="ph-ic" width="25" height="12" viewBox="0 0 27 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="0.5" y="0.5" width="23" height="12" rx="3.5" stroke="#1A1712" stroke-opacity="0.4"/>
+              <rect x="2"   y="2"   width="16" height="9"  rx="2" fill="#1A1712"/>
+              <rect x="25"  y="4"   width="1.6" height="5" rx="0.8" fill="#1A1712" fill-opacity="0.4"/>
+            </svg>
+          </span>
+        </div>
+        <!-- En-tête d'appel -->
+        <div class="ph-header">
+          <img src="/logo-icon.png" alt="Aitom" class="ph-avatar" />
+          <div class="ph-id">
+            <span class="ph-name">Aitom</span>
+            <span class="ph-sub"><span class="ph-livedot"></span>Appel en cours · <span class="ph-timer" data-timer>00:00</span></span>
+          </div>
+          <div class="wave ph-wave">
+            {waveBars.map((_, i) => <span class="bar" style={`--i:${i}`}></span>)}
+          </div>
+        </div>
+        <!-- Conversation -->
+        <div class="ph-body" data-conversation>
+          <span class="ph-tag">Transcription en direct</span>
+          <div class="msg msg--ai">Bonjour, vous êtes bien chez Aitom, je suis votre assistant. Comment puis-je vous aider ?</div>
+          <div class="msg msg--in">Bonjour, j'aurais aimé quelques renseignements sur vos services.</div>
+          <div class="msg msg--ai">Avec plaisir. Préférez-vous que je vous envoie une présentation, ou un rendez-vous avec un conseiller ?</div>
+          <div class="msg msg--in">Un rendez-vous, ce serait parfait.</div>
+          <div class="msg msg--ai">Très bien. J'ai une disponibilité jeudi à 14h ou vendredi à 10h.</div>
+          <div class="msg msg--in">Jeudi 14h, c'est noté.</div>
+          <div class="msg msg--ai">Parfait, c'est réservé ✓ Vous recevez la confirmation par SMS. Belle journée !</div>
+          <div class="typing"><span></span><span></span><span></span></div>
+        </div>
+      </div>
+      <div class="phone-gloss"></div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .phone-stage {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    perspective: 1400px;
+  }
+  .phone-glow {
+    position: absolute;
+    width: 360px; height: 360px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(105, 103, 251, 0.38), rgba(105, 103, 251, 0) 70%);
+    filter: blur(46px);
+    z-index: 0;
+  }
+  .phone-tilt {
+    position: relative;
+    z-index: 1;
+    transform-style: preserve-3d;
+    transform: rotateY(-12deg) rotateX(5deg);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .phone {
+    position: relative;
+    width: 300px;
+    height: 612px;
+    background: linear-gradient(155deg, #2a2620, #15120e 60%);
+    border-radius: 50px;
+    padding: 13px;
+    box-shadow:
+      0 2px 0 rgba(255, 255, 255, 0.12) inset,
+      0 50px 90px -30px rgba(26, 23, 18, 0.6),
+      0 20px 40px -20px rgba(105, 103, 251, 0.35);
+    animation: floaty 6.5s ease-in-out infinite;
+    transform-style: preserve-3d;
+  }
+
+  /* Boutons latéraux */
+  .phone-btn { position: absolute; background: #0e0c09; border-radius: 3px; }
+  .phone-btn--mute   { left: -2px; top: 116px; width: 3px; height: 26px; }
+  .phone-btn--vol-up { left: -2px; top: 160px; width: 3px; height: 46px; }
+  .phone-btn--vol-dn { left: -2px; top: 218px; width: 3px; height: 46px; }
+  .phone-btn--power  { right: -2px; top: 176px; width: 3px; height: 64px; }
+
+  .phone-island {
+    position: absolute;
+    top: 26px; left: 50%;
+    transform: translateX(-50%);
+    width: 92px; height: 26px;
+    background: #050403;
+    border-radius: 14px;
+    z-index: 4;
+  }
+
+  .phone-gloss {
+    position: absolute;
+    inset: 13px;
+    border-radius: 38px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0) 38%);
+    pointer-events: none;
+    z-index: 5;
+  }
+
+  .phone-screen {
+    position: relative;
+    width: 100%; height: 100%;
+    background: #FAF8F2;
+    border-radius: 38px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Barre de statut */
+  .ph-statusbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 24px 4px;
+    color: #1A1712;
+    background: rgba(105, 103, 251, 0.06);
+  }
+  .ph-time {
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    font-variant-numeric: tabular-nums;
+  }
+  .ph-status-icons { display: flex; align-items: center; gap: 6px; }
+  .ph-ic { display: block; }
+
+  .ph-livedot {
+    display: inline-block;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #6967FB;
+    margin-right: 5px;
+    animation: livepulse 1.8s ease-out infinite;
+  }
+  @keyframes livepulse {
+    0%   { box-shadow: 0 0 0 0 rgba(105, 103, 251, 0.5); }
+    100% { box-shadow: 0 0 0 8px rgba(105, 103, 251, 0); }
+  }
+
+  .ph-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 18px 14px;
+    border-bottom: 1px solid #DCD5C8;
+    background: rgba(105, 103, 251, 0.06);
+  }
+  .ph-avatar {
+    width: 40px; height: 40px;
+    border-radius: 12px;
+    object-fit: cover;
+    flex-shrink: 0;
+    box-shadow: 0 6px 16px -6px rgba(105, 103, 251, 0.55);
+  }
+  .ph-id { display: flex; flex-direction: column; line-height: 1.2; flex: 1; }
+  .ph-name { font-weight: 600; font-size: 0.9rem; color: #1A1712; }
+  .ph-sub { display: flex; align-items: center; font-size: 0.72rem; color: #6B635A; }
+  .ph-timer { font-variant-numeric: tabular-nums; }
+
+  /* Mini waveform */
+  .wave { display: flex; align-items: center; gap: 3px; }
+  .ph-wave { height: 24px; }
+  .wave .bar {
+    width: 3px;
+    border-radius: 3px;
+    background: linear-gradient(180deg, #8785FC, #6967FB);
+    animation: wave 1.15s ease-in-out infinite;
+    animation-delay: calc(var(--i) * 110ms);
+  }
+  @keyframes wave {
+    0%, 100% { height: 18%; opacity: 0.7; }
+    50%      { height: 100%; opacity: 1; }
+  }
+
+  /* Conversation */
+  .ph-body {
+    position: relative;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 8px;
+    padding: 16px 14px 20px;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 44px);
+    mask-image: linear-gradient(to bottom, transparent 0, #000 44px);
+  }
+  .ph-tag {
+    align-self: center;
+    font-size: 0.64rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #B3AA9B;
+    margin-bottom: 4px;
+  }
+
+  .msg {
+    display: none;
+    max-width: 80%;
+    padding: 9px 13px;
+    font-size: 0.8rem;
+    line-height: 1.4;
+    border-radius: 16px;
+    will-change: transform, opacity, filter;
+  }
+  .msg--in {
+    align-self: flex-start;
+    background: #E7E1D5;
+    color: #1A1712;
+    border-bottom-left-radius: 5px;
+  }
+  .msg--ai {
+    align-self: flex-end;
+    background: #6967FB;
+    color: #FAF8F2;
+    border-bottom-right-radius: 5px;
+  }
+  .msg.show { display: block; animation: bubble 0.9s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+  /* Apparition « mousse » : montée douce + scale + flou qui se dissipe */
+  @keyframes bubble {
+    0%   { opacity: 0; transform: translateY(20px) scale(0.88); filter: blur(7px); }
+    55%  { opacity: 1; }
+    100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+  }
+
+  .typing {
+    display: none;
+    align-self: flex-end;
+    gap: 4px;
+    padding: 11px 14px;
+    background: #6967FB;
+    border-radius: 16px;
+    border-bottom-right-radius: 5px;
+  }
+  .typing.show { display: flex; }
+  .typing span {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: rgba(250, 248, 242, 0.85);
+    animation: typedot 1.5s ease-in-out infinite;
+  }
+  .typing span:nth-child(2) { animation-delay: 0.22s; }
+  .typing span:nth-child(3) { animation-delay: 0.44s; }
+  @keyframes typedot {
+    0%, 60%, 100% { transform: translateY(0); opacity: 0.45; }
+    30%           { transform: translateY(-4px); opacity: 1; }
+  }
+
+  @keyframes floaty {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-8px); }
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .phone-tilt { transform: rotateY(-6deg) rotateX(3deg); }
+  }
+  @media (max-width: 400px) {
+    .phone-stage { transform: scale(0.86); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .phone, .wave .bar, .ph-livedot, .msg, .typing span { animation: none !important; }
+    .wave .bar { height: 60%; }
+    .msg { display: block; }
+    .typing { display: none; }
+  }
+</style>
+
+<script>
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Heure réelle dans la barre de statut
+  const clock = document.querySelector('[data-clock]');
+  if (clock) {
+    const setClock = () => {
+      clock.textContent = new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+    };
+    setClock();
+    setInterval(setClock, 30000);
+  }
+
+  // Minuteur d'appel (piloté par la conversation, remis à zéro à chaque cycle)
+  const timer = document.querySelector('[data-timer]');
+  let callSeconds = 0;
+  const renderTimer = () => {
+    if (!timer) return;
+    const mm = String(Math.floor(callSeconds / 60)).padStart(2, '0');
+    const ss = String(callSeconds % 60).padStart(2, '0');
+    timer.textContent = `${mm}:${ss}`;
+  };
+  renderTimer();
+
+  // Parallaxe 2.5D : le téléphone suit la souris
+  const tilt = document.querySelector('[data-tilt]');
+  if (tilt && !reduce) {
+    const stage = tilt.closest('.phone-stage') || tilt.parentElement;
+    const baseY = -12, baseX = 5, rangeY = 18, rangeX = 10;
+    stage.addEventListener('pointermove', (e) => {
+      const r = stage.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width - 0.5;
+      const py = (e.clientY - r.top) / r.height - 0.5;
+      tilt.style.transform = `rotateY(${baseY + px * rangeY}deg) rotateX(${baseX - py * rangeX}deg)`;
+    });
+    stage.addEventListener('pointerleave', () => {
+      tilt.style.transform = `rotateY(${baseY}deg) rotateX(${baseX}deg)`;
+    });
+  }
+
+  // Conversation qui se déroule en boucle
+  const conv = document.querySelector('[data-conversation]');
+  if (conv && !reduce) {
+    const msgs = Array.from(conv.querySelectorAll('.msg'));
+    const typing = conv.querySelector('.typing');
+    const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+    let timerInt = null;
+
+    (async () => {
+      while (true) {
+        // nouvelle conversation : on repart de 00:00
+        callSeconds = 0;
+        renderTimer();
+        if (timerInt) clearInterval(timerInt);
+        timerInt = setInterval(() => { callSeconds++; renderTimer(); }, 1000);
+
+        msgs.forEach((m) => m.classList.remove('show'));
+        typing?.classList.remove('show');
+        await sleep(1200);
+        for (const m of msgs) {
+          const isAi = m.classList.contains('msg--ai');
+          if (isAi) {
+            typing?.classList.add('show');
+            await sleep(1200);
+            typing?.classList.remove('show');
+            await sleep(200);
+          }
+          m.classList.add('show');
+          await sleep(isAi ? 2000 : 1500);
+        }
+
+        // conversation terminée : le minuteur se fige, puis on recommence
+        clearInterval(timerInt);
+        timerInt = null;
+        await sleep(3600);
+      }
+    })();
+  }
+</script>

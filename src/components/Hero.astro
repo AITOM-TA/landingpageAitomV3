@@ -1,64 +1,54 @@
 ---
+import PhoneMock from './PhoneMock.astro';
 ---
 
 <section class="relative min-h-screen flex flex-col pt-[68px] overflow-hidden" aria-label="Héro">
-  <!-- Decorative circles (right, partially off-screen) -->
-  <div
-    class="absolute right-0 top-1/2 -translate-y-[55%] translate-x-[28%] w-[700px] h-[700px] pointer-events-none select-none"
-    aria-hidden="true"
-  >
-    <svg viewBox="0 0 700 700" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
-      <circle cx="350" cy="350" r="338" stroke="#6967FB" stroke-width="0.75" opacity="0.20"/>
-      <circle cx="350" cy="350" r="270" stroke="#1A1712" stroke-width="0.5" opacity="0.07"/>
-      <circle cx="350" cy="350" r="200" stroke="#6967FB" stroke-width="0.5" opacity="0.14"/>
-      <g class="arc-spin" style="transform-origin: 350px 350px">
-        <path
-          d="M350 12 A338 338 0 0 1 688 350"
-          stroke="#6967FB"
-          stroke-width="1.5"
-          stroke-linecap="round"
-          opacity="0.55"
-        />
-      </g>
-      <circle cx="350" cy="350" r="3" fill="#6967FB" opacity="0.5"/>
-    </svg>
-  </div>
 
   <!-- Main content -->
   <div class="flex-1 flex items-center relative z-10">
-    <div class="max-w-container mx-auto px-8 w-full py-8 lg:py-12">
-      <div class="max-w-[700px]">
+    <div class="max-w-container mx-auto px-8 w-full py-10 lg:py-12">
+      <div class="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
 
-        <!-- Label -->
-        <p class="text-xs font-sans font-semibold text-accent uppercase tracking-[0.14em] mb-5" data-animate>
-          Standard téléphonique IA
-        </p>
+        <!-- Texte -->
+        <div class="max-w-[560px]">
 
-        <!-- Headline -->
-        <h1 class="font-display font-bold text-hero text-ink mb-5" data-animate data-delay="1">
-          Un appel manqué,<br>c'est un client <em>perdu</em>.
-        </h1>
+          <!-- Label -->
+          <p class="text-xs font-sans font-semibold text-accent uppercase tracking-[0.14em] mb-5" data-animate>
+            Standard téléphonique IA
+          </p>
 
-        <!-- Subtitle -->
-        <p class="text-[17px] leading-[1.65] text-muted max-w-[520px] mb-8" data-animate data-delay="2">
-          Aitom répond à 100 % de vos appels, 24h/24, prend vos rendez-vous et qualifie vos clients, même quand vous êtes sur un chantier, en intervention ou déjà au téléphone.
-        </p>
+          <!-- Headline -->
+          <h1 class="font-display font-bold text-hero text-ink mb-5" data-animate data-delay="1">
+            Un appel manqué,<br>c'est un client <em>perdu</em>.
+          </h1>
 
-        <!-- CTAs -->
-        <div class="flex flex-wrap items-center gap-x-10 gap-y-5" data-animate data-delay="3">
-          <a
-            href="#contact"
-            class="btn-primary inline-block bg-accent text-bg text-sm font-semibold px-7 py-[14px] rounded"
-          >
-            Discuter d'un projet
-          </a>
-          <a
-            href="#projets"
-            class="btn-secondary inline-flex items-center gap-2 text-sm text-muted hover:text-ink transition-colors duration-300 ease-expo group"
-          >
-            <span class="btn-label">Voir les résultats</span>
-            <span class="inline-block group-hover:translate-x-2 transition-transform duration-300 ease-expo">→</span>
-          </a>
+          <!-- Subtitle -->
+          <p class="text-[17px] leading-[1.65] text-muted max-w-[520px] mb-8" data-animate data-delay="2">
+            Aitom répond à 100 % de vos appels, 24h/24, prend vos rendez-vous et renseigne vos clients, même quand vous êtes occupé, en rendez-vous ou déjà au téléphone.
+          </p>
+
+          <!-- CTAs -->
+          <div class="flex flex-wrap items-center gap-x-10 gap-y-5" data-animate data-delay="3">
+            <a
+              href="#contact"
+              class="btn-primary inline-block bg-accent text-bg text-sm font-semibold px-7 py-[14px] rounded"
+            >
+              Discuter d'un projet
+            </a>
+            <a
+              href="#projets"
+              class="btn-secondary inline-flex items-center gap-2 text-sm text-muted hover:text-ink transition-colors duration-300 ease-expo group"
+            >
+              <span class="btn-label">Voir les résultats</span>
+              <span class="inline-block group-hover:translate-x-2 transition-transform duration-300 ease-expo">→</span>
+            </a>
+          </div>
+
+        </div>
+
+        <!-- Mockup téléphone -->
+        <div class="flex justify-center lg:justify-end" data-animate data-delay="2">
+          <PhoneMock />
         </div>
 
       </div>

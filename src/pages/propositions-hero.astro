@@ -1,0 +1,671 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+// Texte du héro, identique pour chaque proposition (seul le visuel change)
+const heroText = {
+  label: 'Standard téléphonique IA',
+  subtitle:
+    "Aitom répond à 100 % de vos appels, 24h/24, prend vos rendez-vous et qualifie vos clients, même quand vous êtes sur un chantier ou déjà au téléphone.",
+};
+
+const options = [
+  { n: '01', name: 'Carte « appel en direct »', note: 'Le plus concret — montre le produit en action.' },
+  { n: '02', name: 'Ondes sonar pulsantes', note: 'Le plus raccord avec la DA actuelle.' },
+  { n: '03', name: 'Forme d’onde vocale', note: 'Lecture immédiate « voix ».' },
+  { n: '04', name: 'Hybride node + ondes + waveform', note: 'Le plus riche visuellement.' },
+  { n: '05', name: 'Mockup téléphone + conversation IA', note: 'Transcription en direct, bulles qui s’enchaînent.' },
+];
+---
+
+<Layout title="Propositions — visuel héro (page de travail)">
+  <!-- Barre de travail -->
+  <div class="work-bar">
+    <span class="font-display font-bold text-ink">Aitom · page de travail</span>
+    <span class="text-muted text-sm">4 propositions de visuel héro — non liée au site</span>
+  </div>
+
+  <main class="pt-[44px]">
+
+    {options.map((opt) => (
+      <section class="variant">
+        <span class="variant-badge">Option {opt.n} · {opt.name}</span>
+        <span class="variant-note">{opt.note}</span>
+
+        <div class="max-w-container mx-auto px-8 w-full grid lg:grid-cols-2 gap-12 items-center">
+          <!-- Colonne texte (identique partout) -->
+          <div class="max-w-[560px]">
+            <p class="text-xs font-sans font-semibold text-accent uppercase tracking-[0.14em] mb-5">{heroText.label}</p>
+            <h1 class="font-display font-bold text-hero text-ink mb-5">
+              Un appel manqué,<br>c'est un client <em>perdu</em>.
+            </h1>
+            <p class="text-[17px] leading-[1.65] text-muted max-w-[480px] mb-8">{heroText.subtitle}</p>
+            <div class="flex flex-wrap items-center gap-x-8 gap-y-4">
+              <span class="btn-primary inline-block bg-accent text-bg text-sm font-semibold px-7 py-[14px] rounded">Discuter d'un projet</span>
+              <span class="inline-flex items-center gap-2 text-sm text-muted">Voir les résultats <span>→</span></span>
+            </div>
+          </div>
+
+          <!-- Colonne visuel (change selon l'option) -->
+          <div class="visual-stage">
+
+            {opt.n === '01' && (
+              <div class="relative w-full h-full flex items-center justify-center">
+                <div class="sonar sonar--soft" aria-hidden="true">
+                  <span class="ring"></span><span class="ring"></span><span class="ring"></span>
+                </div>
+                <div class="call-card">
+                  <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center gap-2.5">
+                      <span class="live-dot"></span>
+                      <span class="text-sm font-semibold text-ink">Appel entrant</span>
+                    </div>
+                    <span class="text-xs text-muted tabular">00:12</span>
+                  </div>
+                  <p class="text-xs text-muted mb-4">Aitom · en ligne</p>
+                  <div class="wave wave--sm mb-5" aria-hidden="true">
+                    {Array.from({ length: 9 }).map((_, i) => (
+                      <span class="bar" style={`--i:${i}`}></span>
+                    ))}
+                  </div>
+                  <p class="text-sm text-ink leading-relaxed mb-1">
+                    « Bonjour, cabinet du Dr Martin,<span class="caret"></span> »
+                  </p>
+                  <div class="border-t border-border my-4"></div>
+                  <span class="rdv-badge">✓ Rendez-vous pris · jeudi 14h</span>
+                </div>
+              </div>
+            )}
+
+            {opt.n === '02' && (
+              <div class="sonar sonar--big" aria-hidden="true">
+                <span class="ring"></span><span class="ring"></span>
+                <span class="ring"></span><span class="ring"></span>
+                <span class="node"></span>
+              </div>
+            )}
+
+            {opt.n === '03' && (
+              <div class="wave wave--big" aria-hidden="true">
+                {Array.from({ length: 15 }).map((_, i) => (
+                  <span class="bar" style={`--i:${i}`}></span>
+                ))}
+              </div>
+            )}
+
+            {opt.n === '04' && (
+              <div class="hybrid" aria-hidden="true">
+                <div class="sonar sonar--big">
+                  <span class="ring"></span><span class="ring"></span><span class="ring"></span>
+                </div>
+                <div class="hybrid-core">
+                  <div class="wave wave--mini">
+                    {Array.from({ length: 7 }).map((_, i) => (
+                      <span class="bar" style={`--i:${i}`}></span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {opt.n === '05' && (
+              <div class="phone-stage" aria-hidden="true">
+                <div class="phone-glow"></div>
+                <div class="phone-tilt" data-tilt>
+                  <div class="phone">
+                    <span class="phone-btn phone-btn--mute"></span>
+                    <span class="phone-btn phone-btn--vol-up"></span>
+                    <span class="phone-btn phone-btn--vol-dn"></span>
+                    <span class="phone-btn phone-btn--power"></span>
+                    <div class="phone-island"></div>
+                    <div class="phone-screen">
+                      <!-- Barre de statut -->
+                      <div class="ph-statusbar">
+                        <span>9:41</span>
+                        <span class="ph-status-icons">
+                          <span class="ph-signal"></span>
+                          <span class="ph-battery"></span>
+                        </span>
+                      </div>
+                      <!-- En-tête d'appel -->
+                      <div class="ph-header">
+                        <img src="/logo-icon.png" alt="Aitom" class="ph-avatar" />
+                        <div class="ph-id">
+                          <span class="ph-name">Aitom</span>
+                          <span class="ph-sub"><span class="ph-livedot"></span>Appel en cours · <span class="ph-timer" data-timer>00:00</span></span>
+                        </div>
+                        <div class="wave wave--mini ph-wave">
+                          {Array.from({ length: 5 }).map((_, i) => (
+                            <span class="bar" style={`--i:${i}`}></span>
+                          ))}
+                        </div>
+                      </div>
+                      <!-- Conversation -->
+                      <div class="ph-body" data-conversation>
+                        <span class="ph-tag">Transcription en direct</span>
+                        <div class="msg msg--ai">Plomberie Martin, bonjour ! Je suis l'assistant Aitom. Comment puis-je vous aider ?</div>
+                        <div class="msg msg--in">Bonjour, j'ai une fuite sous l'évier. Vous pourriez passer aujourd'hui ?</div>
+                        <div class="msg msg--ai">Bien sûr. C'est une urgence, ou ça peut attendre l'après-midi ?</div>
+                        <div class="msg msg--in">Cet après-midi, c'est parfait.</div>
+                        <div class="msg msg--ai">Je vous propose un créneau à 16h30. Ça vous convient ?</div>
+                        <div class="msg msg--in">Oui, très bien.</div>
+                        <div class="msg msg--ai">Parfait, c'est noté ✓ Rendez-vous confirmé à 16h30. Belle journée !</div>
+                        <div class="typing"><span></span><span></span><span></span></div>
+                      </div>
+                    </div>
+                    <div class="phone-gloss"></div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+          </div>
+        </div>
+      </section>
+    ))}
+
+  </main>
+</Layout>
+
+<style>
+  .work-bar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 200;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0 1.5rem;
+    background: rgba(250, 248, 242, 0.9);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid #DCD5C8;
+    font-size: 0.85rem;
+  }
+
+  .variant {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+    border-bottom: 1px solid #DCD5C8;
+    padding: 5rem 0;
+  }
+
+  .variant-badge {
+    position: absolute;
+    top: 2rem; left: 2rem;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #6967FB;
+    background: rgba(105, 103, 251, 0.08);
+    border: 1px solid rgba(105, 103, 251, 0.25);
+    padding: 5px 12px;
+    border-radius: 999px;
+  }
+
+  .variant-note {
+    position: absolute;
+    top: 2.1rem; right: 2rem;
+    font-size: 0.78rem;
+    color: #6B635A;
+  }
+
+  .visual-stage {
+    position: relative;
+    height: 440px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* ── Ondes sonar ── */
+  .sonar {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+  }
+
+  .sonar .ring {
+    position: absolute;
+    width: 140px;
+    height: 140px;
+    border: 1px solid #6967FB;
+    border-radius: 50%;
+    opacity: 0;
+    animation: sonar 3.4s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+  }
+  .sonar .ring:nth-child(2) { animation-delay: 0.85s; }
+  .sonar .ring:nth-child(3) { animation-delay: 1.7s; }
+  .sonar .ring:nth-child(4) { animation-delay: 2.55s; }
+
+  .sonar--soft .ring { border-color: rgba(105, 103, 251, 0.45); }
+  .sonar--soft { position: absolute; inset: 0; }
+
+  .sonar .node {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: #6967FB;
+    box-shadow: 0 0 0 8px rgba(105, 103, 251, 0.14);
+    animation: nodepulse 2.2s ease-in-out infinite;
+  }
+
+  @keyframes sonar {
+    0%   { transform: scale(0.35); opacity: 0.7; }
+    100% { transform: scale(3.6); opacity: 0; }
+  }
+  @keyframes nodepulse {
+    0%, 100% { transform: scale(1); }
+    50%      { transform: scale(1.18); }
+  }
+
+  /* ── Forme d'onde vocale ── */
+  .wave {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+  .wave .bar {
+    width: 6px;
+    border-radius: 3px;
+    background: linear-gradient(180deg, #8785FC, #6967FB);
+    animation: wave 1.15s ease-in-out infinite;
+    animation-delay: calc(var(--i) * 90ms);
+  }
+  .wave--big { height: 200px; }
+  .wave--big .bar { width: 8px; }
+  .wave--sm  { height: 56px; }
+  .wave--sm .bar { width: 5px; }
+  .wave--mini { height: 44px; }
+  .wave--mini .bar { width: 4px; }
+
+  @keyframes wave {
+    0%, 100% { height: 16%; opacity: 0.7; }
+    50%      { height: 100%; opacity: 1; }
+  }
+  .wave--big .bar { height: 30px; }      /* base for % scaling fallback */
+
+  /* ── Carte appel en direct ── */
+  .call-card {
+    position: relative;
+    z-index: 2;
+    width: min(390px, 100%);
+    background: #FAF8F2;
+    border: 1px solid #DCD5C8;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 34px 80px -34px rgba(26, 23, 18, 0.35);
+    animation: floaty 5s ease-in-out infinite;
+  }
+  @keyframes floaty {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-8px); }
+  }
+
+  .live-dot {
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    background: #6967FB;
+    box-shadow: 0 0 0 0 rgba(105, 103, 251, 0.5);
+    animation: livepulse 1.8s ease-out infinite;
+  }
+  @keyframes livepulse {
+    0%   { box-shadow: 0 0 0 0 rgba(105, 103, 251, 0.5); }
+    100% { box-shadow: 0 0 0 10px rgba(105, 103, 251, 0); }
+  }
+
+  .tabular { font-variant-numeric: tabular-nums; }
+
+  .caret {
+    display: inline-block;
+    width: 1px;
+    height: 1em;
+    margin-left: 1px;
+    background: #6967FB;
+    vertical-align: text-bottom;
+    animation: blink 1s step-end infinite;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  .rdv-badge {
+    display: inline-block;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #6967FB;
+    background: rgba(105, 103, 251, 0.1);
+    border: 1px solid rgba(105, 103, 251, 0.25);
+    padding: 6px 12px;
+    border-radius: 999px;
+  }
+
+  /* ── Hybride ── */
+  .hybrid {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .hybrid-core {
+    position: relative;
+    z-index: 2;
+    width: 96px; height: 96px;
+    border-radius: 50%;
+    background: #FAF8F2;
+    border: 1px solid #DCD5C8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 20px 50px -24px rgba(105, 103, 251, 0.5);
+  }
+
+  /* ── Mockup téléphone + conversation IA (2.5D) ── */
+  .phone-stage {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    perspective: 1400px;
+  }
+  .phone-glow {
+    position: absolute;
+    width: 360px; height: 360px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(105, 103, 251, 0.38), rgba(105, 103, 251, 0) 70%);
+    filter: blur(46px);
+    z-index: 0;
+  }
+  .phone-tilt {
+    position: relative;
+    z-index: 1;
+    transform-style: preserve-3d;
+    transform: rotateY(-12deg) rotateX(5deg);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .phone {
+    position: relative;
+    width: 300px;
+    height: 612px;
+    background: linear-gradient(155deg, #2a2620, #15120e 60%);
+    border-radius: 50px;
+    padding: 13px;
+    box-shadow:
+      0 2px 0 rgba(255, 255, 255, 0.12) inset,
+      0 50px 90px -30px rgba(26, 23, 18, 0.6),
+      0 20px 40px -20px rgba(105, 103, 251, 0.35);
+    animation: floaty 6.5s ease-in-out infinite;
+    transform-style: preserve-3d;
+  }
+
+  /* Boutons latéraux */
+  .phone-btn {
+    position: absolute;
+    background: #0e0c09;
+    border-radius: 3px;
+  }
+  .phone-btn--mute   { left: -2px; top: 116px; width: 3px; height: 26px; }
+  .phone-btn--vol-up { left: -2px; top: 160px; width: 3px; height: 46px; }
+  .phone-btn--vol-dn { left: -2px; top: 218px; width: 3px; height: 46px; }
+  .phone-btn--power  { right: -2px; top: 176px; width: 3px; height: 64px; }
+
+  /* Dynamic Island */
+  .phone-island {
+    position: absolute;
+    top: 26px; left: 50%;
+    transform: translateX(-50%);
+    width: 92px; height: 26px;
+    background: #050403;
+    border-radius: 14px;
+    z-index: 4;
+  }
+
+  /* Brillance d'écran */
+  .phone-gloss {
+    position: absolute;
+    inset: 13px;
+    border-radius: 38px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0) 38%);
+    pointer-events: none;
+    z-index: 5;
+  }
+
+  .phone-screen {
+    position: relative;
+    width: 100%; height: 100%;
+    background: #FAF8F2;
+    border-radius: 38px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Barre de statut */
+  .ph-statusbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 26px 4px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #1A1712;
+  }
+  .ph-status-icons { display: flex; align-items: center; gap: 6px; }
+  .ph-signal {
+    width: 16px; height: 10px;
+    background:
+      linear-gradient(to top, #1A1712 0%, #1A1712 100%) no-repeat;
+    -webkit-mask: repeating-linear-gradient(to right, #000 0 3px, transparent 3px 5px);
+    mask: repeating-linear-gradient(to right, #000 0 3px, transparent 3px 5px);
+    border-radius: 1px;
+  }
+  .ph-battery {
+    width: 22px; height: 11px;
+    border: 1.5px solid #1A1712;
+    border-radius: 3px;
+    position: relative;
+  }
+  .ph-battery::before {
+    content: '';
+    position: absolute;
+    inset: 1.5px;
+    width: 70%;
+    background: #1A1712;
+    border-radius: 1px;
+  }
+  .ph-battery::after {
+    content: '';
+    position: absolute;
+    right: -3px; top: 3px;
+    width: 2px; height: 5px;
+    background: #1A1712;
+    border-radius: 0 1px 1px 0;
+  }
+
+  .ph-livedot {
+    display: inline-block;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #6967FB;
+    margin-right: 5px;
+    animation: livepulse 1.8s ease-out infinite;
+  }
+
+  .ph-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 18px 14px;
+    border-bottom: 1px solid #DCD5C8;
+    background: rgba(105, 103, 251, 0.06);
+  }
+  .ph-avatar {
+    width: 40px; height: 40px;
+    border-radius: 12px;
+    object-fit: cover;
+    flex-shrink: 0;
+    box-shadow: 0 6px 16px -6px rgba(105, 103, 251, 0.55);
+  }
+  .ph-id { display: flex; flex-direction: column; line-height: 1.2; flex: 1; }
+  .ph-name { font-weight: 600; font-size: 0.9rem; color: #1A1712; }
+  .ph-sub { font-size: 0.72rem; color: #6B635A; }
+  .ph-timer { font-variant-numeric: tabular-nums; }
+  .ph-wave { height: 24px; }
+  .ph-wave .bar { width: 3px; }
+
+  .ph-body {
+    position: relative;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 8px;
+    padding: 16px 14px 20px;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 44px);
+    mask-image: linear-gradient(to bottom, transparent 0, #000 44px);
+  }
+  .ph-tag {
+    align-self: center;
+    font-size: 0.64rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #B3AA9B;
+    margin-bottom: 4px;
+  }
+
+  .msg {
+    display: none;
+    max-width: 80%;
+    padding: 9px 13px;
+    font-size: 0.8rem;
+    line-height: 1.4;
+    border-radius: 16px;
+  }
+  .msg.show { animation: bubble 0.7s cubic-bezier(0.22, 1, 0.36, 1) both; }
+  .msg--in {
+    display: none;
+    align-self: flex-start;
+    background: #E7E1D5;
+    color: #1A1712;
+    border-bottom-left-radius: 5px;
+  }
+  .msg--ai {
+    align-self: flex-end;
+    background: #6967FB;
+    color: #FAF8F2;
+    border-bottom-right-radius: 5px;
+  }
+  .msg.show { display: block; }
+  @keyframes bubble {
+    from { opacity: 0; transform: translateY(16px) scale(0.94); }
+    60%  { opacity: 1; }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .typing {
+    display: none;
+    align-self: flex-end;
+    gap: 4px;
+    padding: 11px 14px;
+    background: #6967FB;
+    border-radius: 16px;
+    border-bottom-right-radius: 5px;
+  }
+  .typing.show { display: flex; }
+  .typing span {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: rgba(250, 248, 242, 0.85);
+    animation: typedot 1.5s ease-in-out infinite;
+  }
+  .typing span:nth-child(2) { animation-delay: 0.22s; }
+  .typing span:nth-child(3) { animation-delay: 0.44s; }
+  @keyframes typedot {
+    0%, 60%, 100% { transform: translateY(0); opacity: 0.45; }
+    30%           { transform: translateY(-4px); opacity: 1; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sonar .ring, .sonar .node, .wave .bar,
+    .call-card, .live-dot, .caret,
+    .msg, .typing span, .phone, .ph-livedot {
+      animation: none !important;
+    }
+    .sonar .ring { opacity: 0.3; }
+    .wave .bar { height: 60%; }
+    .msg, .msg--in { display: block; }
+    .typing { display: none; }
+  }
+</style>
+
+<script>
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Minuteur du mockup téléphone
+  const timer = document.querySelector('[data-timer]');
+  if (timer && !reduce) {
+    let s = 0;
+    setInterval(() => {
+      s = (s + 1) % 3600;
+      const mm = String(Math.floor(s / 60)).padStart(2, '0');
+      const ss = String(s % 60).padStart(2, '0');
+      timer.textContent = `${mm}:${ss}`;
+    }, 1000);
+  }
+
+  // Parallaxe 2.5D : le téléphone suit la souris
+  const tilt = document.querySelector('[data-tilt]');
+  if (tilt && !reduce) {
+    const stage = tilt.closest('.visual-stage') || tilt.parentElement;
+    const baseY = -12, baseX = 5, rangeY = 18, rangeX = 10;
+    stage.addEventListener('pointermove', (e) => {
+      const r = stage.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width - 0.5;
+      const py = (e.clientY - r.top) / r.height - 0.5;
+      tilt.style.transform = `rotateY(${baseY + px * rangeY}deg) rotateX(${baseX - py * rangeX}deg)`;
+    });
+    stage.addEventListener('pointerleave', () => {
+      tilt.style.transform = `rotateY(${baseY}deg) rotateX(${baseX}deg)`;
+    });
+  }
+
+  // Conversation IA qui se déroule en boucle
+  const conv = document.querySelector('[data-conversation]');
+  if (conv && !reduce) {
+    const msgs = Array.from(conv.querySelectorAll('.msg'));
+    const typing = conv.querySelector('.typing');
+    const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+    (async () => {
+      while (true) {
+        msgs.forEach((m) => m.classList.remove('show'));
+        typing?.classList.remove('show');
+        await sleep(1200);
+        for (const m of msgs) {
+          const isAi = m.classList.contains('msg--ai');
+          if (isAi) {
+            typing?.classList.add('show');
+            await sleep(1200);
+            typing?.classList.remove('show');
+            await sleep(180);
+          }
+          m.classList.add('show');
+          // pause de lecture proportionnelle à la longueur du message
+          await sleep(isAi ? 2000 : 1500);
+        }
+        await sleep(3600);
+      }
+    })();
+  }
+</script>

@@ -29,17 +29,41 @@
             <span class="text-accent">→</span> Opérationnel en quelques jours si vous lancez
           </li>
         </ul>
+
+        <!-- Carte fondateur -->
+        <div class="founder mt-12 pt-8 border-t border-border flex items-center gap-4" data-animate data-delay="3">
+          <img
+            src="/founder.jpg"
+            alt="Tanguy, fondateur d'Aitom"
+            width="600"
+            height="900"
+            loading="lazy"
+            decoding="async"
+            class="founder-photo"
+          />
+          <div>
+            <div class="flex items-center gap-2">
+              <p class="text-sm font-display font-semibold text-ink leading-tight">Tanguy</p>
+              <a
+                href="https://www.linkedin.com/in/tanguy-auguet/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="founder-linkedin"
+                aria-label="Profil LinkedIn de Tanguy"
+              >
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.35V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM7.12 20.45H3.55V9h3.57v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/>
+                </svg>
+              </a>
+            </div>
+            <p class="text-xs text-muted">Fondateur d'Aitom</p>
+          </div>
+        </div>
       </div>
 
       <!-- Right: form -->
       <div data-animate data-delay="2">
-        <!-- NOTE: configurez l'endpoint de réception (Formspree, Vercel Forms, etc.)
-             en remplaçant l'attribut `action` ci-dessous. -->
-        <form
-          class="contact-form flex flex-col gap-5"
-          action="#"
-          method="POST"
-        >
+        <form id="audit-form" class="contact-form flex flex-col gap-5">
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
             <div class="field">
               <label for="firstname">Prénom</label>
@@ -73,6 +97,8 @@
           <p class="text-xs text-faint mt-1">
             Pas un robot au bout du fil pour vous : un humain vous rappelle sous 24h pour planifier votre audit.
           </p>
+
+          <p class="form-status" data-status aria-live="polite"></p>
         </form>
 
         <!-- Alternative contact -->
@@ -132,4 +158,89 @@
     background-color: #FAF8F2;
     box-shadow: 0 0 0 3px rgba(105, 103, 251, 0.12);
   }
+
+  .form-status {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    min-height: 1em;
+    margin-top: 0.25rem;
+  }
+  .form-status[data-type='success'] { color: #2f9e6e; }
+  .form-status[data-type='error']   { color: #c4453b; }
+
+  .founder-linkedin {
+    display: inline-flex;
+    color: #B3AA9B;
+    transition: color 200ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .founder-linkedin:hover { color: #6967FB; }
+  .founder-linkedin svg { width: 15px; height: 15px; display: block; }
+
+  .founder-photo {
+    width: 76px;
+    height: 76px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center 12%;
+    flex-shrink: 0;
+    border: 2px solid #FAF8F2;
+    box-shadow:
+      0 0 0 1px #DCD5C8,
+      0 10px 24px -10px rgba(26, 23, 18, 0.45);
+  }
 </style>
+
+<script>
+  const form = document.getElementById('audit-form') as HTMLFormElement | null;
+
+  if (form) {
+    // Webhook n8n — déclenché à chaque soumission du formulaire
+    const WEBHOOK_URL = 'https://n8n-u41084.vm.elestio.app/webhook/e6dde53f-afd3-49d2-bd03-f2b9df7060c2';
+    const status = form.querySelector('[data-status]') as HTMLElement | null;
+    const button = form.querySelector('button[type="submit"]') as HTMLButtonElement | null;
+
+    const showStatus = (msg: string, type: string) => {
+      if (!status) return;
+      status.textContent = msg;
+      status.dataset.type = type;
+    };
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const data = new FormData(form);
+      const payload = {
+        first_name: String(data.get('firstname') || '').trim(),
+        last_name: String(data.get('lastname') || '').trim(),
+        email: String(data.get('email') || '').trim(),
+        phone: String(data.get('phone') || '').trim(),
+        message: String(data.get('activity') || '').trim(),
+        submitted_at: new Date().toISOString(),
+        source: 'landing-aitom',
+        page: window.location.href,
+      };
+
+      const originalLabel = button?.textContent || 'Réserver mon audit gratuit';
+      if (button) { button.disabled = true; button.textContent = 'Envoi…'; }
+      showStatus('', '');
+
+      try {
+        const res = await fetch(WEBHOOK_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+        form.reset();
+        showStatus('Merci ! Votre demande est bien reçue. On vous rappelle sous 24h.', 'success');
+        if (button) button.textContent = 'Demande envoyée ✓';
+      } catch (err) {
+        console.error('Envoi du webhook échoué :', err);
+        showStatus('Une erreur est survenue. Réessayez ou écrivez-nous à contact@aitom.fr.', 'error');
+        if (button) { button.disabled = false; button.textContent = originalLabel; }
+      }
+    });
+  }
+</script>
