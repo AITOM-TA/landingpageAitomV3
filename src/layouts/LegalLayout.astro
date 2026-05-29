@@ -1,0 +1,124 @@
+---
+import Layout from './Layout.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<Layout title={`${title} · Aitom`} description={description}>
+  <!-- Barre supérieure minimale -->
+  <header class="border-b border-border">
+    <div class="max-w-container mx-auto px-8 h-[68px] flex items-center justify-between">
+      <a
+        href="/"
+        class="flex items-center gap-2.5 hover:opacity-80 transition-opacity duration-200"
+        aria-label="Aitom, accueil"
+      >
+        <img src="/logo-icon.png" alt="" class="h-6 w-6" />
+        <span class="font-display font-bold text-ink text-lg tracking-[-0.02em] leading-none">Aitom</span>
+      </a>
+      <a
+        href="/"
+        class="group inline-flex items-center gap-2 text-sm text-muted hover:text-ink transition-colors duration-300 ease-expo"
+      >
+        <span class="inline-block group-hover:-translate-x-1 transition-transform duration-300 ease-expo">←</span>
+        Retour à l'accueil
+      </a>
+    </div>
+  </header>
+
+  <main class="max-w-container mx-auto px-8 py-section-sm">
+    <div class="max-w-[760px]">
+      <h1 class="font-display font-bold text-ink text-[clamp(2rem,4vw,3rem)] tracking-[-0.03em] leading-[1.08] mb-10">
+        {title}
+      </h1>
+      <div class="prose">
+        <slot />
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  .prose :global(h2) {
+    font-family: 'Figtree', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 1.3rem;
+    letter-spacing: -0.01em;
+    color: #1A1712;
+    margin-top: 2.75rem;
+    margin-bottom: 0.9rem;
+  }
+
+  .prose :global(p) {
+    color: #6B635A;
+    font-size: 1rem;
+    line-height: 1.75;
+    margin-bottom: 1.1rem;
+  }
+
+  .prose :global(.lead) {
+    color: #1A1712;
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    margin-bottom: 2rem;
+  }
+
+  .prose :global(.meta) {
+    color: #B3AA9B;
+    font-size: 0.8125rem;
+    letter-spacing: 0.02em;
+    margin-bottom: 2.5rem;
+  }
+
+  .prose :global(a) {
+    color: #6967FB;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    text-decoration-thickness: 1px;
+    transition: opacity 200ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .prose :global(a:hover) {
+    opacity: 0.65;
+  }
+
+  .prose :global(strong) {
+    color: #1A1712;
+    font-weight: 600;
+  }
+
+  .prose :global(ul) {
+    list-style: none;
+    margin-bottom: 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+
+  .prose :global(li) {
+    position: relative;
+    padding-left: 1.25rem;
+    color: #6B635A;
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  .prose :global(li)::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.6em;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #6967FB;
+  }
+</style>
