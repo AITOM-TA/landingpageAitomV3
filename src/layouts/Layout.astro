@@ -5,7 +5,7 @@ interface Props {
 }
 
 const {
-  title = 'Aitom — Le standard téléphonique IA qui ne rate aucun appel',
+  title = 'Aitom · Le standard téléphonique IA qui ne rate aucun appel',
   description = "Aitom répond à 100 % de vos appels 24h/24, prend vos rendez-vous et qualifie vos clients. Le standard téléphonique IA pour les artisans, cabinets et PME de services.",
 } = Astro.props;
 
@@ -89,7 +89,7 @@ const siteUrl = 'https://aitom.fr';
   }
 
   ::selection {
-    background: #0A7C84;
+    background: #6967FB;
     color: #FAF8F2;
   }
 
@@ -178,7 +178,7 @@ const siteUrl = 'https://aitom.fr';
 
   .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 28px rgba(10, 124, 132, 0.28);
+    box-shadow: 0 8px 28px rgba(105, 103, 251, 0.28);
   }
 
   .btn-primary:hover::before {
@@ -219,9 +219,33 @@ const siteUrl = 'https://aitom.fr';
   [id] {
     scroll-margin-top: 80px;
   }
+
+  /* Lenis (inertia smooth scroll) — overrides native smooth when active */
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+
+  .lenis.lenis-smooth iframe {
+    pointer-events: none;
+  }
 </style>
 
 <script>
+  import Lenis from 'lenis';
+
   // Scroll animations
   const observer = new IntersectionObserver(
     (entries) => {
@@ -235,4 +259,21 @@ const siteUrl = 'https://aitom.fr';
   );
 
   document.querySelectorAll('[data-animate]').forEach((el) => observer.observe(el));
+
+  // Smooth inertia scrolling — skipped when the user prefers reduced motion
+  // (native CSS `scroll-smooth` on <html> then handles anchor jumps as a fallback).
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const lenis = new Lenis({
+      duration: 1.1,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      anchors: { offset: -80 }, // clears the 68px fixed nav
+    });
+
+    const raf = (time) => {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    };
+    requestAnimationFrame(raf);
+  }
 </script>

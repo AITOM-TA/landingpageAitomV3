@@ -1,16 +1,16 @@
 ---
-const features = [
+const secondary = [
   {
-    title: 'Tableau de bord',
-    description: "Appels reçus, rendez-vous pris, temps gagné — l'essentiel en un coup d'œil.",
-  },
-  {
+    src: '/app/historique.png',
+    alt: "Historique des appels dans l'application Aitom : liste complète des appels avec date, durée et numéros.",
     title: 'Historique des appels',
-    description: 'Chaque appel enregistré, horodaté et accessible à tout moment.',
+    description: 'Chaque appel reçu, horodaté et accessible à tout moment.',
   },
   {
-    title: 'Transcriptions',
-    description: "Le résumé écrit de chaque conversation, pour rappeler en connaissant déjà le besoin.",
+    src: '/app/transcription.png',
+    alt: "Détail d'une conversation dans Aitom : lecteur audio, transcription, résumé et informations de l'appel.",
+    title: 'Transcriptions & résumés',
+    description: "L'enregistrement, le résumé écrit et le motif de chaque appel.",
   },
 ];
 ---
@@ -29,24 +29,42 @@ const features = [
       </p>
     </div>
 
-    <!-- Main app preview placeholder -->
-    <div class="app-frame" data-animate>
+    <!-- Featured: dashboard -->
+    <figure class="app-frame" data-animate>
       <div class="app-chrome" aria-hidden="true">
         <span class="dot"></span><span class="dot"></span><span class="dot"></span>
       </div>
-      <div class="app-screen">
-        <span class="app-placeholder-label">Aperçu de l'application — bientôt disponible</span>
-      </div>
-    </div>
+      <img
+        src="/app/dashboard.png"
+        alt="Tableau de bord Aitom : nombre d'appels traités, durée totale, durée moyenne et graphique des appels quotidiens."
+        width="1920"
+        height="1080"
+        loading="lazy"
+        decoding="async"
+        class="app-img"
+      />
+    </figure>
+    <figcaption class="text-sm text-muted mt-4 max-w-[520px]" data-animate>
+      <span class="text-ink font-medium">Tableau de bord.</span> Appels reçus, durée des conversations, activité du jour : l'essentiel en un coup d'œil.
+    </figcaption>
 
-    <!-- Feature placeholders -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-border mt-px">
-      {features.map((feature, i) => (
-        <div class="feature-card bg-bg p-8 md:p-10" data-animate data-delay={String((i % 3) + 1)}>
-          <!-- Thumbnail placeholder -->
-          <div class="thumb-placeholder mb-6" aria-hidden="true"></div>
-          <h3 class="font-display font-bold text-lg text-ink mb-2">{feature.title}</h3>
-          <p class="text-sm text-muted leading-relaxed">{feature.description}</p>
+    <!-- Secondary screens -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-border mt-16">
+      {secondary.map((shot, i) => (
+        <div class="shot-card bg-bg p-6 md:p-8" data-animate data-delay={String((i % 2) + 1)}>
+          <div class="shot-frame">
+            <img
+              src={shot.src}
+              alt={shot.alt}
+              width="1920"
+              height="1080"
+              loading="lazy"
+              decoding="async"
+              class="app-img"
+            />
+          </div>
+          <h3 class="font-display font-bold text-lg text-ink mt-6 mb-2">{shot.title}</h3>
+          <p class="text-sm text-muted leading-relaxed">{shot.description}</p>
         </div>
       ))}
     </div>
@@ -61,6 +79,7 @@ const features = [
     border-radius: 8px;
     overflow: hidden;
     background-color: #F1EDE4;
+    box-shadow: 0 24px 60px -28px rgba(26, 23, 18, 0.22);
   }
 
   .app-chrome {
@@ -80,34 +99,25 @@ const features = [
     display: inline-block;
   }
 
-  .app-screen {
-    aspect-ratio: 16 / 9;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-image: linear-gradient(135deg, #F1EDE4 0%, #FAF8F2 100%);
+  .app-img {
+    display: block;
+    width: 100%;
+    height: auto;
   }
 
-  .app-placeholder-label {
-    font-size: 0.8125rem;
-    letter-spacing: 0.04em;
-    color: #B3AA9B;
-  }
-
-  /* Feature thumbnail placeholders */
-  .feature-card {
+  /* Secondary screenshot cards */
+  .shot-card {
     transition: background-color 200ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  .feature-card:hover {
+  .shot-card:hover {
     background-color: #F1EDE4;
   }
 
-  .thumb-placeholder {
-    aspect-ratio: 4 / 3;
-    border-radius: 4px;
+  .shot-frame {
     border: 1px solid #DCD5C8;
-    background-image:
-      linear-gradient(135deg, #F1EDE4 0%, #E7E1D5 100%);
+    border-radius: 6px;
+    overflow: hidden;
+    background-color: #FAF8F2;
   }
 </style>

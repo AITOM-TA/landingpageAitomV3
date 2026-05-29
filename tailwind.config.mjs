@@ -12,7 +12,10 @@ export default {
       ink: '#1A1712',
       muted: '#6B635A',
       faint: '#B3AA9B',
-      accent: '#0A7C84',
+      accent: '#6967FB',
+      'accent-2': '#8785FC',
+      'accent-3': '#A5A4FD',
+      'accent-4': '#C3C2FD',
     },
     fontFamily: {
       display: ['Figtree', 'system-ui', 'sans-serif'],
