@@ -23,6 +23,15 @@ const siteUrl = 'https://aitom.fr';
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="canonical" href={siteUrl} />
 
+    <!-- Google tag (gtag.js) — GA4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YEXF5GRC6F" is:inline></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-YEXF5GRC6F');
+    </script>
+
     <!-- Primary meta -->
     <title>{title}</title>
     <meta name="description" content={description} />
