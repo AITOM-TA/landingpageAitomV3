@@ -4,14 +4,36 @@
 <footer class="border-t border-border">
   <div class="max-w-container mx-auto px-8 py-12">
 
-    <!-- Top row -->
-    <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 mb-12">
-      <a href="/" class="flex items-center gap-2.5 hover:opacity-80 transition-opacity duration-200" aria-label="Aitom, accueil">
-        <img src="/logo-icon.png" alt="" class="h-6 w-6" />
-        <span class="font-display font-bold text-ink text-lg tracking-[-0.02em] leading-none">Aitom</span>
-      </a>
+    <!-- Top row : gauche (logo + contact) / droite (liens), alignés en bas -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12">
+
+      <!-- Gauche : logo puis contact -->
+      <div class="flex flex-col gap-6">
+        <a href="/" class="flex items-center gap-2.5 hover:opacity-80 transition-opacity duration-200" aria-label="Aitom, accueil">
+          <img src="/logo-icon.png" alt="" class="h-6 w-6" />
+          <span class="font-display font-bold text-ink text-lg tracking-[-0.02em] leading-none">Aitom</span>
+        </a>
+        <div class="flex flex-wrap items-center gap-x-8 gap-y-3">
+          <a href="mailto:contact@aitom.fr" class="text-sm text-muted hover:text-accent transition-colors duration-200">
+            contact@aitom.fr
+          </a>
+          <a href="tel:+33777313245" class="text-sm text-muted hover:text-accent transition-colors duration-200">
+            +33 7 77 31 32 45
+          </a>
+          <a
+            href="https://www.linkedin.com/company/aitom"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-sm text-muted hover:text-accent transition-colors duration-200"
+          >
+            LinkedIn
+          </a>
+        </div>
+      </div>
+
+      <!-- Droite : liens, alignés en bas (même niveau que la ligne contact) -->
       <nav aria-label="Liens de navigation en bas de page">
-        <ul class="flex flex-wrap gap-x-8 gap-y-2 list-none">
+        <ul class="flex flex-wrap gap-x-8 gap-y-2 list-none md:justify-end">
           <li>
             <a href="#solution" class="text-sm text-muted hover:text-ink transition-colors duration-200">La solution</a>
           </li>
@@ -26,24 +48,6 @@
           </li>
         </ul>
       </nav>
-    </div>
-
-    <!-- Contact row -->
-    <div class="flex flex-wrap items-center gap-x-8 gap-y-3 mb-12">
-      <a href="mailto:contact@aitom.fr" class="text-sm text-muted hover:text-accent transition-colors duration-200">
-        contact@aitom.fr
-      </a>
-      <a href="tel:+33777313245" class="text-sm text-muted hover:text-accent transition-colors duration-200">
-        +33 7 77 31 32 45
-      </a>
-      <a
-        href="https://www.linkedin.com/company/aitom"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="text-sm text-muted hover:text-accent transition-colors duration-200"
-      >
-        LinkedIn
-      </a>
     </div>
 
     <!-- Bottom row -->

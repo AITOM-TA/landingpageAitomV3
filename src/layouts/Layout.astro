@@ -1,5 +1,7 @@
 ---
-import CookieBanner from '../components/CookieBanner.astro';
+// Bannière cookies masquée pour l'instant — réactiver en remettant
+// l'import et <CookieBanner /> dans le <body>.
+// import CookieBanner from '../components/CookieBanner.astro';
 
 interface Props {
   title?: string;
@@ -56,8 +58,6 @@ const siteUrl = 'https://aitom.fr';
     <div class="grain" aria-hidden="true"></div>
 
     <slot />
-
-    <CookieBanner />
   </body>
 </html>
 
