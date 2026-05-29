@@ -1,0 +1,73 @@
+---
+const logos = [
+  { src: '/logos/kine-brantome.png', name: 'Cabinet kinés Brantôme' },
+  { src: '/logos/pierre-girod.png', name: 'Cabinet Pierre Girod' },
+  { src: '/logos/elecazur.png', name: 'Elec Azur' },
+  { src: '/logos/etude-notariale-antibes.png', name: 'Étude notariale Antibes' },
+  { src: '/logos/expetis.png', name: 'Expetis' },
+  { src: '/logos/renaissens-esthetique.png', name: 'Renaissens Esthétique' },
+  { src: '/logos/rivegauche-gestion.png', name: 'Rive Gauche Gestion' },
+  { src: '/logos/smart-road.png', name: 'Smart Road' },
+];
+// Doublé pour une boucle sans couture
+const loop = [...logos, ...logos];
+---
+
+<section class="py-16 md:py-20 border-t border-border overflow-hidden">
+  <div class="max-w-container mx-auto px-8">
+    <p class="trust-label" data-animate>Ils nous font confiance</p>
+  </div>
+  <div class="logo-marquee" data-animate data-delay="1">
+    <div class="logo-track">
+      {loop.map((l) => <img src={l.src} alt={l.name} class="trust-logo" loading="lazy" decoding="async" />)}
+    </div>
+  </div>
+</section>
+
+<style>
+  .trust-label {
+    text-align: center;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #B3AA9B;
+    margin-bottom: 2.5rem;
+  }
+
+  .logo-marquee {
+    width: 100%;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  }
+  .logo-track {
+    display: flex;
+    align-items: center;
+    width: max-content;
+    animation: logoscroll 38s linear infinite;
+  }
+  .logo-track:hover { animation-play-state: paused; }
+
+  .trust-logo {
+    height: 64px;
+    width: auto;
+    flex-shrink: 0;
+    /* Marge (au lieu de gap) pour un espacement identique partout,
+       y compris à la jointure entre les deux copies -> boucle sans saut. */
+    margin: 0 2.25rem;
+    object-fit: contain;
+    opacity: 0.55;
+    transition: opacity 300ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .trust-logo:hover { opacity: 1; }
+
+  @keyframes logoscroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .logo-track { animation: none; flex-wrap: wrap; justify-content: center; }
+  }
+</style>
