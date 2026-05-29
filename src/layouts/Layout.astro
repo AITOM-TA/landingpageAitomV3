@@ -89,8 +89,8 @@ const siteUrl = 'https://aitom.fr';
   }
 
   ::selection {
-    background: #4EE2EC;
-    color: #0c0b08;
+    background: #0A7C84;
+    color: #FAF8F2;
   }
 
   html {
@@ -103,10 +103,10 @@ const siteUrl = 'https://aitom.fr';
     inset: 0;
     pointer-events: none;
     z-index: 500;
-    opacity: 0.038;
+    opacity: 0.045;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     background-size: 256px 256px;
-    mix-blend-mode: overlay;
+    mix-blend-mode: multiply;
   }
 
   /* Scroll-triggered fade-up animation */
@@ -178,7 +178,7 @@ const siteUrl = 'https://aitom.fr';
 
   .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 28px rgba(78, 226, 236, 0.28);
+    box-shadow: 0 8px 28px rgba(10, 124, 132, 0.28);
   }
 
   .btn-primary:hover::before {
@@ -235,18 +235,4 @@ const siteUrl = 'https://aitom.fr';
   );
 
   document.querySelectorAll('[data-animate]').forEach((el) => observer.observe(el));
-
-  // Nav scroll state
-  const nav = document.getElementById('nav');
-  if (nav) {
-    const update = () => {
-      if (window.scrollY > 60) {
-        nav.classList.add('nav-scrolled');
-      } else {
-        nav.classList.remove('nav-scrolled');
-      }
-    };
-    window.addEventListener('scroll', update, { passive: true });
-    update();
-  }
 </script>

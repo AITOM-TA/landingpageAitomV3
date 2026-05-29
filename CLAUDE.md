@@ -37,11 +37,13 @@ Navigation is anchor-based (`#services`, `#approche`, `#projets`, `#about`, `#co
 ## Styling conventions
 
 Custom Tailwind tokens (defined in `tailwind.config.mjs`):
-- Colors: `bg-bg` (`#0C0B08`), `text-ink` (`#EDE9E0`), `text-muted` (`#787068`), `bg-accent` / `text-accent` (`#CCFF00`)
-- Spacing: `py-section` (160px), `py-section-sm` (96px)
-- Font: Figtree Variable — self-hosted via `@fontsource-variable/figtree`, family name `'Figtree Variable'`
-- Easing: `ease-expo` → `cubic-bezier(0.16, 1, 0.3, 1)`
+- Colors (currently a **light/warm** palette): `bg` (`#FAF8F2`), `surface` (`#F1EDE4`), `surface-2` (`#E7E1D5`), `border` (`#DCD5C8`), `ink` (`#1A1712`), `muted` (`#6B635A`), `faint` (`#B3AA9B`), `accent` (`#0A7C84`). The palette is set under `theme.colors` (not `extend`), so it **replaces** Tailwind's defaults — utilities like `text-red-500` are unavailable. Note: recent commits have flipped the whole palette between dark and light themes by editing these eight values, so always read the config rather than assuming a theme. A couple of hex values are also hard-coded in `Layout.astro` (`::selection`, button shadows) and must be changed alongside the tokens.
+- Spacing: `py-section` (160px), `py-section-sm` (96px); `max-w-container` (1280px)
+- Other tokens: `rounded` default radius is `4px`; base body text is `17px`/`1.65` line-height; `ease-expo` → `cubic-bezier(0.16, 1, 0.3, 1)`
+- Font: **Figtree**, self-hosted via `@font-face` in `Layout.astro` pointing to `/fonts/Figtree-*.ttf` (in `public/fonts/`; only Regular/Italic/Bold/BoldItalic are shipped). Use `font-display` / `font-sans` (both map to `'Figtree'`). The `@fontsource-variable/figtree` dependency is **not** actually used; the full weight set in `fontsAItom/` is not wired up.
+- Display sizes `text-hero`, `text-display`, `text-display-sm` are **not** Tailwind tokens — they're clamp-based global classes in `Layout.astro`'s `<style>` block.
+- Global component classes also live in that `<style>` block: `.btn-primary` (sheen sweep + lift on hover) and `.btn-secondary` (animated underline via a `.btn-label` child span). A fixed `.grain` film-grain overlay div is rendered once in `Layout.astro`.
 
 ## Scroll animations
 
-Elements gain `data-animate` to opt into fade-up-on-scroll. Stagger order is controlled with `data-delay="1"` through `data-delay="5"`. The Intersection Observer that drives this is initialised in `Layout.astro`. Respects `prefers-reduced-motion`.
+Elements gain `data-animate` to opt into fade-up-on-scroll (translateY + opacity). Stagger order is controlled with `data-delay="1"` through `data-delay="5"` (80ms steps; only 1–3 are currently used). The Intersection Observer that drives this is initialised in `Layout.astro`'s `<script>` and adds `.is-visible` when an element scrolls into view. `prefers-reduced-motion` is respected via CSS (the observer still runs, but the animated properties are neutralised).
