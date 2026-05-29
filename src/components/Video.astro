@@ -1,0 +1,141 @@
+---
+// Vidéo de présentation (format story 9:16), hébergée sur Supabase Storage.
+// #t=0.5 → affiche la frame à 0,5 s comme vignette (poster) avant lecture.
+const VIDEO_URL =
+  'https://phqyccawwwpdvslxzljl.supabase.co/storage/v1/object/public/Video/TANGUY.mp4';
+---
+
+<section id="video" class="py-section-sm md:py-section border-t border-border">
+  <div class="max-w-container mx-auto px-8">
+    <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+
+      <!-- Texte -->
+      <div class="lg:order-2" data-animate data-delay="1">
+        <p class="text-xs font-semibold text-accent uppercase tracking-[0.14em] mb-3">En vidéo</p>
+        <h2 class="font-display font-bold text-display text-ink mb-6">
+          Aitom en<br>60 secondes
+        </h2>
+        <p class="text-[17px] leading-[1.65] text-muted mb-8 max-w-[440px]">
+          Qui nous sommes, ce que nous faisons et comment notre standard IA répond pour vous. La présentation la plus courte possible.
+        </p>
+        <ul class="flex flex-col gap-3 list-none">
+          <li class="flex items-center gap-3 text-sm text-muted">
+            <span class="text-accent">→</span> Une équipe, pas une hotline anonyme
+          </li>
+          <li class="flex items-center gap-3 text-sm text-muted">
+            <span class="text-accent">→</span> Un standard IA adapté à votre métier
+          </li>
+          <li class="flex items-center gap-3 text-sm text-muted">
+            <span class="text-accent">→</span> Mise en place et suivi de A à Z
+          </li>
+        </ul>
+      </div>
+
+      <!-- Vidéo dans un cadre téléphone -->
+      <div class="flex justify-center lg:justify-start lg:order-1" data-animate>
+        <div class="vphone">
+          <div class="vphone-glow" aria-hidden="true"></div>
+          <div class="vphone-island" aria-hidden="true"></div>
+          <div class="vphone-screen">
+            <video
+              class="vphone-video"
+              src={`${VIDEO_URL}#t=0.5`}
+              playsinline
+              preload="metadata"
+              data-video
+            ></video>
+            <button class="vplay" type="button" data-play aria-label="Lire la vidéo de présentation">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M8 5.14v13.72a1 1 0 0 0 1.54.84l10.79-6.86a1 1 0 0 0 0-1.68L9.54 4.3A1 1 0 0 0 8 5.14z"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  .vphone {
+    position: relative;
+    width: 380px;
+    max-width: 86vw;
+    background: linear-gradient(155deg, #2a2620, #15120e 60%);
+    border-radius: 44px;
+    padding: 12px;
+    box-shadow:
+      0 2px 0 rgba(255, 255, 255, 0.12) inset,
+      0 50px 90px -30px rgba(26, 23, 18, 0.55),
+      0 20px 40px -20px rgba(105, 103, 251, 0.35);
+  }
+  .vphone-glow {
+    position: absolute;
+    inset: -40px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(105, 103, 251, 0.3), rgba(105, 103, 251, 0) 70%);
+    filter: blur(40px);
+    z-index: -1;
+  }
+  .vphone-island {
+    position: absolute;
+    top: 24px; left: 50%;
+    transform: translateX(-50%);
+    width: 86px; height: 24px;
+    background: #050403;
+    border-radius: 13px;
+    z-index: 3;
+  }
+  .vphone-screen {
+    position: relative;
+    border-radius: 33px;
+    overflow: hidden;
+    background: #050403;
+    aspect-ratio: 9 / 16;
+  }
+  .vphone-video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Bouton lecture */
+  .vplay {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 64px; height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(105, 103, 251, 0.92);
+    color: #FAF8F2;
+    cursor: pointer;
+    box-shadow: 0 10px 30px -8px rgba(105, 103, 251, 0.7);
+    transition: transform 250ms cubic-bezier(0.16, 1, 0.3, 1), background-color 250ms ease;
+  }
+  .vplay svg { width: 26px; height: 26px; margin-left: 3px; }
+  .vplay:hover { transform: scale(1.08); background: #6967FB; }
+  .vplay.is-hidden { opacity: 0; visibility: hidden; transform: scale(0.6); transition: all 300ms cubic-bezier(0.16, 1, 0.3, 1); }
+</style>
+
+<script>
+  const video = document.querySelector('[data-video]') as HTMLVideoElement | null;
+  const play = document.querySelector('[data-play]') as HTMLButtonElement | null;
+
+  if (video && play) {
+    play.addEventListener('click', () => {
+      video.controls = true;
+      video.play();
+      play.classList.add('is-hidden');
+    });
+    // Si l'utilisateur remet à zéro / la vidéo se termine, on garde les contrôles natifs.
+    video.addEventListener('ended', () => {
+      play.classList.remove('is-hidden');
+      video.controls = false;
+    });
+  }
+</script>

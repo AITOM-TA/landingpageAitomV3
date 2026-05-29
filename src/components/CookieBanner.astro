@@ -1,0 +1,223 @@
+---
+// Bannière de consentement cookies — version provisoire.
+// Mémorise le choix dans localStorage ('aitom-cookie-consent' = 'accept' | 'decline').
+// Un petit bouton cookie (bas gauche) permet de rouvrir le choix après coup.
+// TODO: brancher ici le (dé)chargement réel des scripts de mesure d'audience.
+---
+
+<div
+  id="cookie-banner"
+  class="cookie-banner"
+  role="dialog"
+  aria-label="Consentement aux cookies"
+  aria-live="polite"
+>
+  <p class="cookie-text">
+    On utilise des cookies pour améliorer votre expérience et mesurer l'audience.
+    <a href="/politique-de-confidentialite" class="cookie-link">En savoir plus</a>
+  </p>
+  <div class="cookie-actions">
+    <button type="button" data-cookie="decline" class="cookie-btn cookie-btn--ghost">Refuser</button>
+    <button type="button" data-cookie="accept" class="cookie-btn cookie-btn--primary btn-primary">Accepter</button>
+  </div>
+</div>
+
+<!-- Petit bouton cookie pour rouvrir le choix -->
+<button id="cookie-reopen" class="cookie-reopen" type="button" aria-label="Gérer les cookies">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"/>
+    <path d="M8.5 8.5v.01"/>
+    <path d="M16 15.5v.01"/>
+    <path d="M12 12v.01"/>
+    <path d="M11 17v.01"/>
+    <path d="M7 14v.01"/>
+  </svg>
+</button>
+
+<style>
+  .cookie-banner {
+    position: fixed;
+    left: 50%;
+    bottom: 24px;
+    transform: translateX(-50%) translateY(140%);
+    z-index: 600;
+    width: calc(100% - 32px);
+    max-width: 560px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 18px 22px;
+    background: #FAF8F2;
+    border: 1px solid #DCD5C8;
+    border-radius: 12px;
+    box-shadow: 0 24px 60px -24px rgba(26, 23, 18, 0.4);
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      transform 600ms cubic-bezier(0.16, 1, 0.3, 1),
+      opacity 500ms cubic-bezier(0.16, 1, 0.3, 1),
+      visibility 0s linear 600ms;
+  }
+
+  .cookie-banner.is-visible {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+    visibility: visible;
+    transition:
+      transform 600ms cubic-bezier(0.16, 1, 0.3, 1),
+      opacity 500ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .cookie-text {
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: #6B635A;
+    flex: 1;
+  }
+
+  .cookie-link {
+    color: #6967FB;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .cookie-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+
+  .cookie-btn {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    padding: 9px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 200ms cubic-bezier(0.16, 1, 0.3, 1),
+      color 200ms cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 200ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .cookie-btn--ghost {
+    background: transparent;
+    border: 1px solid #DCD5C8;
+    color: #6B635A;
+  }
+  .cookie-btn--ghost:hover {
+    border-color: #B3AA9B;
+    color: #1A1712;
+  }
+
+  .cookie-btn--primary {
+    background: #6967FB;
+    color: #FAF8F2;
+    border: 1px solid #6967FB;
+  }
+
+  /* Petit bouton cookie flottant (bas gauche) */
+  .cookie-reopen {
+    position: fixed;
+    left: 24px;
+    bottom: 24px;
+    z-index: 600;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #FAF8F2;
+    border: 1px solid #DCD5C8;
+    color: #6B635A;
+    box-shadow: 0 10px 30px -12px rgba(26, 23, 18, 0.4);
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0.8) translateY(10px);
+    transition:
+      transform 450ms cubic-bezier(0.16, 1, 0.3, 1),
+      opacity 350ms cubic-bezier(0.16, 1, 0.3, 1),
+      color 200ms ease,
+      border-color 200ms ease,
+      visibility 0s linear 450ms;
+  }
+
+  .cookie-reopen.is-visible {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1) translateY(0);
+    transition:
+      transform 450ms cubic-bezier(0.16, 1, 0.3, 1),
+      opacity 350ms cubic-bezier(0.16, 1, 0.3, 1),
+      color 200ms ease,
+      border-color 200ms ease;
+  }
+
+  .cookie-reopen:hover {
+    color: #6967FB;
+    border-color: #B3AA9B;
+    transform: scale(1.06) translateY(-2px);
+  }
+
+  .cookie-reopen svg { width: 21px; height: 21px; display: block; }
+
+  @media (max-width: 560px) {
+    .cookie-banner {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 14px;
+      bottom: 16px;
+    }
+    .cookie-actions { justify-content: flex-end; }
+    .cookie-reopen { left: 16px; bottom: 16px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cookie-banner { transition: opacity 200ms linear, visibility 0s linear 200ms; transform: translateX(-50%); }
+    .cookie-banner.is-visible { transition: opacity 200ms linear; }
+    .cookie-reopen { transition: opacity 200ms linear, visibility 0s linear 200ms; transform: none; }
+    .cookie-reopen.is-visible { transition: opacity 200ms linear; transform: none; }
+  }
+</style>
+
+<script>
+  const KEY = 'aitom-cookie-consent';
+  const banner = document.getElementById('cookie-banner');
+  const reopen = document.getElementById('cookie-reopen');
+
+  if (banner) {
+    const showBanner = () => {
+      banner.classList.add('is-visible');
+      reopen?.classList.remove('is-visible');
+    };
+    const showReopen = () => {
+      banner.classList.remove('is-visible');
+      reopen?.classList.add('is-visible');
+    };
+
+    let choice = null;
+    try { choice = localStorage.getItem(KEY); } catch (e) {}
+
+    if (!choice) {
+      // Pas encore de choix : on affiche la bannière après un court délai.
+      setTimeout(showBanner, 800);
+    } else {
+      // Choix déjà fait : on montre directement le petit bouton cookie.
+      showReopen();
+    }
+
+    banner.querySelectorAll('[data-cookie]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const value = btn.getAttribute('data-cookie'); // 'accept' | 'decline'
+        try { localStorage.setItem(KEY, value); } catch (e) {}
+        showReopen();
+        // TODO (à brancher) : si value === 'accept', charger les scripts de mesure.
+        window.dispatchEvent(new CustomEvent('cookie-consent', { detail: value }));
+      });
+    });
+
+    // Rouvrir le choix via le petit bouton cookie.
+    reopen?.addEventListener('click', showBanner);
+  }
+</script>
