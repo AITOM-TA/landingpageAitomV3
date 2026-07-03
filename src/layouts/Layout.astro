@@ -6,14 +6,36 @@
 interface Props {
   title?: string;
   description?: string;
+  /** Empêche l'indexation (pages de travail, brouillons). */
+  noindex?: boolean;
 }
 
 const {
   title = 'Aitom · Le standard téléphonique IA qui ne rate aucun appel',
   description = "Aitom répond à 100 % de vos appels 24h/24, prend vos rendez-vous et qualifie vos clients. Le standard téléphonique IA pour les artisans, cabinets et PME de services.",
+  noindex = false,
 } = Astro.props;
 
 const siteUrl = 'https://aitom.fr';
+
+// Canonique propre à chaque page (slash final pour coller aux URLs du sitemap).
+const pathname = Astro.url.pathname.endsWith('/') ? Astro.url.pathname : `${Astro.url.pathname}/`;
+const canonical = new URL(pathname, siteUrl).href;
+
+const ogImage = `${siteUrl}/og.png`;
+
+const orgSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Aitom',
+  url: siteUrl,
+  logo: `${siteUrl}/logo-icon.png`,
+  description:
+    'Standard téléphonique IA pour artisans, cabinets et PME de services : réponse à 100 % des appels, 24h/24, prise de rendez-vous et qualification des clients.',
+  email: 'contact@aitom.fr',
+  telephone: '+33 7 77 31 32 45',
+  sameAs: ['https://www.linkedin.com/company/aitom'],
+};
 ---
 
 <!doctype html>
@@ -23,13 +45,24 @@ const siteUrl = 'https://aitom.fr';
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <link rel="canonical" href={siteUrl} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
 
-    <!-- Google tag (gtag.js) — GA4 -->
+    <!-- Google tag (gtag.js) — GA4, Consent Mode v2 : tout est refusé par défaut
+         (pings sans cookie tant qu'aucun consentement n'est donné — RGPD/CNIL).
+         Pour recueillir le consentement, réactiver <CookieBanner /> et envoyer
+         gtag('consent', 'update', { analytics_storage: 'granted' }) à l'acceptation. -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-YEXF5GRC6F" is:inline></script>
     <script is:inline>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
+      gtag('consent', 'default', {
+        ad_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied',
+        analytics_storage: 'denied',
+        wait_for_update: 500,
+      });
       gtag('js', new Date());
       gtag('config', 'G-YEXF5GRC6F');
     </script>
@@ -41,16 +74,23 @@ const siteUrl = 'https://aitom.fr';
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content={siteUrl} />
+    <meta property="og:url" content={canonical} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:locale" content="fr_FR" />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Aitom — Un appel manqué, c'est un client perdu. Standard téléphonique IA." />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
 
+    <!-- Données structurées — Organization -->
+    <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
   </head>
 
   <body class="bg-bg text-ink font-sans antialiased overflow-x-hidden">
@@ -64,7 +104,7 @@ const siteUrl = 'https://aitom.fr';
 <style is:global>
   @font-face {
     font-family: 'Figtree';
-    src: url('/fonts/Figtree-Regular.ttf') format('truetype');
+    src: url('/fonts/Figtree-Regular.woff2') format('woff2');
     font-weight: 400;
     font-style: normal;
     font-display: swap;
@@ -72,7 +112,7 @@ const siteUrl = 'https://aitom.fr';
 
   @font-face {
     font-family: 'Figtree';
-    src: url('/fonts/Figtree-Italic.ttf') format('truetype');
+    src: url('/fonts/Figtree-Italic.woff2') format('woff2');
     font-weight: 400;
     font-style: italic;
     font-display: swap;
@@ -80,7 +120,7 @@ const siteUrl = 'https://aitom.fr';
 
   @font-face {
     font-family: 'Figtree';
-    src: url('/fonts/Figtree-Bold.ttf') format('truetype');
+    src: url('/fonts/Figtree-Bold.woff2') format('woff2');
     font-weight: 700;
     font-style: normal;
     font-display: swap;
@@ -88,7 +128,7 @@ const siteUrl = 'https://aitom.fr';
 
   @font-face {
     font-family: 'Figtree';
-    src: url('/fonts/Figtree-BoldItalic.ttf') format('truetype');
+    src: url('/fonts/Figtree-BoldItalic.woff2') format('woff2');
     font-weight: 700;
     font-style: italic;
     font-display: swap;

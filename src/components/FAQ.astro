@@ -21,7 +21,20 @@ const faqs = [
       "Toute TPE ou PME de services : artisans, plombiers, cabinets dentaires, avocats, dépanneurs, agences… Si vous recevez des appels de clients, votre standard IA est fait pour vous.",
   },
 ];
+
+// Données structurées — la FAQ affichée sert de source unique.
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((faq) => ({
+    '@type': 'Question',
+    name: faq.question,
+    acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+  })),
+};
 ---
+
+<script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
 
 <section id="faq" class="py-section-sm md:py-section border-t border-border">
   <div class="max-w-container mx-auto px-8">
