@@ -8,7 +8,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 npm run dev      # Start dev server at localhost:4321
 npm run build    # Build static site to /dist
 npm run preview  # Serve built site locally
-npm start        # astro preview on $PORT (used by Railway)
+npm start        # serve dist/ on $PORT (used by Railway)
 ```
 
 No test suite or linter is configured.
@@ -52,7 +52,7 @@ Layout.astro          ← <html>, SEO meta, GA4, global styles, scroll reveal + 
 
 ## Deployment
 
-`vercel.json` configures Vercel, but the site also runs on **Railway** via `npm start` (`astro preview` behind Railway's proxy) — that's why `astro.config.mjs` sets `server.allowedHosts: true`. Don't remove either without checking where production actually lives.
+`vercel.json` configures Vercel, but the site also runs on **Railway** via `npm start` (static `serve` of `dist/` behind Railway's proxy; `astro.config.mjs` keeps `server.allowedHosts: true` from the earlier `astro preview` setup). Don't remove either without checking where production actually lives.
 
 ## Styling conventions
 
