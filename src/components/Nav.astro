@@ -1,4 +1,7 @@
 ---
+// Depuis une page interne (blog, mentions…), les ancres doivent renvoyer vers
+// l'accueil avant de scroller. Sur l'accueil, on garde l'ancre pure (Lenis).
+const home = Astro.url.pathname === '/' ? '' : '/';
 ---
 
 <nav id="nav" aria-label="Navigation principale">
@@ -13,7 +16,7 @@
     <div class="hidden md:flex items-center gap-10">
       <a href="https://app.aitom.fr" class="text-sm text-muted hover:text-ink transition-colors duration-200 ease-expo">Se connecter</a>
       <a
-        href="#contact"
+        href={`${home}#contact`}
         class="btn-primary text-sm font-semibold bg-accent text-bg px-5 py-2.5 rounded"
       >
         Parler à un expert
@@ -36,7 +39,7 @@
       <div class="border-t border-border bg-surface px-8 py-6">
         <div class="flex flex-col gap-5">
           <a href="https://app.aitom.fr" class="menu-link text-sm text-muted hover:text-ink transition-colors duration-200" role="menuitem">Se connecter</a>
-          <a href="#contact" class="menu-link text-sm font-semibold text-accent" role="menuitem">Parler à un expert →</a>
+          <a href={`${home}#contact`} class="menu-link text-sm font-semibold text-accent" role="menuitem">Parler à un expert →</a>
         </div>
       </div>
     </div>

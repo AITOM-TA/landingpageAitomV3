@@ -1,5 +1,5 @@
 ---
-// Bannière cookies masquée pour l'instant — réactiver en remettant
+// Bannière cookies masquée pour l'instant, réactiver en remettant
 // l'import et <CookieBanner /> dans le <body>.
 // import CookieBanner from '../components/CookieBanner.astro';
 
@@ -8,12 +8,15 @@ interface Props {
   description?: string;
   /** Empêche l'indexation (pages de travail, brouillons). */
   noindex?: boolean;
+  /** URL absolue de l'image de partage (défaut : /og.png). */
+  ogImage?: string;
 }
 
 const {
   title = 'Aitom · Le standard téléphonique IA qui ne rate aucun appel',
   description = "Aitom répond à 100 % de vos appels 24h/24, prend vos rendez-vous et qualifie vos clients. Le standard téléphonique IA pour les artisans, cabinets et PME de services.",
   noindex = false,
+  ogImage,
 } = Astro.props;
 
 const siteUrl = 'https://aitom.fr';
@@ -22,7 +25,7 @@ const siteUrl = 'https://aitom.fr';
 const pathname = Astro.url.pathname.endsWith('/') ? Astro.url.pathname : `${Astro.url.pathname}/`;
 const canonical = new URL(pathname, siteUrl).href;
 
-const ogImage = `${siteUrl}/og.png`;
+const ogImageUrl = ogImage ?? `${siteUrl}/og.png`;
 
 const orgSchema = {
   '@context': 'https://schema.org',
@@ -48,8 +51,8 @@ const orgSchema = {
     <link rel="canonical" href={canonical} />
     {noindex && <meta name="robots" content="noindex, nofollow" />}
 
-    <!-- Google tag (gtag.js) — GA4, Consent Mode v2 : tout est refusé par défaut
-         (pings sans cookie tant qu'aucun consentement n'est donné — RGPD/CNIL).
+    <!-- Google tag (gtag.js), GA4, Consent Mode v2 : tout est refusé par défaut
+         (pings sans cookie tant qu'aucun consentement n'est donné, RGPD/CNIL).
          Pour recueillir le consentement, réactiver <CookieBanner /> et envoyer
          gtag('consent', 'update', { analytics_storage: 'granted' }) à l'acceptation. -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-YEXF5GRC6F" is:inline></script>
@@ -78,18 +81,16 @@ const orgSchema = {
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:locale" content="fr_FR" />
-    <meta property="og:image" content={ogImage} />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Aitom — Un appel manqué, c'est un client perdu. Standard téléphonique IA." />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:alt" content={title} />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image" content={ogImageUrl} />
 
-    <!-- Données structurées — Organization -->
+    <!-- Données structurées, Organization -->
     <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
   </head>
 
@@ -163,7 +164,7 @@ const orgSchema = {
     mix-blend-mode: multiply;
   }
 
-  /* Scroll-triggered reveal — pilotée par @keyframes (n'entre pas en conflit
+  /* Scroll-triggered reveal, pilotée par @keyframes (n'entre pas en conflit
      avec les `transition` de survol des cartes, contrairement à un `transition`). */
   [data-animate] {
     opacity: 0;
@@ -286,7 +287,7 @@ const orgSchema = {
     scroll-margin-top: 80px;
   }
 
-  /* Lenis (inertia smooth scroll) — overrides native smooth when active */
+  /* Lenis (inertia smooth scroll), overrides native smooth when active */
   html.lenis,
   html.lenis body {
     height: auto;
@@ -328,7 +329,7 @@ const orgSchema = {
 
   document.querySelectorAll('[data-animate]').forEach((el) => observer.observe(el));
 
-  // Smooth inertia scrolling — skipped when the user prefers reduced motion
+  // Smooth inertia scrolling, skipped when the user prefers reduced motion
   // (native CSS `scroll-smooth` on <html> then handles anchor jumps as a fallback).
   if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     const lenis = new Lenis({

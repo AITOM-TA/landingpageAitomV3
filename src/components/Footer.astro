@@ -1,4 +1,6 @@
 ---
+// Ancres cross-page : depuis une page interne, renvoyer vers l'accueil.
+const home = Astro.url.pathname === '/' ? '' : '/';
 ---
 
 <footer class="border-t border-border">
@@ -35,16 +37,19 @@
       <nav aria-label="Liens de navigation en bas de page">
         <ul class="flex flex-wrap gap-x-8 gap-y-2 list-none md:justify-end">
           <li>
-            <a href="#solution" class="text-sm text-muted hover:text-ink transition-colors duration-200">La solution</a>
+            <a href={`${home}#solution`} class="text-sm text-muted hover:text-ink transition-colors duration-200">La solution</a>
           </li>
           <li>
-            <a href="#fonctionnement" class="text-sm text-muted hover:text-ink transition-colors duration-200">Comment ça marche</a>
+            <a href={`${home}#fonctionnement`} class="text-sm text-muted hover:text-ink transition-colors duration-200">Comment ça marche</a>
           </li>
           <li>
-            <a href="#projets" class="text-sm text-muted hover:text-ink transition-colors duration-200">Résultats</a>
+            <a href={`${home}#projets`} class="text-sm text-muted hover:text-ink transition-colors duration-200">Résultats</a>
           </li>
           <li>
-            <a href="#faq" class="text-sm text-muted hover:text-ink transition-colors duration-200">FAQ</a>
+            <a href="/blog" class="text-sm text-muted hover:text-ink transition-colors duration-200">Blog</a>
+          </li>
+          <li>
+            <a href={`${home}#faq`} class="text-sm text-muted hover:text-ink transition-colors duration-200">FAQ</a>
           </li>
         </ul>
       </nav>

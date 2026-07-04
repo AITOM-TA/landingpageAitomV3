@@ -194,7 +194,7 @@
   const form = document.getElementById('audit-form') as HTMLFormElement | null;
 
   if (form) {
-    // Webhook n8n — déclenché à chaque soumission du formulaire
+    // Webhook n8n, déclenché à chaque soumission du formulaire
     const WEBHOOK_URL = 'https://n8n-u41084.vm.elestio.app/webhook/e6dde53f-afd3-49d2-bd03-f2b9df7060c2';
     const status = form.querySelector('[data-status]') as HTMLElement | null;
     const button = form.querySelector('button[type="submit"]') as HTMLButtonElement | null;
