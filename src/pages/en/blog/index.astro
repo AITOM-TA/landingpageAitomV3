@@ -1,0 +1,17 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Nav from '../../../components/Nav.astro';
+import Footer from '../../../components/Footer.astro';
+import BlogList from '../../../components/BlogList.astro';
+---
+
+<Layout
+  lang="en"
+  title="Aitom Blog · AI answering service, call handling and scheduling"
+  description="Guides and tips on AI answering services, call handling and phone automation for small and mid-sized service businesses."
+  translations={{ fr: '/blog/', en: '/en/blog/' }}
+>
+  <Nav lang="en" altUrl="/blog" />
+  <BlogList lang="en" />
+  <Footer lang="en" />
+</Layout>

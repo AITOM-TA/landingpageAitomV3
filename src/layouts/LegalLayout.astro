@@ -5,29 +5,33 @@ import Footer from '../components/Footer.astro';
 interface Props {
   title: string;
   description?: string;
+  lang?: 'fr' | 'en';
+  translations?: { fr?: string; en?: string };
 }
 
-const { title, description } = Astro.props;
+const { title, description, lang = 'fr', translations } = Astro.props;
+const localeRoot = lang === 'en' ? '/en/' : '/';
+const backLabel = lang === 'en' ? 'Back to home' : "Retour à l'accueil";
 ---
 
-<Layout title={`${title} · Aitom`} description={description}>
+<Layout lang={lang} title={`${title} · Aitom`} description={description} translations={translations}>
   <!-- Barre supérieure minimale -->
   <header class="border-b border-border">
     <div class="max-w-container mx-auto px-8 h-[68px] flex items-center justify-between">
       <a
-        href="/"
+        href={localeRoot}
         class="flex items-center gap-2.5 hover:opacity-80 transition-opacity duration-200"
-        aria-label="Aitom, accueil"
+        aria-label="Aitom"
       >
         <img src="/logo-icon.png" alt="" class="h-6 w-6" />
         <span class="font-display font-bold text-ink text-lg tracking-[-0.02em] leading-none">Aitom</span>
       </a>
       <a
-        href="/"
+        href={localeRoot}
         class="group inline-flex items-center gap-2 text-sm text-muted hover:text-ink transition-colors duration-300 ease-expo"
       >
         <span class="inline-block group-hover:-translate-x-1 transition-transform duration-300 ease-expo">←</span>
-        Retour à l'accueil
+        {backLabel}
       </a>
     </div>
   </header>
@@ -43,7 +47,7 @@ const { title, description } = Astro.props;
     </div>
   </main>
 
-  <Footer />
+  <Footer lang={lang} />
 </Layout>
 
 <style>

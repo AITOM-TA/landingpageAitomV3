@@ -1,16 +1,29 @@
 ---
-const items = [
-  {
-    name: 'Conseil IA',
-    description:
-      "On repère les opportunités concrètes dans votre organisation et on vous remet un plan d'action priorisé.",
+interface Props {
+  lang?: 'fr' | 'en';
+}
+const { lang = 'fr' } = Astro.props;
+
+const t = {
+  fr: {
+    eyebrow: 'Aller plus loin',
+    heading: "Le téléphone n'est qu'un début.",
+    intro: "Une fois votre accueil automatisé, on identifie ensemble les autres tâches répétitives qui vous coûtent du temps, et on s'en occupe.",
+    items: [
+      { name: 'Conseil IA', description: "On repère les opportunités concrètes dans votre organisation et on vous remet un plan d'action priorisé." },
+      { name: 'Automatisation', description: 'On connecte vos outils et on élimine les tâches répétitives, pour réinvestir chaque heure gagnée là où elle compte.' },
+    ],
   },
-  {
-    name: 'Automatisation',
-    description:
-      'On connecte vos outils et on élimine les tâches répétitives, pour réinvestir chaque heure gagnée là où elle compte.',
+  en: {
+    eyebrow: 'Going further',
+    heading: 'The phone is just the start.',
+    intro: 'Once your call answering is automated, we identify together the other repetitive tasks that cost you time, and we take care of them.',
+    items: [
+      { name: 'AI consulting', description: 'We spot concrete opportunities in your operations and hand you a prioritized action plan.' },
+      { name: 'Automation', description: 'We connect your tools and eliminate repetitive tasks, so every hour saved goes back where it matters.' },
+    ],
   },
-];
+}[lang];
 ---
 
 <section id="plus-loin" class="py-section-sm border-t border-border">
@@ -19,18 +32,18 @@ const items = [
 
       <!-- Intro -->
       <p class="text-xs font-semibold text-muted uppercase tracking-[0.14em] mb-5" data-animate>
-        Aller plus loin
+        {t.eyebrow}
       </p>
       <h2 class="font-display font-bold text-display-sm text-ink mb-5" data-animate data-delay="1">
-        Le téléphone n'est qu'un début.
+        {t.heading}
       </h2>
       <p class="text-[17px] leading-[1.65] text-muted mb-12" data-animate data-delay="2">
-        Une fois votre accueil automatisé, on identifie ensemble les autres tâches répétitives qui vous coûtent du temps, et on s'en occupe.
+        {t.intro}
       </p>
 
       <!-- Condensed items -->
       <div class="divide-y divide-border border-t border-border" data-animate data-delay="2">
-        {items.map((item) => (
+        {t.items.map((item) => (
           <div class="py-6 md:flex md:items-baseline md:gap-8">
             <h3 class="font-display font-semibold text-ink text-base md:w-44 md:shrink-0 mb-1 md:mb-0">
               {item.name}

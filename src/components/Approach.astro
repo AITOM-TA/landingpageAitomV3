@@ -1,24 +1,33 @@
 ---
-const steps = [
-  {
-    number: '01',
-    title: 'Audit en 30 minutes',
-    description:
-      "On analyse vos appels, votre activité et vos besoins. Vous repartez avec un plan clair et un devis transparent, sans engagement.",
+interface Props {
+  lang?: 'fr' | 'en';
+}
+const { lang = 'fr' } = Astro.props;
+
+const t = {
+  fr: {
+    eyebrow: 'Comment ça marche',
+    headingBefore: "Vous n'avez ",
+    headingEm: 'rien',
+    headingAfter: 'à faire',
+    steps: [
+      { number: '01', title: 'Audit en 30 minutes', description: "On analyse vos appels, votre activité et vos besoins. Vous repartez avec un plan clair et un devis transparent, sans engagement." },
+      { number: '02', title: 'Installation clé en main', description: "On configure votre standard et on le branche sur votre numéro existant. Vous n'avez rien à faire : tout est prêt en quelques jours." },
+      { number: '03', title: "Suivi dans l'app", description: "Vous suivez chaque appel, écoutez les enregistrements et ajustez les réponses en un clic. On reste à vos côtés pour affiner." },
+    ],
   },
-  {
-    number: '02',
-    title: 'Installation clé en main',
-    description:
-      "On configure votre standard et on le branche sur votre numéro existant. Vous n'avez rien à faire : tout est prêt en quelques jours.",
+  en: {
+    eyebrow: 'How it works',
+    headingBefore: 'You have ',
+    headingEm: 'nothing',
+    headingAfter: 'to do',
+    steps: [
+      { number: '01', title: '30-minute audit', description: 'We look at your calls, your business and your needs. You leave with a clear plan and a transparent quote, no commitment.' },
+      { number: '02', title: 'Turnkey setup', description: "We configure your answering service and connect it to your existing number. You do nothing: it's all ready in a few days." },
+      { number: '03', title: 'Track it in the app', description: 'You follow every call, listen to recordings and adjust responses in one click. We stay by your side to fine-tune.' },
+    ],
   },
-  {
-    number: '03',
-    title: "Suivi dans l'app",
-    description:
-      "Vous suivez chaque appel, écoutez les enregistrements et ajustez les réponses en un clic. On reste à vos côtés pour affiner.",
-  },
-];
+}[lang];
 ---
 
 <section id="fonctionnement" class="py-section-sm md:py-section border-t border-border">
@@ -26,15 +35,15 @@ const steps = [
 
     <!-- Header -->
     <div class="mb-16" data-animate>
-      <p class="text-xs font-semibold text-accent uppercase tracking-[0.14em] mb-3">Comment ça marche</p>
+      <p class="text-xs font-semibold text-accent uppercase tracking-[0.14em] mb-3">{t.eyebrow}</p>
       <h2 class="font-display font-bold text-display text-ink max-w-md">
-        Vous n'avez <em>rien</em><br>à faire
+        {t.headingBefore}<em>{t.headingEm}</em><br>{t.headingAfter}
       </h2>
     </div>
 
     <!-- Steps -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-border">
-      {steps.map((step, i) => (
+      {t.steps.map((step, i) => (
         <div
           class="step-card bg-bg p-10 md:p-12"
           data-animate

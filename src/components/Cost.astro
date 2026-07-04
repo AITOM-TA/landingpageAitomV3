@@ -1,24 +1,33 @@
 ---
-const stats = [
-  {
-    figure: '15 %',
-    label: 'des appels restent sans réponse',
-    description:
-      "Réunion, chantier, déjà au téléphone : chaque appel manqué part directement chez le concurrent qui, lui, décroche.",
+interface Props {
+  lang?: 'fr' | 'en';
+}
+const { lang = 'fr' } = Astro.props;
+
+const t = {
+  fr: {
+    eyebrow: 'Le coût caché',
+    heading: ['Ce que vous coûtent', 'les appels manqués'],
+    note: ['La plupart des gérants ne voient jamais cet argent partir.', 'Pourtant, il part chaque jour.'],
+    closing: "Un seul client gagné par semaine grâce à un appel décroché rembourse souvent l'outil pour le mois entier.",
+    stats: [
+      { figure: '15 %', label: 'des appels restent sans réponse', description: "Réunion, chantier, déjà au téléphone : chaque appel manqué part directement chez le concurrent qui, lui, décroche." },
+      { figure: '3 000 €', label: 'par mois pour une secrétaire', description: "Et il faut encore gérer les congés, les arrêts maladie, la formation et les heures où personne ne répond." },
+      { figure: '23 min', label: 'perdues à chaque interruption', description: "C'est le temps qu'il faut pour se reconcentrer après un appel. Multipliez par le nombre d'appels d'une journée." },
+    ],
   },
-  {
-    figure: '3 000 €',
-    label: 'par mois pour une secrétaire',
-    description:
-      "Et il faut encore gérer les congés, les arrêts maladie, la formation et les heures où personne ne répond.",
+  en: {
+    eyebrow: 'The hidden cost',
+    heading: ['What missed calls', 'are costing you'],
+    note: ['Most owners never see this money leave.', 'Yet it walks out the door every day.'],
+    closing: 'A single customer won each week from a call you answered often pays for the whole month.',
+    stats: [
+      { figure: '15%', label: 'of calls go unanswered', description: 'In a meeting, on a job site, already on the phone: every missed call goes straight to the competitor who does pick up.' },
+      { figure: '$3,000', label: 'a month for a receptionist', description: 'And you still have to cover vacation, sick days, training, and the hours when nobody answers.' },
+      { figure: '23 min', label: 'lost with every interruption', description: "That's how long it takes to refocus after a call. Multiply that by the number of calls in a day." },
+    ],
   },
-  {
-    figure: '23 min',
-    label: 'perdues à chaque interruption',
-    description:
-      "C'est le temps qu'il faut pour se reconcentrer après un appel. Multipliez par le nombre d'appels d'une journée.",
-  },
-];
+}[lang];
 ---
 
 <section id="cout" class="py-section-sm md:py-section border-t border-border">
@@ -27,19 +36,19 @@ const stats = [
     <!-- Header -->
     <div class="flex flex-col md:flex-row md:items-end md:justify-between mb-16 gap-6">
       <div data-animate>
-        <p class="text-xs font-semibold text-accent uppercase tracking-[0.14em] mb-3">Le coût caché</p>
+        <p class="text-xs font-semibold text-accent uppercase tracking-[0.14em] mb-3">{t.eyebrow}</p>
         <h2 class="font-display font-bold text-display text-ink">
-          Ce que vous coûtent<br>les appels manqués
+          {t.heading[0]}<br>{t.heading[1]}
         </h2>
       </div>
       <p class="text-sm text-muted max-w-[300px] md:text-right leading-relaxed" data-animate data-delay="1">
-        La plupart des gérants ne voient jamais cet argent partir.<br>Pourtant, il part chaque jour.
+        {t.note[0]}<br>{t.note[1]}
       </p>
     </div>
 
     <!-- Stat cards -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-border">
-      {stats.map((stat, i) => (
+      {t.stats.map((stat, i) => (
         <div
           class="stat-card bg-bg p-10 md:p-12"
           data-animate
@@ -60,7 +69,7 @@ const stats = [
 
     <!-- Closing line -->
     <p class="text-[17px] leading-[1.65] text-muted max-w-[560px] mt-16" data-animate>
-      Un seul client gagné par semaine grâce à un appel décroché rembourse souvent l'outil pour le mois entier.
+      {t.closing}
     </p>
 
   </div>

@@ -15,6 +15,8 @@ const blog = defineCollection({
     heroAlt: z.string(),
     // Mot-clé SEO principal visé (documentaire, non affiché).
     targetKeyword: z.string().optional(),
+    // Langue de l'article : 'fr' (racine /blog) ou 'en' (/en/blog).
+    lang: z.enum(['fr', 'en']).default('fr'),
     draft: z.boolean().default(false),
   }),
 });

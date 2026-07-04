@@ -27,6 +27,17 @@ Marketing site for **Aitom**, an AI phone receptionist ("standard téléphonique
 
 **Blog content** lives in `src/content/blog/*.md`, driven by the `blog` collection in `src/content.config.ts` (Astro Content Layer, `glob` loader). Frontmatter schema: `title`, `description`, `publishDate`, `author`, `heroImage` (a `/blog/*.webp` path), `heroAlt`, `targetKeyword` (SEO doc), `draft`. Hero images are generated with Replicate FLUX (isometric flat-vector, indigo/periwinkle) and live in `public/blog/`. The blog is linked only from the **Footer** (not the main Nav) but IS in the sitemap. To migrate to a Supabase-sourced pipeline later, swap only the collection's `loader`; the pages don't change. **Never introduce em-dashes in articles** (see the rule above).
 
+## Internationalization (i18n)
+
+The site is **bilingual**: French at the root (default), US English under `/en/`. There is **no Astro i18n config**; it is done manually with a `lang` prop threaded through components.
+
+- **Every component takes a `lang?: 'fr' | 'en'` prop** (default `'fr'`) and holds its copy in an inline `const t = { fr: {...}, en: {...} }[lang]` dictionary. French strings stay verbatim so the FR site is unchanged. When editing copy, edit BOTH languages in that dictionary. Components touched: all of `Hero`, `Cost`, `Services`, `Approach`, `Video`, `TrustLogos`, `Work`, `Platform`, `Beyond`, `FAQ`, `CTASection`, `PhoneMock`, `Nav`, `Footer`, plus `Layout` and `LegalLayout`.
+- **Pages**: FR at `src/pages/{index,blog,mentions-legales,politique-de-confidentialite}`, EN mirrors at `src/pages/en/{index,blog,legal-notice,privacy-policy}`. Each EN page passes `lang="en"` to Layout + every component. Home/blog listings share `BlogList.astro`; articles share `BlogArticle.astro` (both `lang`-aware).
+- **Blog content is one collection**, split by the frontmatter `lang` field. FR and EN articles have **different slugs** (e.g. `standard-telephonique-ia-guide` ↔ `ai-answering-service-guide`) and coexist flat in `src/content/blog/`. Routes filter by `data.lang`; slug pairs live in `src/i18n/blogAlternates.ts` (used for hreflang + the language switcher).
+- **SEO**: `Layout` sets `<html lang>`, `og:locale`, and renders `hreflang` alternates (`fr`/`en`/`x-default`) from a `translations={{ fr, en }}` prop of relative URLs each page passes. `Nav` shows an FR/EN switch pill whose target is the `altUrl` prop.
+- **Contact form** (`CTASection`): localized status messages are passed as `data-*` attributes on the `<form>` and read by the script (which cannot see the `lang` variable at runtime). Same n8n webhook for both languages.
+- The English copy targets **US** terminology (e.g. "AI answering service", not a literal "telephone standard") and US market pricing ($). The default-locale meta/titles for each language live in `Layout.astro`'s `DEFAULTS` map.
+
 **Landing page composition**: `index.astro` assembles sections in order; navigation is anchor-based, no routing:
 
 ```

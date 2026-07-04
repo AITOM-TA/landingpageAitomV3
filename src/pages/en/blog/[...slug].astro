@@ -1,0 +1,35 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../../layouts/Layout.astro';
+import Nav from '../../../components/Nav.astro';
+import Footer from '../../../components/Footer.astro';
+import BlogArticle from '../../../components/BlogArticle.astro';
+import { altPair } from '../../../i18n/blogAlternates';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft && data.lang === 'en');
+  const sorted = posts.sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime());
+  return sorted.map((post) => ({
+    params: { slug: post.id },
+    props: { post, related: sorted.filter((p) => p.id !== post.id).slice(0, 2) },
+  }));
+}
+
+const { post, related } = Astro.props;
+const pair = altPair(post.id, 'en');
+const frUrl = pair ? `/blog/${pair.fr}` : '/blog';
+const translations = { fr: pair ? `/blog/${pair.fr}/` : undefined, en: `/en/blog/${post.id}/` };
+const heroAbs = new URL(post.data.heroImage, 'https://aitom.fr').href;
+---
+
+<Layout
+  lang="en"
+  title={`${post.data.title} · Aitom Blog`}
+  description={post.data.description}
+  ogImage={heroAbs}
+  translations={translations}
+>
+  <Nav lang="en" altUrl={frUrl} />
+  <BlogArticle post={post} related={related} lang="en" />
+  <Footer lang="en" />
+</Layout>

@@ -1,4 +1,45 @@
 ---
+interface Props {
+  lang?: 'fr' | 'en';
+}
+const { lang = 'fr' } = Astro.props;
+
+const t = {
+  fr: {
+    eyebrow: 'Audit gratuit',
+    h: { l1: 'Réservez votre', l2: 'audit ', em: 'gratuit', after: '.' },
+    subtitle: "30 minutes pour analyser vos appels et voir précisément ce qu'un standard IA changerait pour vous. Vous repartez avec un plan clair, sans engagement.",
+    points: ['30 minutes, sans engagement', "Un plan d'action concret et chiffré", 'Opérationnel en quelques jours si vous lancez'],
+    founderRole: "Fondateur d'Aitom",
+    founderAria: 'Profil LinkedIn de Tanguy',
+    labels: { firstname: 'Prénom', lastname: 'Nom', email: 'Email professionnel', phone: 'Téléphone', activity: 'Votre activité' },
+    placeholder: 'Ex. : plombier, cabinet dentaire, dépannage…',
+    submit: 'Parler à un expert',
+    disclaimer: 'Pas un robot au bout du fil pour vous : un humain vous rappelle sous 24h pour planifier votre audit.',
+    altPrompt: 'Vous préférez écrire ?',
+    msgSuccess: 'Merci ! Votre demande est bien reçue. On vous rappelle sous 24h.',
+    msgError: 'Une erreur est survenue. Réessayez ou écrivez-nous à contact@aitom.fr.',
+    msgSending: 'Envoi…',
+    msgSent: 'Demande envoyée ✓',
+  },
+  en: {
+    eyebrow: 'Free audit',
+    h: { l1: 'Book your', l2: 'free ', em: 'audit', after: '.' },
+    subtitle: '30 minutes to review your calls and see exactly what an AI answering service would change for you. You leave with a clear plan, no commitment.',
+    points: ['30 minutes, no commitment', 'A concrete, costed action plan', 'Up and running in a few days if you move forward'],
+    founderRole: 'Founder of Aitom',
+    founderAria: "Tanguy's LinkedIn profile",
+    labels: { firstname: 'First name', lastname: 'Last name', email: 'Work email', phone: 'Phone', activity: 'Your business' },
+    placeholder: 'e.g. plumber, dental office, on-call service…',
+    submit: 'Talk to an expert',
+    disclaimer: 'No robot on the line for you: a real person calls you back within 24 hours to schedule your audit.',
+    altPrompt: 'Prefer to write?',
+    msgSuccess: "Thank you! We've got your request. We'll call you back within 24 hours.",
+    msgError: 'Something went wrong. Please try again or email us at contact@aitom.fr.',
+    msgSending: 'Sending…',
+    msgSent: 'Request sent ✓',
+  },
+}[lang];
 ---
 
 <section id="contact" class="py-section-sm md:py-section border-t border-border">
@@ -8,26 +49,22 @@
       <!-- Left: pitch -->
       <div>
         <p class="text-xs font-semibold text-accent uppercase tracking-[0.14em] mb-8" data-animate>
-          Audit gratuit
+          {t.eyebrow}
         </p>
         <h2 class="font-display font-bold text-display text-ink mb-8" data-animate data-delay="1">
-          Réservez votre<br>audit <em>gratuit</em>.
+          {t.h.l1}<br>{t.h.l2}<em>{t.h.em}</em>{t.h.after}
         </h2>
         <p class="text-[17px] leading-[1.65] text-muted mb-10 max-w-[440px]" data-animate data-delay="2">
-          30 minutes pour analyser vos appels et voir précisément ce qu'un standard IA changerait pour vous. Vous repartez avec un plan clair, sans engagement.
+          {t.subtitle}
         </p>
 
         <!-- Reassurance points -->
         <ul class="flex flex-col gap-3 list-none" data-animate data-delay="3">
-          <li class="flex items-center gap-3 text-sm text-muted">
-            <span class="text-accent">→</span> 30 minutes, sans engagement
-          </li>
-          <li class="flex items-center gap-3 text-sm text-muted">
-            <span class="text-accent">→</span> Un plan d'action concret et chiffré
-          </li>
-          <li class="flex items-center gap-3 text-sm text-muted">
-            <span class="text-accent">→</span> Opérationnel en quelques jours si vous lancez
-          </li>
+          {t.points.map((point) => (
+            <li class="flex items-center gap-3 text-sm text-muted">
+              <span class="text-accent">→</span> {point}
+            </li>
+          ))}
         </ul>
 
         <!-- Carte fondateur -->
@@ -49,53 +86,60 @@
                 target="_blank"
                 rel="noopener noreferrer"
                 class="founder-linkedin"
-                aria-label="Profil LinkedIn de Tanguy"
+                aria-label={t.founderAria}
               >
                 <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                   <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.35V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM7.12 20.45H3.55V9h3.57v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/>
                 </svg>
               </a>
             </div>
-            <p class="text-xs text-muted">Fondateur d'Aitom</p>
+            <p class="text-xs text-muted">{t.founderRole}</p>
           </div>
         </div>
       </div>
 
       <!-- Right: form -->
       <div data-animate data-delay="2">
-        <form id="audit-form" class="contact-form flex flex-col gap-5">
+        <form
+          id="audit-form"
+          class="contact-form flex flex-col gap-5"
+          data-msg-success={t.msgSuccess}
+          data-msg-error={t.msgError}
+          data-msg-sending={t.msgSending}
+          data-msg-sent={t.msgSent}
+        >
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
             <div class="field">
-              <label for="firstname">Prénom</label>
+              <label for="firstname">{t.labels.firstname}</label>
               <input type="text" id="firstname" name="firstname" autocomplete="given-name" required />
             </div>
             <div class="field">
-              <label for="lastname">Nom</label>
+              <label for="lastname">{t.labels.lastname}</label>
               <input type="text" id="lastname" name="lastname" autocomplete="family-name" required />
             </div>
           </div>
 
           <div class="field">
-            <label for="email">Email professionnel</label>
+            <label for="email">{t.labels.email}</label>
             <input type="email" id="email" name="email" autocomplete="email" required />
           </div>
 
           <div class="field">
-            <label for="phone">Téléphone</label>
+            <label for="phone">{t.labels.phone}</label>
             <input type="tel" id="phone" name="phone" autocomplete="tel" required />
           </div>
 
           <div class="field">
-            <label for="activity">Votre activité</label>
-            <textarea id="activity" name="activity" rows="3" placeholder="Ex. : plombier, cabinet dentaire, dépannage…" required></textarea>
+            <label for="activity">{t.labels.activity}</label>
+            <textarea id="activity" name="activity" rows="3" placeholder={t.placeholder} required></textarea>
           </div>
 
           <button type="submit" class="btn-primary inline-block bg-accent text-bg text-sm font-semibold px-7 py-[15px] rounded mt-1 w-full sm:w-auto">
-            Parler à un expert
+            {t.submit}
           </button>
 
           <p class="text-xs text-faint mt-1">
-            Pas un robot au bout du fil pour vous : un humain vous rappelle sous 24h pour planifier votre audit.
+            {t.disclaimer}
           </p>
 
           <p class="form-status" data-status aria-live="polite"></p>
@@ -103,7 +147,7 @@
 
         <!-- Alternative contact -->
         <p class="text-sm text-muted mt-8 pt-8 border-t border-border">
-          Vous préférez écrire ?
+          {t.altPrompt}
           <a href="mailto:contact@aitom.fr" class="text-ink hover:text-accent transition-colors duration-300 font-medium">contact@aitom.fr</a>
         </p>
       </div>
@@ -198,6 +242,8 @@
     const WEBHOOK_URL = 'https://n8n-u41084.vm.elestio.app/webhook/e6dde53f-afd3-49d2-bd03-f2b9df7060c2';
     const status = form.querySelector('[data-status]') as HTMLElement | null;
     const button = form.querySelector('button[type="submit"]') as HTMLButtonElement | null;
+    // Messages localisés (FR/EN) fournis via data-attributs sur le <form>.
+    const M = form.dataset;
 
     const showStatus = (msg: string, type: string) => {
       if (!status) return;
@@ -220,8 +266,8 @@
         page: window.location.href,
       };
 
-      const originalLabel = button?.textContent || 'Parler à un expert';
-      if (button) { button.disabled = true; button.textContent = 'Envoi…'; }
+      const originalLabel = button?.textContent?.trim() || '';
+      if (button) { button.disabled = true; button.textContent = M.msgSending || ''; }
       showStatus('', '');
 
       try {
@@ -234,11 +280,11 @@
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
         form.reset();
-        showStatus('Merci ! Votre demande est bien reçue. On vous rappelle sous 24h.', 'success');
-        if (button) button.textContent = 'Demande envoyée ✓';
+        showStatus(M.msgSuccess || '', 'success');
+        if (button) button.textContent = M.msgSent || '';
       } catch (err) {
-        console.error('Envoi du webhook échoué :', err);
-        showStatus('Une erreur est survenue. Réessayez ou écrivez-nous à contact@aitom.fr.', 'error');
+        console.error('Webhook submission failed:', err);
+        showStatus(M.msgError || '', 'error');
         if (button) { button.disabled = false; button.textContent = originalLabel; }
       }
     });

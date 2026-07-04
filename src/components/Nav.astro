@@ -1,30 +1,45 @@
 ---
-// Depuis une page interne (blog, mentions…), les ancres doivent renvoyer vers
-// l'accueil avant de scroller. Sur l'accueil, on garde l'ancre pure (Lenis).
-const home = Astro.url.pathname === '/' ? '' : '/';
+interface Props {
+  lang?: 'fr' | 'en';
+  /** URL de la page dans l'autre langue (pour le sélecteur FR/EN). */
+  altUrl?: string;
+}
+const { lang = 'fr', altUrl } = Astro.props;
+const isEn = lang === 'en';
+const localeRoot = isEn ? '/en/' : '/';
+// Ancres : pures sur l'accueil de la langue (Lenis smooth scroll), préfixées ailleurs.
+const p = Astro.url.pathname.replace(/\/$/, '') || '/';
+const onHome = p === (isEn ? '/en' : '/');
+const anchor = (id: string) => (onHome ? `#${id}` : `${localeRoot}#${id}`);
+const switchUrl = altUrl ?? (isEn ? '/' : '/en/');
+const t = {
+  fr: { signin: 'Se connecter', cta: 'Parler à un expert', sw: 'EN', swAria: 'View the site in English', open: 'Ouvrir le menu', close: 'Fermer le menu' },
+  en: { signin: 'Sign in', cta: 'Talk to an expert', sw: 'FR', swAria: 'Voir le site en français', open: 'Open menu', close: 'Close menu' },
+}[lang];
 ---
 
 <nav id="nav" aria-label="Navigation principale">
   <div class="max-w-container mx-auto px-8 flex items-center justify-between h-[68px]">
     <!-- Wordmark -->
-    <a href="/" class="flex items-center gap-2.5 hover:opacity-80 transition-opacity duration-200" aria-label="Aitom, accueil">
+    <a href={localeRoot} class="flex items-center gap-2.5 hover:opacity-80 transition-opacity duration-200" aria-label="Aitom, accueil">
       <img src="/logo-icon.png" alt="" class="h-7 w-7" />
       <span class="font-display font-bold text-ink text-xl tracking-[-0.02em] leading-none">Aitom</span>
     </a>
 
     <!-- Desktop links -->
-    <div class="hidden md:flex items-center gap-10">
-      <a href="https://app.aitom.fr" class="text-sm text-muted hover:text-ink transition-colors duration-200 ease-expo">Se connecter</a>
+    <div class="hidden md:flex items-center gap-8">
+      <a href={switchUrl} class="lang-switch text-xs font-semibold text-muted hover:text-ink transition-colors duration-200" aria-label={t.swAria}>{t.sw}</a>
+      <a href="https://app.aitom.fr" class="text-sm text-muted hover:text-ink transition-colors duration-200 ease-expo">{t.signin}</a>
       <a
-        href={`${home}#contact`}
+        href={anchor('contact')}
         class="btn-primary text-sm font-semibold bg-accent text-bg px-5 py-2.5 rounded"
       >
-        Parler à un expert
+        {t.cta}
       </a>
     </div>
 
     <!-- Mobile toggle -->
-    <button id="nav-toggle" class="md:hidden text-muted hover:text-ink transition-colors p-1" aria-label="Ouvrir le menu" aria-expanded="false">
+    <button id="nav-toggle" class="md:hidden text-muted hover:text-ink transition-colors p-1" aria-label={t.open} data-open={t.open} data-close={t.close} aria-expanded="false">
       <svg class="burger-icon" width="22" height="22" viewBox="0 0 22 22" fill="none">
         <path class="b-top" d="M3 6h16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
         <path class="b-mid" d="M3 11h16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
@@ -38,8 +53,9 @@ const home = Astro.url.pathname === '/' ? '' : '/';
     <div class="menu-inner">
       <div class="border-t border-border bg-surface px-8 py-6">
         <div class="flex flex-col gap-5">
-          <a href="https://app.aitom.fr" class="menu-link text-sm text-muted hover:text-ink transition-colors duration-200" role="menuitem">Se connecter</a>
-          <a href={`${home}#contact`} class="menu-link text-sm font-semibold text-accent" role="menuitem">Parler à un expert →</a>
+          <a href="https://app.aitom.fr" class="menu-link text-sm text-muted hover:text-ink transition-colors duration-200" role="menuitem">{t.signin}</a>
+          <a href={anchor('contact')} class="menu-link text-sm font-semibold text-accent" role="menuitem">{t.cta} →</a>
+          <a href={switchUrl} class="menu-link text-sm text-muted hover:text-ink transition-colors duration-200" role="menuitem" aria-label={t.swAria}>{t.sw}</a>
         </div>
       </div>
     </div>
@@ -132,6 +148,15 @@ const home = Astro.url.pathname === '/' ? '' : '/';
 
   .menu-wrapper.is-open .menu-link:nth-child(1) { opacity: 1; transform: none; transition-delay: 100ms; }
   .menu-wrapper.is-open .menu-link:nth-child(2) { opacity: 1; transform: none; transition-delay: 150ms; }
+  .menu-wrapper.is-open .menu-link:nth-child(3) { opacity: 1; transform: none; transition-delay: 200ms; }
+
+  .lang-switch {
+    border: 1px solid #DCD5C8;
+    border-radius: 999px;
+    padding: 4px 10px;
+    letter-spacing: 0.06em;
+  }
+  .lang-switch:hover { border-color: #B3AA9B; }
 </style>
 
 <script>
@@ -144,7 +169,7 @@ const home = Astro.url.pathname === '/' ? '' : '/';
     menu?.classList.toggle('is-open', !isOpen);
     burger?.classList.toggle('is-open', !isOpen);
     toggle.setAttribute('aria-expanded', String(!isOpen));
-    toggle.setAttribute('aria-label', !isOpen ? 'Fermer le menu' : 'Ouvrir le menu');
+    toggle.setAttribute('aria-label', (!isOpen ? toggle.dataset.close : toggle.dataset.open) || '');
   });
 
   menu?.querySelectorAll('a').forEach((link) => {
@@ -152,7 +177,7 @@ const home = Astro.url.pathname === '/' ? '' : '/';
       menu.classList.remove('is-open');
       burger?.classList.remove('is-open');
       toggle?.setAttribute('aria-expanded', 'false');
-      toggle?.setAttribute('aria-label', 'Ouvrir le menu');
+      if (toggle) toggle.setAttribute('aria-label', toggle.dataset.open || '');
     });
   });
 

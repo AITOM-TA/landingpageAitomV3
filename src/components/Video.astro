@@ -3,6 +3,28 @@
 // #t=0.5 → affiche la frame à 0,5 s comme vignette (poster) avant lecture.
 const VIDEO_URL =
   'https://phqyccawwwpdvslxzljl.supabase.co/storage/v1/object/public/Video/TANGUY.mp4';
+
+interface Props {
+  lang?: 'fr' | 'en';
+}
+const { lang = 'fr' } = Astro.props;
+
+const t = {
+  fr: {
+    eyebrow: 'En vidéo',
+    heading: ['Aitom en', '60 secondes'],
+    subtitle: 'Qui nous sommes, ce que nous faisons et comment notre standard IA répond pour vous. La présentation la plus courte possible.',
+    bullets: ['Une équipe, pas une hotline anonyme', 'Un standard IA adapté à votre métier', 'Mise en place et suivi de A à Z'],
+    playAria: 'Lire la vidéo de présentation',
+  },
+  en: {
+    eyebrow: 'On video',
+    heading: ['Aitom in', '60 seconds'],
+    subtitle: 'Who we are, what we do, and how our AI answering service picks up for you. The shortest possible intro.',
+    bullets: ['A team, not an anonymous hotline', 'An AI service tailored to your business', 'Setup and support from A to Z'],
+    playAria: 'Play the intro video',
+  },
+}[lang];
 ---
 
 <section id="video" class="py-section-sm md:py-section border-t border-border">
@@ -11,23 +33,19 @@ const VIDEO_URL =
 
       <!-- Texte -->
       <div class="lg:order-2" data-animate data-delay="1">
-        <p class="text-xs font-semibold text-accent uppercase tracking-[0.14em] mb-3">En vidéo</p>
+        <p class="text-xs font-semibold text-accent uppercase tracking-[0.14em] mb-3">{t.eyebrow}</p>
         <h2 class="font-display font-bold text-display text-ink mb-6">
-          Aitom en<br>60 secondes
+          {t.heading[0]}<br>{t.heading[1]}
         </h2>
         <p class="text-[17px] leading-[1.65] text-muted mb-8 max-w-[440px]">
-          Qui nous sommes, ce que nous faisons et comment notre standard IA répond pour vous. La présentation la plus courte possible.
+          {t.subtitle}
         </p>
         <ul class="flex flex-col gap-3 list-none">
-          <li class="flex items-center gap-3 text-sm text-muted">
-            <span class="text-accent">→</span> Une équipe, pas une hotline anonyme
-          </li>
-          <li class="flex items-center gap-3 text-sm text-muted">
-            <span class="text-accent">→</span> Un standard IA adapté à votre métier
-          </li>
-          <li class="flex items-center gap-3 text-sm text-muted">
-            <span class="text-accent">→</span> Mise en place et suivi de A à Z
-          </li>
+          {t.bullets.map((b) => (
+            <li class="flex items-center gap-3 text-sm text-muted">
+              <span class="text-accent">→</span> {b}
+            </li>
+          ))}
         </ul>
       </div>
 
@@ -46,7 +64,7 @@ const VIDEO_URL =
               preload="metadata"
               data-video
             ></video>
-            <button class="vplay" type="button" data-play aria-label="Lire la vidéo de présentation">
+            <button class="vplay" type="button" data-play aria-label={t.playAria}>
               <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                 <path d="M8 5.14v13.72a1 1 0 0 0 1.54.84l10.79-6.86a1 1 0 0 0 0-1.68L9.54 4.3A1 1 0 0 0 8 5.14z"/>
               </svg>

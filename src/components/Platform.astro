@@ -1,18 +1,36 @@
 ---
-const secondary = [
-  {
-    src: '/app/historique.webp',
-    alt: "Historique des appels dans l'application Aitom : liste complète des appels avec date, durée et numéros.",
-    title: 'Historique des appels',
-    description: 'Chaque appel reçu, horodaté et accessible à tout moment.',
+interface Props {
+  lang?: 'fr' | 'en';
+}
+const { lang = 'fr' } = Astro.props;
+
+const t = {
+  fr: {
+    eyebrow: 'La plateforme',
+    heading: ['Tout votre accueil,', 'dans une seule app'],
+    note: 'Rien à installer. Vous suivez vos appels depuis votre téléphone ou votre ordinateur.',
+    dashAlt: "Tableau de bord Aitom : nombre d'appels traités, durée totale, durée moyenne et graphique des appels quotidiens.",
+    capBold: 'Tableau de bord.',
+    capRest: " Appels reçus, durée des conversations, activité du jour : l'essentiel en un coup d'œil.",
+    secondary: [
+      { src: '/app/historique.webp', alt: "Historique des appels dans l'application Aitom : liste complète des appels avec date, durée et numéros.", title: 'Historique des appels', description: 'Chaque appel reçu, horodaté et accessible à tout moment.' },
+      { src: '/app/transcription.webp', alt: "Détail d'une conversation dans Aitom : lecteur audio, transcription, résumé et informations de l'appel.", title: 'Transcriptions & résumés', description: "L'enregistrement, le résumé écrit et le motif de chaque appel." },
+    ],
   },
-  {
-    src: '/app/transcription.webp',
-    alt: "Détail d'une conversation dans Aitom : lecteur audio, transcription, résumé et informations de l'appel.",
-    title: 'Transcriptions & résumés',
-    description: "L'enregistrement, le résumé écrit et le motif de chaque appel.",
+  en: {
+    eyebrow: 'The platform',
+    heading: ['Your entire front desk,', 'in one app'],
+    note: 'Nothing to install. Track your calls from your phone or your computer.',
+    dashAlt: 'Aitom dashboard: number of calls handled, total time, average time and a chart of daily calls.',
+    capBold: 'Dashboard.',
+    capRest: " Calls received, conversation length, today's activity: the essentials at a glance.",
+    secondary: [
+      { src: '/app/historique.webp', alt: 'Call history in the Aitom app: full list of calls with date, duration and numbers.', title: 'Call history', description: 'Every call received, timestamped and available anytime.' },
+      { src: '/app/transcription.webp', alt: 'A conversation detail in Aitom: audio player, transcript, summary and call info.', title: 'Transcripts & summaries', description: 'The recording, the written summary and the reason for every call.' },
+    ],
   },
-];
+}[lang];
+const secondary = t.secondary;
 ---
 
 <section id="plateforme" class="py-section-sm md:py-section border-t border-border">
@@ -21,11 +39,11 @@ const secondary = [
     <!-- Header -->
     <div class="flex flex-col md:flex-row md:items-end md:justify-between mb-16 gap-6">
       <div data-animate>
-        <p class="text-xs font-semibold text-accent uppercase tracking-[0.14em] mb-3">La plateforme</p>
-        <h2 class="font-display font-bold text-display text-ink">Tout votre accueil,<br>dans une seule app</h2>
+        <p class="text-xs font-semibold text-accent uppercase tracking-[0.14em] mb-3">{t.eyebrow}</p>
+        <h2 class="font-display font-bold text-display text-ink">{t.heading[0]}<br>{t.heading[1]}</h2>
       </div>
       <p class="text-sm text-muted max-w-[300px] md:text-right leading-relaxed" data-animate data-delay="1">
-        Rien à installer. Vous suivez vos appels depuis votre téléphone ou votre ordinateur.
+        {t.note}
       </p>
     </div>
 
@@ -36,7 +54,7 @@ const secondary = [
       </div>
       <img
         src="/app/dashboard.webp"
-        alt="Tableau de bord Aitom : nombre d'appels traités, durée totale, durée moyenne et graphique des appels quotidiens."
+        alt={t.dashAlt}
         width="1920"
         height="1080"
         loading="lazy"
@@ -45,7 +63,7 @@ const secondary = [
       />
     </figure>
     <figcaption class="text-sm text-muted mt-4 max-w-[520px]" data-animate>
-      <span class="text-ink font-medium">Tableau de bord.</span> Appels reçus, durée des conversations, activité du jour : l'essentiel en un coup d'œil.
+      <span class="text-ink font-medium">{t.capBold}</span>{t.capRest}
     </figcaption>
 
     <!-- Secondary screens -->

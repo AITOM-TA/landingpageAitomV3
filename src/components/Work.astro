@@ -1,30 +1,31 @@
 ---
-const projects = [
-  {
-    number: '01',
-    title: 'Standard IA & gestion des urgences',
-    tag: 'Éditeur de logiciel B2B',
-    description:
-      "Notre IA répond aux appels, qualifie chaque demande et transfère les urgences au bon interlocuteur en temps réel. Plus aucun cas critique ne reste sans réponse.",
-    large: true,
+interface Props {
+  lang?: 'fr' | 'en';
+}
+const { lang = 'fr' } = Astro.props;
+
+const t = {
+  fr: {
+    eyebrow: 'Projets',
+    heading: ['Ce que nous avons', 'construit'],
+    note: 'Projets sélectionnés, données anonymisées.',
+    cards: [
+      { n: '01', tag: 'Éditeur de logiciel B2B', title: 'Standard IA & gestion des urgences', desc: "Notre IA répond aux appels, qualifie chaque demande et transfère les urgences au bon interlocuteur en temps réel. Plus aucun cas critique ne reste sans réponse.", aria: 'Projet : standard IA & gestion des urgences' },
+      { n: '02', tag: 'Cabinet de kinésithérapie', title: '100 appels par jour, zéro manqué', desc: "L'IA décroche chaque appel et gère les rendez-vous directement dans l'agenda. Les praticiens restent avec leurs patients.", aria: 'Projet : 100 appels par jour, zéro manqué' },
+      { n: '03', tag: 'Cabinet comptable', title: 'Accueil & suivi des dossiers', desc: "L'IA gère les appels clients, répond aux questions courantes et renseigne les dossiers en direct. Des heures gagnées chaque semaine.", aria: 'Projet : accueil & suivi des dossiers' },
+    ],
   },
-  {
-    number: '02',
-    title: '100 appels par jour, zéro manqué',
-    tag: 'Cabinet de kinésithérapie',
-    description:
-      "L'IA décroche chaque appel et gère les rendez-vous directement dans l'agenda. Les praticiens restent avec leurs patients.",
-    large: false,
+  en: {
+    eyebrow: 'Case studies',
+    heading: ["What we've", 'built'],
+    note: 'Selected projects, anonymized data.',
+    cards: [
+      { n: '01', tag: 'B2B software company', title: 'AI answering & urgent call handling', desc: 'Our AI answers calls, qualifies every request and routes urgent ones to the right person in real time. No critical case ever goes unanswered.', aria: 'Case study: AI answering and urgent call handling' },
+      { n: '02', tag: 'Physical therapy practice', title: '100 calls a day, zero missed', desc: 'The AI picks up every call and manages appointments right in the calendar. Providers stay with their patients.', aria: 'Case study: 100 calls a day, zero missed' },
+      { n: '03', tag: 'Accounting firm', title: 'Call answering & case follow-up', desc: 'The AI handles client calls, answers common questions and updates files live. Hours saved every week.', aria: 'Case study: call answering and case follow-up' },
+    ],
   },
-  {
-    number: '03',
-    title: 'Accueil & suivi des dossiers',
-    tag: 'Cabinet comptable',
-    description:
-      "L'IA gère les appels clients, répond aux questions courantes et renseigne les dossiers en direct. Des heures gagnées chaque semaine.",
-    large: false,
-  },
-];
+}[lang];
 ---
 
 <section id="projets" class="py-section-sm md:py-section border-t border-border">
@@ -33,71 +34,34 @@ const projects = [
     <!-- Header -->
     <div class="flex flex-col md:flex-row md:items-end md:justify-between mb-14 gap-6">
       <div data-animate>
-        <p class="text-xs font-semibold text-accent uppercase tracking-[0.14em] mb-3">Projets</p>
-        <h2 class="font-display font-bold text-display text-ink">Ce que nous avons<br><em>construit</em></h2>
+        <p class="text-xs font-semibold text-accent uppercase tracking-[0.14em] mb-3">{t.eyebrow}</p>
+        <h2 class="font-display font-bold text-display text-ink">{t.heading[0]}<br><em>{t.heading[1]}</em></h2>
       </div>
       <p class="text-sm text-muted" data-animate data-delay="1">
-        Projets sélectionnés, données anonymisées.
+        {t.note}
       </p>
     </div>
 
     <!-- Grid -->
     <div class="work-grid" data-animate data-delay="1">
-
-      <!-- Large card -->
-      <a href="#contact" class="work-card work-card--large group" aria-label="Projet : standard IA & gestion des urgences">
-        <div class="work-card-inner">
-          <div class="flex items-start justify-between mb-auto">
-            <span class="text-xs font-sans text-faint">01</span>
-            <span class="tag">Éditeur de logiciel B2B</span>
+      {t.cards.map((card, i) => (
+        <a href="#contact" class:list={['work-card', 'group', i === 0 && 'work-card--large']} aria-label={card.aria}>
+          <div class="work-card-inner">
+            <div class="flex items-start justify-between mb-auto">
+              <span class="text-xs font-sans text-faint">{card.n}</span>
+              <span class="tag">{card.tag}</span>
+            </div>
+            <div class="mt-auto">
+              <h3 class="font-display font-bold text-display-sm text-ink mb-3 group-hover:text-ink transition-colors duration-200">
+                {card.title}
+              </h3>
+              <p class="text-sm text-muted leading-relaxed">
+                {card.desc}
+              </p>
+            </div>
           </div>
-          <div class="mt-auto">
-            <h3 class="font-display font-bold text-display-sm text-ink mb-3 group-hover:text-ink transition-colors duration-200">
-              Standard IA & gestion des urgences
-            </h3>
-            <p class="text-sm text-muted leading-relaxed">
-              Notre IA répond aux appels, qualifie chaque demande et transfère les urgences au bon interlocuteur en temps réel. Plus aucun cas critique ne reste sans réponse.
-            </p>
-          </div>
-        </div>
-      </a>
-
-      <!-- Small card 2 -->
-      <a href="#contact" class="work-card group" aria-label="Projet : 100 appels par jour, zéro manqué">
-        <div class="work-card-inner">
-          <div class="flex items-start justify-between mb-auto">
-            <span class="text-xs font-sans text-faint">02</span>
-            <span class="tag">Cabinet de kinésithérapie</span>
-          </div>
-          <div class="mt-auto">
-            <h3 class="font-display font-bold text-display-sm text-ink mb-3">
-              100 appels par jour, zéro manqué
-            </h3>
-            <p class="text-sm text-muted leading-relaxed">
-              L'IA décroche chaque appel et gère les rendez-vous directement dans l'agenda. Les praticiens restent avec leurs patients.
-            </p>
-          </div>
-        </div>
-      </a>
-
-      <!-- Small card 3 -->
-      <a href="#contact" class="work-card group" aria-label="Projet : accueil & suivi des dossiers">
-        <div class="work-card-inner">
-          <div class="flex items-start justify-between mb-auto">
-            <span class="text-xs font-sans text-faint">03</span>
-            <span class="tag">Cabinet comptable</span>
-          </div>
-          <div class="mt-auto">
-            <h3 class="font-display font-bold text-display-sm text-ink mb-3">
-              Accueil & suivi des dossiers
-            </h3>
-            <p class="text-sm text-muted leading-relaxed">
-              L'IA gère les appels clients, répond aux questions courantes et renseigne les dossiers en direct. Des heures gagnées chaque semaine.
-            </p>
-          </div>
-        </div>
-      </a>
-
+        </a>
+      ))}
     </div>
 
   </div>

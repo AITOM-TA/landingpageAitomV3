@@ -10,16 +10,37 @@ interface Props {
   noindex?: boolean;
   /** URL absolue de l'image de partage (défaut : /og.png). */
   ogImage?: string;
+  /** Langue de la page : 'fr' (racine) ou 'en' (/en). */
+  lang?: 'fr' | 'en';
+  /** Chemins relatifs des versions FR/EN pour les balises hreflang. */
+  translations?: { fr?: string; en?: string };
 }
 
-const {
-  title = 'Aitom · Le standard téléphonique IA qui ne rate aucun appel',
-  description = "Aitom répond à 100 % de vos appels 24h/24, prend vos rendez-vous et qualifie vos clients. Le standard téléphonique IA pour les artisans, cabinets et PME de services.",
-  noindex = false,
-  ogImage,
-} = Astro.props;
-
 const siteUrl = 'https://aitom.fr';
+
+const DEFAULTS = {
+  fr: {
+    title: 'Aitom · Le standard téléphonique IA qui ne rate aucun appel',
+    description:
+      "Aitom répond à 100 % de vos appels 24h/24, prend vos rendez-vous et qualifie vos clients. Le standard téléphonique IA pour les artisans, cabinets et PME de services.",
+    ogLocale: 'fr_FR',
+    orgDescription:
+      'Standard téléphonique IA pour artisans, cabinets et PME de services : réponse à 100 % des appels, 24h/24, prise de rendez-vous et qualification des clients.',
+  },
+  en: {
+    title: 'Aitom · The AI Answering Service That Never Misses a Call',
+    description:
+      'Aitom answers 100% of your calls 24/7, books your appointments and qualifies your customers. The AI answering service for tradespeople, practices and service SMBs.',
+    ogLocale: 'en_US',
+    orgDescription:
+      'AI answering service for tradespeople, practices and service SMBs: 100% of calls answered, 24/7, with appointment scheduling and customer qualification.',
+  },
+};
+
+const { noindex = false, ogImage, lang = 'fr', translations } = Astro.props;
+const d = DEFAULTS[lang];
+const title = Astro.props.title ?? d.title;
+const description = Astro.props.description ?? d.description;
 
 // Canonique propre à chaque page (slash final pour coller aux URLs du sitemap).
 const pathname = Astro.url.pathname.endsWith('/') ? Astro.url.pathname : `${Astro.url.pathname}/`;
@@ -27,14 +48,20 @@ const canonical = new URL(pathname, siteUrl).href;
 
 const ogImageUrl = ogImage ?? `${siteUrl}/og.png`;
 
+// Alternances de langue (hreflang) : rendues seulement si fournies.
+const alternates = translations
+  ? Object.entries(translations)
+      .filter(([, href]) => href)
+      .map(([hreflang, href]) => ({ hreflang, href: new URL(href!, siteUrl).href }))
+  : [];
+
 const orgSchema = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
   name: 'Aitom',
   url: siteUrl,
   logo: `${siteUrl}/logo-icon.png`,
-  description:
-    'Standard téléphonique IA pour artisans, cabinets et PME de services : réponse à 100 % des appels, 24h/24, prise de rendez-vous et qualification des clients.',
+  description: d.orgDescription,
   email: 'contact@aitom.fr',
   telephone: '+33 7 77 31 32 45',
   sameAs: ['https://www.linkedin.com/company/aitom'],
@@ -42,13 +69,15 @@ const orgSchema = {
 ---
 
 <!doctype html>
-<html lang="fr" class="scroll-smooth">
+<html lang={lang} class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="canonical" href={canonical} />
+    {alternates.map((a) => <link rel="alternate" hreflang={a.hreflang} href={a.href} />)}
+    {translations?.fr && <link rel="alternate" hreflang="x-default" href={new URL(translations.fr, siteUrl).href} />}
     {noindex && <meta name="robots" content="noindex, nofollow" />}
 
     <!-- Google tag (gtag.js), GA4, Consent Mode v2 : tout est refusé par défaut
@@ -80,7 +109,7 @@ const orgSchema = {
     <meta property="og:url" content={canonical} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:locale" content={d.ogLocale} />
     <meta property="og:image" content={ogImageUrl} />
     <meta property="og:image:alt" content={title} />
 

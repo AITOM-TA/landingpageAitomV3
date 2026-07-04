@@ -1,6 +1,40 @@
 ---
 // Mockup téléphone 2.5D : l'assistant IA répond, qualifie et prend le rendez-vous.
 const waveBars = Array.from({ length: 5 });
+
+interface Props {
+  lang?: 'fr' | 'en';
+}
+const { lang = 'fr' } = Astro.props;
+
+const t = {
+  fr: {
+    sub: 'Appel en cours · ',
+    tag: 'Transcription en direct',
+    msgs: [
+      { who: 'ai', text: 'Bonjour, vous êtes bien chez Aitom, je suis votre assistant. Comment puis-je vous aider ?' },
+      { who: 'in', text: "Bonjour, j'aurais aimé quelques renseignements sur vos services." },
+      { who: 'ai', text: 'Avec plaisir. Préférez-vous que je vous envoie une présentation, ou un rendez-vous avec un conseiller ?' },
+      { who: 'in', text: 'Un rendez-vous, ce serait parfait.' },
+      { who: 'ai', text: "Très bien. J'ai une disponibilité jeudi à 14h ou vendredi à 10h." },
+      { who: 'in', text: "Jeudi 14h, c'est noté." },
+      { who: 'ai', text: "Parfait, c'est réservé ✓ Vous recevez la confirmation par SMS. Belle journée !" },
+    ],
+  },
+  en: {
+    sub: 'On call · ',
+    tag: 'Live transcript',
+    msgs: [
+      { who: 'ai', text: "Hi, you've reached Aitom, I'm your assistant. How can I help?" },
+      { who: 'in', text: "Hi, I'd like some information about your services." },
+      { who: 'ai', text: 'Happy to help. Would you prefer I send you an overview, or book a call with an advisor?' },
+      { who: 'in', text: 'A call would be perfect.' },
+      { who: 'ai', text: 'Great. I have an opening Thursday at 2 PM or Friday at 10 AM.' },
+      { who: 'in', text: 'Thursday at 2 PM works.' },
+      { who: 'ai', text: "Perfect, you're booked ✓ You'll get a confirmation by text. Have a great day!" },
+    ],
+  },
+}[lang];
 ---
 
 <div class="phone-stage" aria-hidden="true">
@@ -37,7 +71,7 @@ const waveBars = Array.from({ length: 5 });
           <img src="/logo-icon.png" alt="Aitom" class="ph-avatar" />
           <div class="ph-id">
             <span class="ph-name">Aitom</span>
-            <span class="ph-sub"><span class="ph-livedot"></span>Appel en cours · <span class="ph-timer" data-timer>00:00</span></span>
+            <span class="ph-sub"><span class="ph-livedot"></span>{t.sub}<span class="ph-timer" data-timer>00:00</span></span>
           </div>
           <div class="wave ph-wave">
             {waveBars.map((_, i) => <span class="bar" style={`--i:${i}`}></span>)}
@@ -45,14 +79,8 @@ const waveBars = Array.from({ length: 5 });
         </div>
         <!-- Conversation -->
         <div class="ph-body" data-conversation>
-          <span class="ph-tag">Transcription en direct</span>
-          <div class="msg msg--ai">Bonjour, vous êtes bien chez Aitom, je suis votre assistant. Comment puis-je vous aider ?</div>
-          <div class="msg msg--in">Bonjour, j'aurais aimé quelques renseignements sur vos services.</div>
-          <div class="msg msg--ai">Avec plaisir. Préférez-vous que je vous envoie une présentation, ou un rendez-vous avec un conseiller ?</div>
-          <div class="msg msg--in">Un rendez-vous, ce serait parfait.</div>
-          <div class="msg msg--ai">Très bien. J'ai une disponibilité jeudi à 14h ou vendredi à 10h.</div>
-          <div class="msg msg--in">Jeudi 14h, c'est noté.</div>
-          <div class="msg msg--ai">Parfait, c'est réservé ✓ Vous recevez la confirmation par SMS. Belle journée !</div>
+          <span class="ph-tag">{t.tag}</span>
+          {t.msgs.map((m) => <div class={`msg msg--${m.who}`}>{m.text}</div>)}
           <div class="typing"><span></span><span></span><span></span></div>
         </div>
       </div>

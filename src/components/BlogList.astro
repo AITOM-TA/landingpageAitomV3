@@ -1,0 +1,193 @@
+---
+import { getCollection } from 'astro:content';
+
+interface Props {
+  lang?: 'fr' | 'en';
+}
+const { lang = 'fr' } = Astro.props;
+
+const t = {
+  fr: {
+    subtitle:
+      "Guides et conseils sur le standard téléphonique IA, l'accueil client et l'automatisation des appels pour les entreprises de services.",
+    searchPlaceholder: 'Rechercher un article…',
+    searchAria: 'Rechercher un article',
+    empty: 'Aucun article ne correspond à votre recherche.',
+    dateLocale: 'fr-FR',
+    blogBase: '/blog',
+  },
+  en: {
+    subtitle:
+      'Guides and tips on AI answering services, call handling and phone automation for service businesses.',
+    searchPlaceholder: 'Search articles…',
+    searchAria: 'Search articles',
+    empty: 'No article matches your search.',
+    dateLocale: 'en-US',
+    blogBase: '/en/blog',
+  },
+}[lang];
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft && data.lang === lang)).sort(
+  (a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime()
+);
+
+const fmtDate = (d: Date) =>
+  new Intl.DateTimeFormat(t.dateLocale, { day: 'numeric', month: 'long', year: 'numeric' }).format(d);
+const readingTime = (body: string) => Math.max(1, Math.round(body.trim().split(/\s+/).length / 200));
+
+const cards = posts.map((p) => ({
+  slug: p.id,
+  ...p.data,
+  date: fmtDate(p.data.publishDate),
+  minutes: readingTime(p.body ?? ''),
+  search: `${p.data.title} ${p.data.description}`.toLowerCase(),
+}));
+---
+
+<main>
+  <!-- Hero -->
+  <section class="blog-hero">
+    <div class="max-w-container mx-auto px-8 text-center">
+      <h1 class="font-display font-bold text-hero text-ink mb-6" data-animate>Blog Aitom</h1>
+      <p class="text-[19px] leading-[1.6] text-muted max-w-[620px] mx-auto mb-10" data-animate data-delay="1">
+        {t.subtitle}
+      </p>
+      <div class="search-wrap" data-animate data-delay="2">
+        <svg class="search-ic" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2" />
+          <path d="m20 20-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+        </svg>
+        <input id="blog-search" type="search" placeholder={t.searchPlaceholder} aria-label={t.searchAria} autocomplete="off" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Grille -->
+  <section class="max-w-container mx-auto px-8 pb-section-sm md:pb-section">
+    <div id="blog-grid" class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+      {cards.map((post, i) => (
+        <a
+          href={`${t.blogBase}/${post.slug}`}
+          class="blog-card group"
+          data-search={post.search}
+          data-animate
+          data-delay={String((i % 3) + 1)}
+        >
+          <div class="card-thumb">
+            <img src={post.heroImage} alt={post.heroAlt} width="1600" height="900" loading="lazy" decoding="async" />
+            <span class="card-rt">{post.minutes} min</span>
+          </div>
+          <div class="card-body">
+            <div class="card-meta">
+              <span class="mi">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <rect x="3" y="5" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.7" />
+                  <path d="M3 9h18M8 3v4M16 3v4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" />
+                </svg>
+                {post.date}
+              </span>
+              <span class="mi">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <circle cx="12" cy="8" r="3.5" stroke="currentColor" stroke-width="1.7" />
+                  <path d="M5 20c0-3.3 3.1-5.5 7-5.5s7 2.2 7 5.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" />
+                </svg>
+                {post.author}
+              </span>
+            </div>
+            <h2 class="card-title">{post.title}</h2>
+            <p class="card-excerpt">{post.description}</p>
+          </div>
+        </a>
+      ))}
+    </div>
+    <p id="blog-empty" class="hidden text-center text-muted py-20">{t.empty}</p>
+  </section>
+</main>
+
+<style>
+  .blog-hero {
+    position: relative;
+    padding: calc(68px + 5rem) 0 4.5rem;
+    background:
+      radial-gradient(120% 80% at 50% 0%, rgba(105, 103, 251, 0.10), transparent 60%),
+      linear-gradient(180deg, #F1EDE4 0%, #FAF8F2 100%);
+    border-bottom: 1px solid #DCD5C8;
+  }
+
+  .search-wrap { position: relative; max-width: 560px; margin: 0 auto; }
+  .search-ic { position: absolute; left: 22px; top: 50%; transform: translateY(-50%); color: #B3AA9B; pointer-events: none; }
+  #blog-search {
+    width: 100%;
+    padding: 18px 22px 18px 54px;
+    font: inherit;
+    font-size: 16px;
+    color: #1A1712;
+    background: #FAF8F2;
+    border: 1px solid #DCD5C8;
+    border-radius: 999px;
+    box-shadow: 0 4px 24px rgba(26, 23, 18, 0.05);
+    transition: border-color 250ms ease, box-shadow 250ms ease;
+  }
+  #blog-search::placeholder { color: #B3AA9B; }
+  #blog-search:focus { outline: none; border-color: #6967FB; box-shadow: 0 0 0 4px rgba(105, 103, 251, 0.12); }
+
+  .blog-card {
+    display: flex;
+    flex-direction: column;
+    background: #FAF8F2;
+    border: 1px solid #DCD5C8;
+    border-radius: 14px;
+    overflow: hidden;
+    transition: transform 400ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 400ms cubic-bezier(0.16, 1, 0.3, 1), border-color 400ms ease;
+  }
+  .blog-card:hover { transform: translateY(-4px); box-shadow: 0 18px 40px rgba(26, 23, 18, 0.10); border-color: #C3C2FD; }
+  .blog-card:focus-visible { outline: 2px solid #6967FB; outline-offset: 3px; }
+
+  .card-thumb { position: relative; aspect-ratio: 16 / 10; overflow: hidden; background: #E7E1D5; }
+  .card-thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform 600ms cubic-bezier(0.16, 1, 0.3, 1); }
+  .blog-card:hover .card-thumb img { transform: scale(1.04); }
+
+  .card-rt {
+    position: absolute; top: 14px; right: 14px;
+    font-size: 12px; font-weight: 600; color: #4744D8;
+    background: rgba(250, 248, 242, 0.92); backdrop-filter: blur(8px);
+    padding: 5px 11px; border-radius: 999px;
+    box-shadow: 0 2px 8px rgba(26, 23, 18, 0.08);
+  }
+
+  .card-body { display: flex; flex-direction: column; gap: 12px; padding: 22px 22px 26px; flex: 1; }
+  .card-meta { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 13px; color: #6B635A; }
+  .card-meta .mi { display: inline-flex; align-items: center; gap: 6px; }
+  .card-meta svg { color: #B3AA9B; }
+
+  .card-title {
+    font-family: 'Figtree', system-ui, sans-serif;
+    font-weight: 700; font-size: 20px; line-height: 1.28; letter-spacing: -0.01em;
+    color: #1A1712; text-wrap: balance; transition: color 250ms ease;
+  }
+  .blog-card:hover .card-title { color: #4744D8; }
+
+  .card-excerpt {
+    font-size: 14.5px; line-height: 1.6; color: #6B635A;
+    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+  }
+
+  @media (max-width: 767px) { .blog-hero { padding: calc(68px + 3rem) 0 3rem; } }
+</style>
+
+<script>
+  const input = document.getElementById('blog-search') as HTMLInputElement | null;
+  const cards = Array.from(document.querySelectorAll<HTMLElement>('.blog-card'));
+  const empty = document.getElementById('blog-empty');
+
+  input?.addEventListener('input', () => {
+    const q = input.value.trim().toLowerCase();
+    let visible = 0;
+    for (const card of cards) {
+      const match = !q || (card.dataset.search ?? '').includes(q);
+      card.style.display = match ? '' : 'none';
+      if (match) visible++;
+    }
+    empty?.classList.toggle('hidden', visible !== 0);
+  });
+</script>

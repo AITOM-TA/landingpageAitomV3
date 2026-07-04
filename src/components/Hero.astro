@@ -1,8 +1,39 @@
 ---
 import PhoneMock from './PhoneMock.astro';
+
+interface Props {
+  lang?: 'fr' | 'en';
+}
+const { lang = 'fr' } = Astro.props;
+
+const t = {
+  fr: {
+    aria: 'Héro',
+    label: 'Standard téléphonique IA',
+    ctaPrimary: "Discuter d'un projet",
+    ctaSecondary: 'Voir les résultats',
+    marquee: [
+      'Appels captés 24/7', 'Prise de rendez-vous', 'Zéro appel manqué', 'Qualification des leads',
+      'Disponible nuit & week-end', 'Réponse immédiate', 'Transfert intelligent', 'Standard sur mesure',
+    ],
+  },
+  en: {
+    aria: 'Hero',
+    label: 'AI Answering Service',
+    ctaPrimary: "Let's talk",
+    ctaSecondary: 'See the results',
+    marquee: [
+      'Calls answered 24/7', 'Appointment scheduling', 'Zero missed calls', 'Lead qualification',
+      'Nights & weekends', 'Instant response', 'Smart transfer', 'Custom answering',
+    ],
+  },
+}[lang];
+
+// Boucle marquee : la liste répétée pour un défilement sans couture.
+const marqueeLoop = [...t.marquee, ...t.marquee, ...t.marquee, ...t.marquee];
 ---
 
-<section class="relative min-h-screen flex flex-col pt-[68px] overflow-hidden" aria-label="Héro">
+<section class="relative min-h-screen flex flex-col pt-[68px] overflow-hidden" aria-label={t.aria}>
 
   <!-- Main content -->
   <div class="flex-1 flex items-center relative z-10">
@@ -14,17 +45,23 @@ import PhoneMock from './PhoneMock.astro';
 
           <!-- Label -->
           <p class="text-xs font-sans font-semibold text-accent uppercase tracking-[0.14em] mb-5" data-animate>
-            Standard téléphonique IA
+            {t.label}
           </p>
 
           <!-- Headline -->
           <h1 class="font-display font-bold text-hero text-ink mb-5" data-animate data-delay="1">
-            Un appel manqué,<br>c'est un client <em>perdu</em>.
+            {lang === 'en' ? (
+              <Fragment>A missed call<br>is a lost <em>customer</em>.</Fragment>
+            ) : (
+              <Fragment>Un appel manqué,<br>c'est un client <em>perdu</em>.</Fragment>
+            )}
           </h1>
 
           <!-- Subtitle -->
           <p class="text-[17px] leading-[1.65] text-muted max-w-[520px] mb-8" data-animate data-delay="2">
-            Aitom répond à 100 % de vos appels, 24h/24, prend vos rendez-vous et renseigne vos clients, même quand vous êtes occupé, en rendez-vous ou déjà au téléphone.
+            {lang === 'en'
+              ? "Aitom answers 100% of your calls, 24/7, books your appointments and helps your customers, even when you're busy, in a meeting, or already on the phone."
+              : 'Aitom répond à 100 % de vos appels, 24h/24, prend vos rendez-vous et renseigne vos clients, même quand vous êtes occupé, en rendez-vous ou déjà au téléphone.'}
           </p>
 
           <!-- CTAs -->
@@ -33,13 +70,13 @@ import PhoneMock from './PhoneMock.astro';
               href="#contact"
               class="btn-primary inline-block bg-accent text-bg text-sm font-semibold px-7 py-[14px] rounded"
             >
-              Discuter d'un projet
+              {t.ctaPrimary}
             </a>
             <a
               href="#projets"
               class="btn-secondary inline-flex items-center gap-2 text-sm text-muted hover:text-ink transition-colors duration-300 ease-expo group"
             >
-              <span class="btn-label">Voir les résultats</span>
+              <span class="btn-label">{t.ctaSecondary}</span>
               <span class="inline-block group-hover:translate-x-2 transition-transform duration-300 ease-expo">→</span>
             </a>
           </div>
@@ -48,7 +85,7 @@ import PhoneMock from './PhoneMock.astro';
 
         <!-- Mockup téléphone -->
         <div class="flex justify-center lg:justify-end" data-animate data-delay="2">
-          <PhoneMock />
+          <PhoneMock lang={lang} />
         </div>
 
       </div>
@@ -60,70 +97,12 @@ import PhoneMock from './PhoneMock.astro';
     <div class="py-[14px]">
       <div class="marquee-row whitespace-nowrap">
         <span class="marquee-inner inline-flex items-center gap-0">
-          <span class="marquee-item">Appels captés 24/7</span>
-          <span class="marquee-dot">·</span>
-          <span class="marquee-item">Prise de rendez-vous</span>
-          <span class="marquee-dot">·</span>
-          <span class="marquee-item">Zéro appel manqué</span>
-          <span class="marquee-dot">·</span>
-          <span class="marquee-item">Qualification des leads</span>
-          <span class="marquee-dot">·</span>
-          <span class="marquee-item">Disponible nuit &amp; week-end</span>
-          <span class="marquee-dot">·</span>
-          <span class="marquee-item">Réponse immédiate</span>
-          <span class="marquee-dot">·</span>
-          <span class="marquee-item">Transfert intelligent</span>
-          <span class="marquee-dot">·</span>
-          <span class="marquee-item">Standard sur mesure</span>
-          <span class="marquee-dot">·</span>
-          <span class="marquee-item">Appels captés 24/7</span>
-          <span class="marquee-dot">·</span>
-          <span class="marquee-item">Prise de rendez-vous</span>
-          <span class="marquee-dot">·</span>
-          <span class="marquee-item">Zéro appel manqué</span>
-          <span class="marquee-dot">·</span>
-          <span class="marquee-item">Qualification des leads</span>
-          <span class="marquee-dot">·</span>
-          <span class="marquee-item">Disponible nuit &amp; week-end</span>
-          <span class="marquee-dot">·</span>
-          <span class="marquee-item">Réponse immédiate</span>
-          <span class="marquee-dot">·</span>
-          <span class="marquee-item">Transfert intelligent</span>
-          <span class="marquee-dot">·</span>
-          <span class="marquee-item">Standard sur mesure</span>
-          <span class="marquee-dot">·</span>
-          <span class="marquee-item">Appels captés 24/7</span>
-          <span class="marquee-dot">·</span>
-          <span class="marquee-item">Prise de rendez-vous</span>
-          <span class="marquee-dot">·</span>
-          <span class="marquee-item">Zéro appel manqué</span>
-          <span class="marquee-dot">·</span>
-          <span class="marquee-item">Qualification des leads</span>
-          <span class="marquee-dot">·</span>
-          <span class="marquee-item">Disponible nuit &amp; week-end</span>
-          <span class="marquee-dot">·</span>
-          <span class="marquee-item">Réponse immédiate</span>
-          <span class="marquee-dot">·</span>
-          <span class="marquee-item">Transfert intelligent</span>
-          <span class="marquee-dot">·</span>
-          <span class="marquee-item">Standard sur mesure</span>
-          <span class="marquee-dot">·</span>
-          <span class="marquee-item">Appels captés 24/7</span>
-          <span class="marquee-dot">·</span>
-          <span class="marquee-item">Prise de rendez-vous</span>
-          <span class="marquee-dot">·</span>
-          <span class="marquee-item">Zéro appel manqué</span>
-          <span class="marquee-dot">·</span>
-          <span class="marquee-item">Qualification des leads</span>
-          <span class="marquee-dot">·</span>
-          <span class="marquee-item">Disponible nuit &amp; week-end</span>
-          <span class="marquee-dot">·</span>
-          <span class="marquee-item">Réponse immédiate</span>
-          <span class="marquee-dot">·</span>
-          <span class="marquee-item">Transfert intelligent</span>
-          <span class="marquee-dot">·</span>
-          <span class="marquee-item">Standard sur mesure</span>
-          <span class="marquee-dot">·</span>
+          {marqueeLoop.map((item) => (
+            <Fragment>
+              <span class="marquee-item">{item}</span>
+              <span class="marquee-dot">·</span>
+            </Fragment>
+          ))}
         </span>
       </div>
     </div>

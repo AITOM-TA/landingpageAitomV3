@@ -13,22 +13,25 @@ import Beyond from '../components/Beyond.astro';
 import FAQ from '../components/FAQ.astro';
 import CTASection from '../components/CTASection.astro';
 import Footer from '../components/Footer.astro';
+
+const lang = 'fr';
+const translations = { fr: '/', en: '/en/' };
 ---
 
-<Layout>
-  <Nav />
+<Layout lang={lang} translations={translations}>
+  <Nav lang={lang} altUrl="/en/" />
   <main>
-    <Hero />
-    <Cost />
-    <Services />
-    <Approach />
-    <Video />
-    <TrustLogos />
-    <Work />
-    <Platform />
-    <Beyond />
-    <FAQ />
-    <CTASection />
+    <Hero lang={lang} />
+    <Cost lang={lang} />
+    <Services lang={lang} />
+    <Approach lang={lang} />
+    <Video lang={lang} />
+    <TrustLogos lang={lang} />
+    <Work lang={lang} />
+    <Platform lang={lang} />
+    <Beyond lang={lang} />
+    <FAQ lang={lang} />
+    <CTASection lang={lang} />
   </main>
-  <Footer />
+  <Footer lang={lang} />
 </Layout>
