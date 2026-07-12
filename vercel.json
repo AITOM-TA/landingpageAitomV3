@@ -2,5 +2,15 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "installCommand": "npm install",
-  "framework": "astro"
+  "framework": "astro",
+  "redirects": [
+    { "source": "/blog/le-guide-sur-la-gestion-des-appels-entrants", "destination": "/blog/accueil-telephonique-professionnel/", "permanent": true },
+    { "source": "/blog/agents-multilingues-ia-accueil-client", "destination": "/blog/accueil-telephonique-professionnel/", "permanent": true },
+    { "source": "/blog/ia-telephonique-pour-son-service-client", "destination": "/blog/standard-telephonique-ia-guide/", "permanent": true },
+    { "source": "/blog/ia-vocale-pme", "destination": "/blog/standard-telephonique-ia-guide/", "permanent": true },
+    { "source": "/blog/ia-telephonique", "destination": "/blog/standard-telephonique-ia-guide/", "permanent": true },
+    { "source": "/blog/ia-telephonique-vs-ivr", "destination": "/blog/callbot-voicebot-agent-vocal/", "permanent": true },
+    { "source": "/blog/differences-nlu-nlp", "destination": "/blog/callbot-voicebot-agent-vocal/", "permanent": true },
+    { "source": "/blog/svi-optimisation", "destination": "/blog/callbot-voicebot-agent-vocal/", "permanent": true }
+  ]
 }

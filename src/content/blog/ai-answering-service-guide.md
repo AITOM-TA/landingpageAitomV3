@@ -1,5 +1,5 @@
 ---
-title: "AI Answering Service: The Complete Guide to Never Missing a Call (2026)"
+title: "AI Answering Service: The Complete 2026 Guide"
 description: "What an AI answering service is, how it works, which businesses it fits, and how it stacks up against a virtual receptionist or voicemail. The 2026 reference guide."
 publishDate: 2026-07-01
 author: "Tanguy A."

@@ -1,0 +1,21 @@
+{
+  "trailingSlash": true,
+  "redirects": [
+    { "source": "/blog/le-guide-sur-la-gestion-des-appels-entrants", "destination": "/blog/accueil-telephonique-professionnel/", "type": 301 },
+    { "source": "/blog/le-guide-sur-la-gestion-des-appels-entrants/", "destination": "/blog/accueil-telephonique-professionnel/", "type": 301 },
+    { "source": "/blog/agents-multilingues-ia-accueil-client", "destination": "/blog/accueil-telephonique-professionnel/", "type": 301 },
+    { "source": "/blog/agents-multilingues-ia-accueil-client/", "destination": "/blog/accueil-telephonique-professionnel/", "type": 301 },
+    { "source": "/blog/ia-telephonique-pour-son-service-client", "destination": "/blog/standard-telephonique-ia-guide/", "type": 301 },
+    { "source": "/blog/ia-telephonique-pour-son-service-client/", "destination": "/blog/standard-telephonique-ia-guide/", "type": 301 },
+    { "source": "/blog/ia-vocale-pme", "destination": "/blog/standard-telephonique-ia-guide/", "type": 301 },
+    { "source": "/blog/ia-vocale-pme/", "destination": "/blog/standard-telephonique-ia-guide/", "type": 301 },
+    { "source": "/blog/ia-telephonique", "destination": "/blog/standard-telephonique-ia-guide/", "type": 301 },
+    { "source": "/blog/ia-telephonique/", "destination": "/blog/standard-telephonique-ia-guide/", "type": 301 },
+    { "source": "/blog/ia-telephonique-vs-ivr", "destination": "/blog/callbot-voicebot-agent-vocal/", "type": 301 },
+    { "source": "/blog/ia-telephonique-vs-ivr/", "destination": "/blog/callbot-voicebot-agent-vocal/", "type": 301 },
+    { "source": "/blog/differences-nlu-nlp", "destination": "/blog/callbot-voicebot-agent-vocal/", "type": 301 },
+    { "source": "/blog/differences-nlu-nlp/", "destination": "/blog/callbot-voicebot-agent-vocal/", "type": 301 },
+    { "source": "/blog/svi-optimisation", "destination": "/blog/callbot-voicebot-agent-vocal/", "type": 301 },
+    { "source": "/blog/svi-optimisation/", "destination": "/blog/callbot-voicebot-agent-vocal/", "type": 301 }
+  ]
+}

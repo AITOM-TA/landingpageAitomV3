@@ -80,10 +80,13 @@ const orgSchema = {
     {translations?.fr && <link rel="alternate" hreflang="x-default" href={new URL(translations.fr, siteUrl).href} />}
     {noindex && <meta name="robots" content="noindex, nofollow" />}
 
-    <!-- Google tag (gtag.js), GA4, Consent Mode v2 : tout est refusé par défaut
-         (pings sans cookie tant qu'aucun consentement n'est donné, RGPD/CNIL).
-         Pour recueillir le consentement, réactiver <CookieBanner /> et envoyer
-         gtag('consent', 'update', { analytics_storage: 'granted' }) à l'acceptation. -->
+    <!-- Google tag (gtag.js), GA4, Consent Mode v2.
+         CHOIX ASSUMÉ (juil. 2026) : analytics_storage accordé par défaut pour une
+         mesure complète SANS bannière (sessions, sources, conversions). Ce n'est
+         pas conforme RGPD/CNIL en l'état : à la mise en place de la CookieBanner,
+         repasser analytics_storage à 'denied' ici, remettre wait_for_update: 500,
+         et envoyer gtag('consent', 'update', {...}) à l'acceptation.
+         Les signaux publicitaires (ad_*) restent refusés : pas de Google Ads. -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-YEXF5GRC6F" is:inline></script>
     <script is:inline>
       window.dataLayer = window.dataLayer || [];
@@ -92,8 +95,7 @@ const orgSchema = {
         ad_storage: 'denied',
         ad_user_data: 'denied',
         ad_personalization: 'denied',
-        analytics_storage: 'denied',
-        wait_for_update: 500,
+        analytics_storage: 'granted',
       });
       gtag('js', new Date());
       gtag('config', 'G-YEXF5GRC6F');

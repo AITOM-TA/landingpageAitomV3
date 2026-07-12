@@ -282,6 +282,11 @@ const t = {
         form.reset();
         showStatus(M.msgSuccess || '', 'success');
         if (button) button.textContent = M.msgSent || '';
+
+        // Conversion GA4 : lead envoyé (visible dans Rapports → Engagement,
+        // à marquer comme conversion clé dans l'interface GA4).
+        const w = window as unknown as { gtag?: (...args: unknown[]) => void };
+        w.gtag?.('event', 'generate_lead', { form_location: location.pathname });
       } catch (err) {
         console.error('Webhook submission failed:', err);
         showStatus(M.msgError || '', 'error');

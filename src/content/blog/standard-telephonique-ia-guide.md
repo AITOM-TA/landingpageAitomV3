@@ -1,5 +1,5 @@
 ---
-title: "Standard téléphonique IA : le guide complet pour ne plus manquer un appel (2026)"
+title: "Standard téléphonique IA : le guide complet 2026"
 description: "Ce qu'est un standard téléphonique IA, comment il fonctionne, pour quels métiers, et comment le comparer à un télésecrétariat ou un répondeur. Le guide de référence 2026."
 publishDate: 2026-07-01
 author: "Tanguy A."

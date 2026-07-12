@@ -8,7 +8,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 npm run dev      # Start dev server at localhost:4321
 npm run build    # Build static site to /dist
 npm run preview  # Serve built site locally
-npm start        # serve dist/ on $PORT (used by Railway)
+npm start        # node server.mjs : sert dist/ sur $PORT (utilisé par Railway)
 ```
 
 No test suite or linter is configured.
@@ -68,7 +68,7 @@ Layout.astro          ← <html>, SEO meta, GA4, global styles, scroll reveal + 
 
 ## Deployment
 
-`vercel.json` configures Vercel, but the site also runs on **Railway** via `npm start` (static `serve` of `dist/` behind Railway's proxy; `astro.config.mjs` keeps `server.allowedHosts: true` from the earlier `astro preview` setup). Don't remove either without checking where production actually lives.
+`vercel.json` configures Vercel, but production runs on **Railway** via `npm start` = `node server.mjs` : un wrapper de `serve-handler` qui (1) redirige en 301 tout hôte `www.*` vers l'apex, et (2) applique les redirections de `serve.json` (anciens slugs de blog de l'ancien site Next.js → articles actuels, `trailingSlash: true`). Les mêmes redirections de chemin sont dupliquées dans `vercel.json` au cas où le site migrerait. Ne pas revenir au binaire `serve` : on perdrait la redirection www. `astro.config.mjs` keeps `server.allowedHosts: true` from the earlier `astro preview` setup.
 
 ## Styling conventions
 
