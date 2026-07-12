@@ -6,6 +6,7 @@ author: "Tanguy A."
 heroImage: "/blog/message-accueil-telephonique-exemples.webp"
 heroAlt: "Illustration d'un professionnel enregistrant un message d'accueil téléphonique dans un microphone."
 targetKeyword: "message d'accueil téléphonique"
+category: "exemples"
 draft: false
 ---
 

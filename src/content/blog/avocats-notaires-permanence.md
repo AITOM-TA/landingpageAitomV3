@@ -6,6 +6,7 @@ author: "Tanguy A."
 heroImage: "/blog/avocats-notaires-permanence.webp"
 heroAlt: "Illustration d'une permanence téléphonique pour cabinet d'avocats et étude notariale."
 targetKeyword: "permanence téléphonique avocat notaire"
+category: "metiers"
 draft: false
 ---
 

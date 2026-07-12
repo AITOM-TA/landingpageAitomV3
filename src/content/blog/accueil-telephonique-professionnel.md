@@ -6,6 +6,7 @@ author: "Tanguy A."
 heroImage: "/blog/accueil-telephonique-professionnel.webp"
 heroAlt: "Illustration d'un accueil téléphonique professionnel, une personne répondant chaleureusement à un appel entrant."
 targetKeyword: "accueil téléphonique"
+category: "guides"
 draft: false
 ---
 

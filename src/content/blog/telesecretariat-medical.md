@@ -6,6 +6,7 @@ author: "Tanguy A."
 heroImage: "/blog/telesecretariat-medical.webp"
 heroAlt: "Illustration d'un télésecrétariat médical gérant les appels et rendez-vous des patients."
 targetKeyword: "télésecrétariat médical"
+category: "metiers"
 draft: false
 ---
 

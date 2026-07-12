@@ -6,6 +6,7 @@ author: "Tanguy A."
 heroImage: "/blog/accueil-telephonique-professionnel.webp"
 heroAlt: "Illustration of professional call answering, a person warmly picking up an incoming call."
 targetKeyword: "professional call answering"
+category: "guides"
 lang: "en"
 draft: false
 ---

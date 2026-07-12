@@ -6,6 +6,7 @@ author: "Tanguy A."
 heroImage: "/blog/standard-telephonique-externalise.webp"
 heroAlt: "Illustration d'un standard téléphonique externalisé, une équipe traitant des appels à distance."
 targetKeyword: "standard téléphonique externalisé"
+category: "tarifs"
 draft: false
 ---
 

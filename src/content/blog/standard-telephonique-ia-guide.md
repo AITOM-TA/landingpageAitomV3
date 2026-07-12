@@ -6,6 +6,7 @@ author: "Tanguy A."
 heroImage: "/blog/standard-telephonique-ia-guide.webp"
 heroAlt: "Illustration d'un standard téléphonique IA répondant à un appel entrant, entouré de professionnels."
 targetKeyword: "standard téléphonique ia"
+category: "guides"
 draft: false
 ---
 

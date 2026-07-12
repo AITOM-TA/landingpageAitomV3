@@ -6,6 +6,7 @@ author: "Tanguy A."
 heroImage: "/blog/standard-telephonique-externalise.webp"
 heroAlt: "Illustration of an outsourced answering service, a team handling calls remotely."
 targetKeyword: "outsourced answering service"
+category: "tarifs"
 lang: "en"
 draft: false
 ---

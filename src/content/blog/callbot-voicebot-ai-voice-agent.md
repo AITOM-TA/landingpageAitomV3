@@ -6,6 +6,7 @@ author: "Tanguy A."
 heroImage: "/blog/callbot-voicebot-agent-vocal.webp"
 heroAlt: "Illustration comparing several AI voice assistants, robots, and sound waves."
 targetKeyword: "ai voice agent"
+category: "technologie"
 lang: "en"
 draft: false
 ---

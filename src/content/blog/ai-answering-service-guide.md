@@ -6,6 +6,7 @@ author: "Tanguy A."
 heroImage: "/blog/standard-telephonique-ia-guide.webp"
 heroAlt: "Illustration of an AI answering service picking up an incoming call, surrounded by business professionals."
 targetKeyword: "ai answering service"
+category: "guides"
 lang: "en"
 draft: false
 ---

@@ -6,6 +6,7 @@ author: "Tanguy A."
 heroImage: "/blog/avocats-notaires-permanence.webp"
 heroAlt: "Illustration of an answering service for a law firm and notary office."
 targetKeyword: "answering service for law firms"
+category: "metiers"
 lang: "en"
 draft: false
 ---

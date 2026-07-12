@@ -6,6 +6,7 @@ author: "Tanguy A."
 heroImage: "/blog/permanence-telephonique-tarifs.webp"
 heroAlt: "Illustration of a 24/7 phone answering service with a clock and price tags."
 targetKeyword: "answering service cost"
+category: "tarifs"
 lang: "en"
 draft: false
 ---

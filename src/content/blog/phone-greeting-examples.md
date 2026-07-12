@@ -6,6 +6,7 @@ author: "Tanguy A."
 heroImage: "/blog/message-accueil-telephonique-exemples.webp"
 heroAlt: "Illustration of a professional recording a phone greeting into a microphone."
 targetKeyword: "professional phone greeting"
+category: "exemples"
 lang: "en"
 draft: false
 ---

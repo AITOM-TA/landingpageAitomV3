@@ -6,6 +6,7 @@ author: "Tanguy A."
 heroImage: "/blog/permanence-telephonique-tarifs.webp"
 heroAlt: "Illustration d'un accueil téléphonique disponible 24h/24 avec horloge et étiquettes de prix."
 targetKeyword: "permanence téléphonique tarif"
+category: "tarifs"
 draft: false
 ---
 

@@ -12,6 +12,8 @@ const t = {
       "Guides et conseils sur le standard téléphonique IA, l'accueil client et l'automatisation des appels pour les entreprises de services.",
     searchPlaceholder: 'Rechercher un article…',
     searchAria: 'Rechercher un article',
+    filterAria: 'Filtrer les articles par catégorie',
+    allLabel: 'Tous',
     empty: 'Aucun article ne correspond à votre recherche.',
     dateLocale: 'fr-FR',
     blogBase: '/blog',
@@ -21,11 +23,22 @@ const t = {
       'Guides and tips on AI answering services, call handling and phone automation for service businesses.',
     searchPlaceholder: 'Search articles…',
     searchAria: 'Search articles',
+    filterAria: 'Filter articles by category',
+    allLabel: 'All',
     empty: 'No article matches your search.',
     dateLocale: 'en-US',
     blogBase: '/en/blog',
   },
 }[lang];
+
+// Libellés localisés des catégories (clés stables partagées FR/EN).
+const CATEGORY_LABELS: Record<string, { fr: string; en: string }> = {
+  guides: { fr: 'Guides', en: 'Guides' },
+  tarifs: { fr: 'Tarifs', en: 'Pricing' },
+  metiers: { fr: 'Métiers', en: 'Industries' },
+  technologie: { fr: 'Technologie', en: 'Technology' },
+  exemples: { fr: 'Exemples', en: 'Examples' },
+};
 
 const posts = (await getCollection('blog', ({ data }) => !data.draft && data.lang === lang)).sort(
   (a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime()
@@ -40,8 +53,14 @@ const cards = posts.map((p) => ({
   ...p.data,
   date: fmtDate(p.data.publishDate),
   minutes: readingTime(p.body ?? ''),
+  categoryLabel: CATEGORY_LABELS[p.data.category]?.[lang] ?? p.data.category,
   search: `${p.data.title} ${p.data.description}`.toLowerCase(),
 }));
+
+// Seules les catégories réellement utilisées deviennent des filtres.
+const usedCategories = Object.keys(CATEGORY_LABELS).filter((key) =>
+  cards.some((c) => c.category === key)
+);
 ---
 
 <main>
@@ -59,17 +78,28 @@ const cards = posts.map((p) => ({
         </svg>
         <input id="blog-search" type="search" placeholder={t.searchPlaceholder} aria-label={t.searchAria} autocomplete="off" />
       </div>
+
+      <!-- Filtres par catégorie -->
+      <div class="filter-wrap" role="group" aria-label={t.filterAria} data-animate data-delay="3">
+        <button type="button" class="filter-pill is-active" data-cat="all" aria-pressed="true">{t.allLabel}</button>
+        {usedCategories.map((key) => (
+          <button type="button" class="filter-pill" data-cat={key} aria-pressed="false">
+            {CATEGORY_LABELS[key][lang]}
+          </button>
+        ))}
+      </div>
     </div>
   </section>
 
-  <!-- Grille -->
-  <section class="max-w-container mx-auto px-8 pb-section-sm md:pb-section">
+  <!-- Grille (espace au-dessus pour détacher les cartes du trait du hero) -->
+  <section class="max-w-container mx-auto px-8 pt-14 md:pt-16 pb-section-sm md:pb-section">
     <div id="blog-grid" class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
       {cards.map((post, i) => (
         <a
           href={`${t.blogBase}/${post.slug}`}
           class="blog-card group"
           data-search={post.search}
+          data-category={post.category}
           data-animate
           data-delay={String((i % 3) + 1)}
         >
@@ -79,19 +109,13 @@ const cards = posts.map((p) => ({
           </div>
           <div class="card-body">
             <div class="card-meta">
+              <span class="card-cat">{post.categoryLabel}</span>
               <span class="mi">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                   <rect x="3" y="5" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.7" />
                   <path d="M3 9h18M8 3v4M16 3v4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" />
                 </svg>
                 {post.date}
-              </span>
-              <span class="mi">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <circle cx="12" cy="8" r="3.5" stroke="currentColor" stroke-width="1.7" />
-                  <path d="M5 20c0-3.3 3.1-5.5 7-5.5s7 2.2 7 5.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" />
-                </svg>
-                {post.author}
               </span>
             </div>
             <h2 class="card-title">{post.title}</h2>
@@ -131,6 +155,33 @@ const cards = posts.map((p) => ({
   #blog-search::placeholder { color: #B3AA9B; }
   #blog-search:focus { outline: none; border-color: #6967FB; box-shadow: 0 0 0 4px rgba(105, 103, 251, 0.12); }
 
+  .filter-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 28px;
+  }
+  .filter-pill {
+    font: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    color: #6B635A;
+    background: #FAF8F2;
+    border: 1px solid #DCD5C8;
+    border-radius: 999px;
+    padding: 9px 18px;
+    cursor: pointer;
+    transition: color 200ms ease, background 200ms ease, border-color 200ms ease;
+  }
+  .filter-pill:hover { color: #1A1712; border-color: #A5A4FD; }
+  .filter-pill.is-active {
+    color: #FAF8F2;
+    background: #6967FB;
+    border-color: #6967FB;
+  }
+  .filter-pill:focus-visible { outline: 2px solid #6967FB; outline-offset: 2px; }
+
   .blog-card {
     display: flex;
     flex-direction: column;
@@ -156,9 +207,18 @@ const cards = posts.map((p) => ({
   }
 
   .card-body { display: flex; flex-direction: column; gap: 12px; padding: 22px 22px 26px; flex: 1; }
-  .card-meta { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 13px; color: #6B635A; }
+  .card-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; font-size: 13px; color: #6B635A; }
   .card-meta .mi { display: inline-flex; align-items: center; gap: 6px; }
   .card-meta svg { color: #B3AA9B; }
+
+  .card-cat {
+    font-size: 12px;
+    font-weight: 600;
+    color: #4744D8;
+    background: rgba(105, 103, 251, 0.10);
+    border-radius: 999px;
+    padding: 4px 11px;
+  }
 
   .card-title {
     font-family: 'Figtree', system-ui, sans-serif;
@@ -178,16 +238,36 @@ const cards = posts.map((p) => ({
 <script>
   const input = document.getElementById('blog-search') as HTMLInputElement | null;
   const cards = Array.from(document.querySelectorAll<HTMLElement>('.blog-card'));
+  const pills = Array.from(document.querySelectorAll<HTMLButtonElement>('.filter-pill'));
   const empty = document.getElementById('blog-empty');
 
-  input?.addEventListener('input', () => {
-    const q = input.value.trim().toLowerCase();
+  let activeCategory = 'all';
+
+  function applyFilters() {
+    const q = input?.value.trim().toLowerCase() ?? '';
     let visible = 0;
     for (const card of cards) {
-      const match = !q || (card.dataset.search ?? '').includes(q);
-      card.style.display = match ? '' : 'none';
-      if (match) visible++;
+      const matchesQuery = !q || (card.dataset.search ?? '').includes(q);
+      const matchesCategory =
+        activeCategory === 'all' || card.dataset.category === activeCategory;
+      const show = matchesQuery && matchesCategory;
+      card.style.display = show ? '' : 'none';
+      if (show) visible++;
     }
     empty?.classList.toggle('hidden', visible !== 0);
-  });
+  }
+
+  input?.addEventListener('input', applyFilters);
+
+  for (const pill of pills) {
+    pill.addEventListener('click', () => {
+      activeCategory = pill.dataset.cat ?? 'all';
+      for (const p of pills) {
+        const active = p === pill;
+        p.classList.toggle('is-active', active);
+        p.setAttribute('aria-pressed', String(active));
+      }
+      applyFilters();
+    });
+  }
 </script>

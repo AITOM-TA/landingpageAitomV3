@@ -6,6 +6,7 @@ author: "Tanguy A."
 heroImage: "/blog/telesecretariat-medical.webp"
 heroAlt: "Illustration of a medical answering service handling patient calls and appointments."
 targetKeyword: "medical answering service"
+category: "metiers"
 lang: "en"
 draft: false
 ---

@@ -15,6 +15,10 @@ const blog = defineCollection({
     heroAlt: z.string(),
     // Mot-clé SEO principal visé (documentaire, non affiché).
     targetKeyword: z.string().optional(),
+    // Catégorie de filtrage (clé stable partagée FR/EN, libellés dans BlogList).
+    category: z
+      .enum(['guides', 'tarifs', 'metiers', 'technologie', 'exemples'])
+      .default('guides'),
     // Langue de l'article : 'fr' (racine /blog) ou 'en' (/en/blog).
     lang: z.enum(['fr', 'en']).default('fr'),
     draft: z.boolean().default(false),
