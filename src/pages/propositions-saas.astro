@@ -67,33 +67,66 @@ const useCases = [
   { title: "Et des dizaines d'autres usages", description: 'Qualification des demandes, débordement aux heures de pointe, permanence de nuit : à vous de le configurer.' },
 ];
 
+// Pricing v2 : miroir exact de saas.plans (l'application fait foi).
 const plans = [
   {
-    id: 'solo',
-    name: 'Solo',
-    price: '99',
-    minutes: '1 000',
-    tagline: 'Pour un indépendant ou un petit cabinet.',
-    features: ['1 assistant IA', '1 numéro dédié', '1 appel à la fois', 'Pack 100 minutes : 15 €'],
+    id: 'starter',
+    name: 'Starter',
+    pricePrefix: '',
+    price: '29',
+    priceNote: 'ou 24 €/mois HT en facturation annuelle',
+    minutes: '250',
+    tagline: 'Pour 1 à 5 appels par jour.',
+    features: [
+      'Assistants illimités',
+      '1 numéro de téléphone dédié',
+      '3 appels simultanés',
+      '20+ voix, 25+ langues',
+      'Transcriptions et résumés',
+      'Pack 100 minutes : 15 €',
+    ],
     highlight: false,
+    ctaLabel: 'Commencer avec Starter',
+    ctaHref: REGISTER_URL,
   },
   {
-    id: 'team',
-    name: 'Team',
-    price: '299',
-    minutes: '3 000',
-    tagline: 'Pour une équipe qui reçoit des appels toute la journée.',
-    features: ['Assistants illimités', '3 numéros dédiés', '3 appels simultanés', 'Pack 100 minutes : 12 €'],
+    id: 'pro',
+    name: 'Pro',
+    pricePrefix: '',
+    price: '99',
+    priceNote: 'ou 84 €/mois HT en facturation annuelle',
+    minutes: '1 000',
+    tagline: 'Pour 5 à 30 appels par jour.',
+    features: [
+      'Tout Starter inclus',
+      '3 numéros de téléphone dédiés',
+      '10 appels simultanés',
+      'Transfert vers un humain',
+      'Prise de rendez-vous (agenda)',
+      'Pack 100 minutes : 12 €',
+    ],
     highlight: true,
+    ctaLabel: 'Commencer avec Pro',
+    ctaHref: REGISTER_URL,
   },
   {
     id: 'scale',
     name: 'Scale',
+    pricePrefix: 'à partir de',
     price: '499',
+    priceNote: 'volume et intégrations sur mesure, sur devis',
     minutes: '5 000',
-    tagline: 'Pour les volumes importants et le multi-sites.',
-    features: ['Assistants illimités', '10 numéros dédiés', '10 appels simultanés', 'Pack 100 minutes : 10 €'],
+    tagline: 'À partir de 30 appels par jour.',
+    features: [
+      'Tout Pro inclus',
+      '10 numéros de téléphone dédiés',
+      'Appels sortants',
+      'Accompagnement dédié',
+      'Pack 100 minutes : 10 €',
+    ],
     highlight: false,
+    ctaLabel: 'Parler à un expert',
+    ctaHref: '/propositions-demo',
   },
 ];
 
@@ -190,7 +223,7 @@ const faqs = [
             </div>
 
             <p class="text-[13px] text-faint" data-animate data-delay="4">
-              À partir de 99 €/mois · Sans engagement · Prêt en quelques minutes
+              À partir de 29 €/mois HT · Sans engagement · Prêt en quelques minutes
             </p>
           </div>
 
@@ -356,9 +389,13 @@ const faqs = [
               <h3 class="font-display font-bold text-xl text-ink mb-1">{plan.name}</h3>
               <p class="text-sm text-muted mb-6">{plan.tagline}</p>
               <p class="mb-1">
+                {plan.pricePrefix && (
+                  <span class="text-muted text-sm">{plan.pricePrefix} </span>
+                )}
                 <span class="font-display font-bold text-[40px] text-ink">{plan.price} €</span>
-                <span class="text-muted text-sm"> / mois</span>
+                <span class="text-muted text-sm"> / mois HT</span>
               </p>
+              <p class="text-[13px] text-faint mb-2">{plan.priceNote}</p>
               <p class="text-sm text-accent font-semibold mb-7">{plan.minutes} minutes incluses</p>
               <ul class="flex flex-col gap-3 mb-8">
                 {plan.features.map((feature) => (
@@ -369,7 +406,7 @@ const faqs = [
                 ))}
               </ul>
               <a
-                href={REGISTER_URL}
+                href={plan.ctaHref}
                 class:list={[
                   'mt-auto text-center text-sm font-semibold px-6 py-3 rounded transition-colors duration-200 ease-expo',
                   plan.highlight
@@ -377,15 +414,16 @@ const faqs = [
                     : 'border border-border text-ink hover:border-accent hover:text-accent',
                 ]}
               >
-                Commencer avec {plan.name}
+                {plan.ctaLabel}
               </a>
             </div>
           ))}
         </div>
 
         <p class="text-sm text-muted mt-10 max-w-[640px]" data-animate>
-          Sans engagement : abonnement mensuel, résiliable à tout moment depuis l'application.
-          Les minutes sont décomptées sur la durée réelle des appels, visible en temps réel.
+          Prix hors taxes. Sans engagement : abonnement mensuel, résiliable à tout moment
+          depuis l'application. Numéro supplémentaire : 7 €/mois HT. Les minutes sont
+          décomptées sur la durée réelle des appels, visible en temps réel.
         </p>
 
       </div>
