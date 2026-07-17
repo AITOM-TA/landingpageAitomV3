@@ -1,0 +1,43 @@
+---
+// En-tête commun du site (design self-serve) : logo, « Réserver une démo »,
+// « S'inscrire maintenant ». Utilisé sur toutes les pages FR (accueil, blog,
+// pages légales, démo). Fixe, 68px : prévoir un pt-[68px] sur le contenu.
+const APP_URL = 'https://mon.aitom.fr';
+---
+
+<header class="site-nav">
+  <div class="max-w-container mx-auto px-8 h-full flex items-center justify-between">
+    <a href="/" class="flex items-center gap-2.5" aria-label="Aitom, retour à l'accueil">
+      <img src="/logo-icon.png" alt="" class="h-7 w-7" />
+      <span class="font-display font-bold text-ink text-lg">Aitom</span>
+    </a>
+    <div class="flex items-center gap-4">
+      <a
+        href="/reserver-une-demo"
+        class="hidden sm:inline-block text-sm font-semibold px-5 py-[10px] rounded border border-border text-ink hover:border-accent hover:text-accent transition-colors duration-200 ease-expo"
+      >
+        Réserver une démo
+      </a>
+      <a
+        href={APP_URL}
+        class="btn-primary inline-block bg-accent text-bg text-sm font-semibold px-5 py-[10px] rounded"
+      >
+        S'inscrire maintenant
+      </a>
+    </div>
+  </div>
+</header>
+
+<style>
+  .site-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 190;
+    height: 68px;
+    background: rgba(250, 248, 242, 0.85);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid #dcd5c8;
+  }
+</style>

@@ -1,5 +1,6 @@
 ---
 import Layout from './Layout.astro';
+import SiteNav from '../components/SiteNav.astro';
 import Footer from '../components/Footer.astro';
 
 interface Props {
@@ -15,26 +16,34 @@ const backLabel = lang === 'en' ? 'Back to home' : "Retour à l'accueil";
 ---
 
 <Layout lang={lang} title={`${title} · Aitom`} description={description} translations={translations}>
-  <!-- Barre supérieure minimale -->
-  <header class="border-b border-border">
-    <div class="max-w-container mx-auto px-8 h-[68px] flex items-center justify-between">
-      <a
-        href={localeRoot}
-        class="flex items-center gap-2.5 hover:opacity-80 transition-opacity duration-200"
-        aria-label="Aitom"
-      >
-        <img src="/logo-icon.png" alt="" class="h-6 w-6" />
-        <span class="font-display font-bold text-ink text-lg tracking-[-0.02em] leading-none">Aitom</span>
-      </a>
-      <a
-        href={localeRoot}
-        class="group inline-flex items-center gap-2 text-sm text-muted hover:text-ink transition-colors duration-300 ease-expo"
-      >
-        <span class="inline-block group-hover:-translate-x-1 transition-transform duration-300 ease-expo">←</span>
-        {backLabel}
-      </a>
-    </div>
-  </header>
+  {lang === 'fr' ? (
+    <>
+      <!-- Même en-tête que le reste du site (fixe, 68px) -->
+      <SiteNav />
+      <div style="height: 68px" aria-hidden="true"></div>
+    </>
+  ) : (
+    <!-- Barre minimale conservée sur la version EN (ancien design) -->
+    <header class="border-b border-border">
+      <div class="max-w-container mx-auto px-8 h-[68px] flex items-center justify-between">
+        <a
+          href={localeRoot}
+          class="flex items-center gap-2.5 hover:opacity-80 transition-opacity duration-200"
+          aria-label="Aitom"
+        >
+          <img src="/logo-icon.png" alt="" class="h-6 w-6" />
+          <span class="font-display font-bold text-ink text-lg tracking-[-0.02em] leading-none">Aitom</span>
+        </a>
+        <a
+          href={localeRoot}
+          class="group inline-flex items-center gap-2 text-sm text-muted hover:text-ink transition-colors duration-300 ease-expo"
+        >
+          <span class="inline-block group-hover:-translate-x-1 transition-transform duration-300 ease-expo">←</span>
+          {backLabel}
+        </a>
+      </div>
+    </header>
+  )}
 
   <main class="max-w-container mx-auto px-8 py-section-sm">
     <div class="max-w-[760px]">

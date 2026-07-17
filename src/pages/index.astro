@@ -1,6 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import PhoneMock from '../components/PhoneMock.astro';
+import SiteNav from '../components/SiteNav.astro';
+import Footer from '../components/Footer.astro';
 
 // Page d'accueil (self-serve, depuis le 17 juillet 2026) : héro + logos
 // clients, démo à appeler, étapes, cas d'usage, tarifs, FAQ, CTA inscription.
@@ -176,23 +178,7 @@ const faqs = [
 
 <Layout translations={{ fr: '/', en: '/en/' }}>
 
-  <!-- Nav épurée : logo + démo + inscription -->
-  <header class="prop-nav">
-    <div class="max-w-container mx-auto px-8 h-full flex items-center justify-between">
-      <a href="/" class="flex items-center gap-2.5">
-        <img src="/logo-icon.png" alt="" class="h-7 w-7" />
-        <span class="font-display font-bold text-ink text-lg">Aitom</span>
-      </a>
-      <div class="flex items-center gap-4">
-        <a href="/reserver-une-demo" class="hidden sm:inline-block text-sm font-semibold px-5 py-[10px] rounded border border-border text-ink hover:border-accent hover:text-accent transition-colors duration-200 ease-expo">
-          Réserver une démo
-        </a>
-        <a href={REGISTER_URL} class="btn-primary inline-block bg-accent text-bg text-sm font-semibold px-5 py-[10px] rounded">
-          S'inscrire maintenant
-        </a>
-      </div>
-    </div>
-  </header>
+  <SiteNav />
 
   <main class="pt-[68px]">
 
@@ -410,7 +396,7 @@ const faqs = [
                   data-year={plan.priceYear}
                 >{plan.priceMonth}</span>
                 <span class="font-display font-bold text-[42px] leading-none text-ink"> €</span>
-                <span class="text-muted text-sm"> / mois HT</span>
+                <span class="text-muted text-sm"> / mois</span>
               </p>
 
               <a
@@ -529,24 +515,7 @@ const faqs = [
 
   </main>
 
-  <!-- Footer épuré : plus de liens d'ancres (Fonctionnement / Tarifs / FAQ) -->
-  <footer class="border-t border-border">
-    <div class="max-w-container mx-auto px-8 py-14">
-      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
-        <div class="flex items-center gap-2.5">
-          <img src="/logo-icon.png" alt="" class="h-7 w-7" />
-          <span class="font-display font-bold text-ink text-lg">Aitom</span>
-        </div>
-        <nav class="flex flex-wrap items-center gap-x-8 gap-y-3" aria-label="Liens de bas de page">
-          <a href="/blog" class="text-sm text-muted hover:text-ink transition-colors duration-200 ease-expo">Blog</a>
-          <a href="mailto:contact@aitom.fr" class="text-sm text-muted hover:text-ink transition-colors duration-200 ease-expo">contact@aitom.fr</a>
-          <a href="/mentions-legales" class="text-sm text-muted hover:text-ink transition-colors duration-200 ease-expo">Mentions légales</a>
-          <a href="/politique-de-confidentialite" class="text-sm text-muted hover:text-ink transition-colors duration-200 ease-expo">Politique de confidentialité</a>
-        </nav>
-      </div>
-      <p class="text-[13px] text-faint mt-10">© 2026 Aitom. Tous droits réservés. Antibes · Côte d'Azur.</p>
-    </div>
-  </footer>
+  <Footer />
 
 </Layout>
 
@@ -554,18 +523,6 @@ const faqs = [
   /* Ancres : compenser la nav fixe (68px) */
   [id] {
     scroll-margin-top: 90px;
-  }
-
-  .prop-nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 190;
-    height: 68px;
-    background: rgba(250, 248, 242, 0.85);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid #dcd5c8;
   }
 
   /* Bandeau logos compact intégré au héro */
@@ -739,6 +696,20 @@ const faqs = [
     background: #6967fb;
     border-radius: 999px;
     padding: 5px 12px;
+  }
+
+  /* Survol des cartes de tarifs : légère élévation, même esprit que le blog */
+  .plan-card {
+    transition:
+      transform 400ms cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 400ms cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 400ms ease;
+  }
+
+  .plan-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 48px rgba(26, 23, 18, 0.12);
+    border-color: #a5a4fd;
   }
 
   .cta-dark {
