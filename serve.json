@@ -1,6 +1,10 @@
 {
   "trailingSlash": true,
   "redirects": [
+    { "source": "/propositions-saas", "destination": "/", "type": 301 },
+    { "source": "/propositions-saas/", "destination": "/", "type": 301 },
+    { "source": "/propositions-demo", "destination": "/reserver-une-demo/", "type": 301 },
+    { "source": "/propositions-demo/", "destination": "/reserver-une-demo/", "type": 301 },
     { "source": "/blog/le-guide-sur-la-gestion-des-appels-entrants", "destination": "/blog/accueil-telephonique-professionnel/", "type": 301 },
     { "source": "/blog/le-guide-sur-la-gestion-des-appels-entrants/", "destination": "/blog/accueil-telephonique-professionnel/", "type": 301 },
     { "source": "/blog/agents-multilingues-ia-accueil-client", "destination": "/blog/accueil-telephonique-professionnel/", "type": 301 },

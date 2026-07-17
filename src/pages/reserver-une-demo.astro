@@ -1,29 +1,26 @@
 ---
 import Layout from '../layouts/Layout.astro';
 
-// Page de travail : réservation de démo (agenda Cal.com aitom/15min intégré).
-// Liée depuis /propositions-saas (bouton « Réserver une démo »).
+// Réservation de démo : agenda Cal.com aitom/15min intégré en pleine page.
+// Liée depuis la page d'accueil (boutons « Réserver une démo »).
 
 const APP_URL = 'https://mon.aitom.fr';
 ---
 
-<Layout title="Réserver une démo · Aitom (page de travail)" noindex>
+<Layout
+  title="Réserver une démo · Aitom"
+  description="Réservez un créneau de 15 minutes : nous vous montrons comment un assistant Aitom répondrait à vos appels, et nous répondons à vos questions."
+>
 
-  <!-- Barre de travail -->
-  <div class="work-bar">
-    <span class="font-display font-bold text-ink">Aitom · page de travail</span>
-    <span class="text-muted text-sm hidden sm:block">Page de réservation de démo liée à la proposition self-serve</span>
-  </div>
-
-  <!-- Nav minimale, cohérente avec la proposition -->
+  <!-- Nav minimale, cohérente avec l'accueil -->
   <header class="prop-nav">
     <div class="max-w-container mx-auto px-8 h-full flex items-center justify-between">
-      <a href="/propositions-saas" class="flex items-center gap-2.5">
+      <a href="/" class="flex items-center gap-2.5">
         <img src="/logo-icon.png" alt="" class="h-7 w-7" />
         <span class="font-display font-bold text-ink text-lg">Aitom</span>
       </a>
       <div class="flex items-center gap-4">
-        <a href="/propositions-saas" class="hidden sm:block text-sm text-muted hover:text-ink transition-colors duration-200 ease-expo">Retour</a>
+        <a href="/" class="hidden sm:block text-sm text-muted hover:text-ink transition-colors duration-200 ease-expo">Retour</a>
         <a href={APP_URL} class="btn-primary inline-block bg-accent text-bg text-sm font-semibold px-5 py-[10px] rounded">
           S'inscrire maintenant
         </a>
@@ -31,7 +28,7 @@ const APP_URL = 'https://mon.aitom.fr';
     </div>
   </header>
 
-  <main class="pt-[112px]">
+  <main class="pt-[68px]">
     <section class="py-10 lg:py-14">
       <div class="max-w-container mx-auto px-8">
 
@@ -86,26 +83,9 @@ const APP_URL = 'https://mon.aitom.fr';
 </Layout>
 
 <style>
-  .work-bar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 200;
-    height: 44px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    padding: 0 1.5rem;
-    background: rgba(250, 248, 242, 0.92);
-    backdrop-filter: blur(8px);
-    border-bottom: 1px solid #dcd5c8;
-  }
-
   .prop-nav {
     position: fixed;
-    top: 44px;
+    top: 0;
     left: 0;
     right: 0;
     z-index: 190;
