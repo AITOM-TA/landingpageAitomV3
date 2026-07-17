@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
-import SiteNav from '../../components/SiteNav.astro';
+import Nav from '../../components/Nav.astro';
 import Footer from '../../components/Footer.astro';
 import BlogArticle from '../../components/BlogArticle.astro';
 import { altPair } from '../../i18n/blogAlternates';
@@ -17,6 +17,7 @@ export async function getStaticPaths() {
 
 const { post, related } = Astro.props;
 const pair = altPair(post.id, 'fr');
+const enUrl = pair ? `/en/blog/${pair.en}` : '/en/blog';
 const translations = { fr: `/blog/${post.id}/`, en: pair ? `/en/blog/${pair.en}/` : undefined };
 const heroAbs = new URL(post.data.heroImage, 'https://aitom.fr').href;
 ---
@@ -28,7 +29,7 @@ const heroAbs = new URL(post.data.heroImage, 'https://aitom.fr').href;
   ogImage={heroAbs}
   translations={translations}
 >
-  <SiteNav />
+  <Nav lang="fr" altUrl={enUrl} />
   <BlogArticle post={post} related={related} lang="fr" />
   <Footer lang="fr" />
 </Layout>

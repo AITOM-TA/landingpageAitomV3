@@ -4,7 +4,6 @@
   "installCommand": "npm install",
   "framework": "astro",
   "redirects": [
-    { "source": "/propositions-saas", "destination": "/", "permanent": true },
     { "source": "/propositions-demo", "destination": "/reserver-une-demo/", "permanent": true },
     { "source": "/blog/le-guide-sur-la-gestion-des-appels-entrants", "destination": "/blog/accueil-telephonique-professionnel/", "permanent": true },
     { "source": "/blog/agents-multilingues-ia-accueil-client", "destination": "/blog/accueil-telephonique-professionnel/", "permanent": true },

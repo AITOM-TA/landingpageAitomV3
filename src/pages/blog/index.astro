@@ -1,6 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import SiteNav from '../../components/SiteNav.astro';
+import Nav from '../../components/Nav.astro';
 import Footer from '../../components/Footer.astro';
 import BlogList from '../../components/BlogList.astro';
 ---
@@ -11,7 +11,7 @@ import BlogList from '../../components/BlogList.astro';
   description="Guides et conseils sur le standard téléphonique IA, la permanence téléphonique, l'accueil client et l'automatisation des appels pour les TPE et PME de services."
   translations={{ fr: '/blog/', en: '/en/blog/' }}
 >
-  <SiteNav />
+  <Nav lang="fr" altUrl="/en/blog" />
   <BlogList lang="fr" />
   <Footer lang="fr" />
 </Layout>
